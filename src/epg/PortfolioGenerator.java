@@ -1,6 +1,7 @@
 package epg;
 
 //Constants
+import static epg.LanguagePropertyType.TITLE_WINDOW;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.ICON_WINDOW_LOGO;
 import static epg.StartupConstants.PATH_DATA;

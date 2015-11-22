@@ -10,5 +10,11 @@ package epg;
  * @author BunnyRailgun
  */
 public enum LanguagePropertyType {
-    TITLE_WINDOW
+    TITLE_WINDOW,
+    TOOLTIP_NEW_PORTFOLIO,
+    TOOLTIP_LOAD_PORTFOLIO,
+    TOOLTIP_SAVE_PORTFOLIO,
+    TOOLTIP_SAVEAS_PORTFOLIO,
+    TOOLTIP_EXPORT_PORTFOLIO,
+    TOOLTIP_EXIT;
 }

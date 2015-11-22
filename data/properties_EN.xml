@@ -6,26 +6,27 @@
 -->
 <properties>
     <property_list>     
-        <property name="TITLE_WINDOW"		value="Slide Show Maker"></property>  
+        <property name="TITLE_WINDOW"		value="ePortfolio Generator"></property>  
         
         <!-- PROGRAM ICON FILES -->
 	
         <!-- TOOLTIPS FOR BUTTONS -->
-        <property name="TOOLTIP_NEW_SLIDE_SHOW"	    value="Create a New Slide Show"></property>
-        <property name="TOOLTIP_LOAD_SLIDE_SHOW"    value="Load an Existing Slide Show"></property>
-        <property name="TOOLTIP_SAVE_SLIDE_SHOW"    value="Save this Slide Show"></property>
-        <property name="TOOLTIP_VIEW_SLIDE_SHOW"    value="View this Slide Show"></property>
+        <property name="TOOLTIP_NEW_PORTFOLIO"	    value="Create a New Portfolio"></property>
+        <property name="TOOLTIP_LOAD_PORTFOLIO"    value="Load an Existing Portfolio"></property>
+        <property name="TOOLTIP_SAVE_PORTFOLIO"    value="Save"></property>
+		<property name="TOOLTIP_SAVEAS_PORTFOLIO"    value="Save As..."></property>
+        <property name="TOOLTIP_EXPORT_PORTFOLIO"    value="Export this Portfolio"></property>
         <property name="TOOLTIP_EXIT"		    value="Exit the Application"></property>
-	<property name="TOOLTIP_ADD_SLIDE"	    value="Add Slide"></property>
-	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Slide"></property>
-	<property name="TOOLTIP_MOVE_UP"	    value="Move Slide Up"></property>
-	<property name="TOOLTIP_MOVE_DOWN"	    value="Move Slide Down"></property>
-	<property name="TOOLTIP_PREVIOUS_SLIDE"	    value="Previous Slide"></property>
-	<property name="TOOLTIP_NEXT_SLIDE"	    value="Next Slide"></property>
+	<property name="TOOLTIP_ADD_PAGE"	    value="Add Page"></property>
+	<property name="TOOLTIP_REMOVE_PAGE"	    value="Remove Page"></property>
+	<property name="TOOLTIP_MOVE_UP"	    value="Move Page Up"></property>
+	<property name="TOOLTIP_MOVE_DOWN"	    value="Move Page Down"></property>
+	<property name="TOOLTIP_PREVIOUS_PAGE"	    value="Previous Page"></property>
+	<property name="TOOLTIP_NEXT_PAGE"	    value="Next Page"></property>
 	
 	<!-- DEFAULT VALUES -->
 	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION"></property>
-	<property name="DEFAULT_SLIDE_SHOW_TITLE"   value="ENTER TITLE"></property>
+	<property name="DEFAULT_PORTFOLIO_TITLE"   value="ENTER TITLE"></property>
 	
 	
 	<!-- UI LABELS -->
@@ -39,7 +40,7 @@
         <property name="COURSE_SEMESTER_LABEL"          value="Semester:"></property>
         <property name="COURSE_YEAR_LABEL"              value="Year:"></property>
         <property name="COURSE_TITLE_LABEL"             value="Title:"></property>
-        <property name="INSTRUCTOR_NAME_LABEL"          value="Instrctor Name:"></property>
+        <property name="INSTRUCTOR_NAME_LABEL"          value="Instructor Name:"></property>
         <property name="INSTRUCTOR_URL_LABEL"           value="Instructor Homepage:"></property>
         <property name="PAGES_SELECTION_HEADING_LABEL"  value="Site Pages"></property>
         <property name="SCHEDULE_HEADING_LABEL"         value="Course Schedule"></property>
