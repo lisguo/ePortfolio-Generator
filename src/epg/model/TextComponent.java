@@ -10,5 +10,26 @@ package epg.model;
  * @author BunnyRailgun
  */
 public class TextComponent {
+    //CAN BE PARAGRAPH, HEADER, OR LIST
+    String type; 
+    String text;
     
+    public TextComponent(String initType, String initText){
+        type = initType;
+        text = initText;
+    }
+    //ACCESSOR
+    public String getText(){
+        return text;
+    }
+    public String getType(){
+        return type;
+    }
+    //MUTATOR
+    public void setText(String newText){
+        text = newText;
+    }
+    public void setType(String newType){
+        type = newType;
+    }
 }

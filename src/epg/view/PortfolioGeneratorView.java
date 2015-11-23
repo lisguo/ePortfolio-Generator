@@ -32,6 +32,7 @@ import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.controller.FileController;
 import epg.model.Page;
 import epg.model.PortfolioModel;
+import epg.model.TextComponent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -92,6 +93,17 @@ public class PortfolioGeneratorView {
     Button addPageButton;
     Button removePageButton;
     Label bannerImg;
+    
+    VBox componentToolbar;
+    Button addTextComponent;
+    Button addImageComponent;
+    Button addSlideShowComponent;
+    Button addVideoComponent;
+    Button removeComponent;
+    Button editComponent;
+    
+    VBox componentPane;
+    ScrollPane componentScrollPane;
     
     
     //SITE VIEWER
@@ -183,7 +195,7 @@ public class PortfolioGeneratorView {
         //PAGE SETTINGS PANE
         VBox pageSettingsPane = new VBox();
         //SETTING THE WIDTH!!!! CHANGE LATER
-        pageSettingsPane.setPrefWidth(900);
+        pageSettingsPane.setPrefWidth(450);
         pageSettingsPane.getStyleClass().add(CSS_CLASS_PAGE_SETTINGS_PANE);
         
         //LAYOUT SELECTION
@@ -245,17 +257,42 @@ public class PortfolioGeneratorView {
         TextField footerField = new TextField();
         footerField.positionCaret(0);
         //CHANGE LATER
-        footerField.setPrefSize(300, 500);
+        footerField.setPrefSize(300, 300);
         footerBox.getChildren().addAll(footerLabel,footerField);
         
         //ADD TO PAGE SETTINGS
         pageSettingsPane.getChildren().addAll(layoutSelection, colorSelection,
                 bannerSelection, studentBox, footerBox);
         
+        //COMPONENT TOOLBAR
+        componentToolbar = new VBox();
+	componentToolbar.getStyleClass().add(CSS_CLASS_SITE_TOOLBAR_VBOX);
+	addTextComponent = new Button("Add Text");
+        addImageComponent = new Button("Add Image");
+        addSlideShowComponent = new Button("Add SlideShow");
+        addVideoComponent = new Button("Add Video");
+        removeComponent = new Button("Remove");
+        editComponent = new Button("Edit");
+        componentToolbar.getChildren().addAll(addTextComponent,
+                addImageComponent,addSlideShowComponent,addVideoComponent,
+                removeComponent,editComponent);
+        
+        //COMPONENT SCROLLPANE
+        componentPane = new VBox();
+        componentScrollPane = new ScrollPane(componentPane);
+        //SETTING THE WIDTH!!!! CHANGE LATER
+        componentPane.setPrefWidth(900);
+        //ADD DUMMY COMPONENTS
+        TextComponent tc1 = new TextComponent("header","Testing Text Component");
+        TextComponentView t1 = new TextComponentView(tc1);
+        componentPane.getChildren().addAll(t1);
+        
         //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR
         portfolioEditorPane.getChildren().add(siteToolbar);
         portfolioEditorPane.getChildren().add(pageEditorScrollPane);
         portfolioEditorPane.getChildren().add(pageSettingsPane);
+        portfolioEditorPane.getChildren().add(componentToolbar);
+        portfolioEditorPane.getChildren().add(componentScrollPane);
         
         portfolioEditor.setContent(portfolioEditorPane);
         
