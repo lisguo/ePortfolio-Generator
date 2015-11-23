@@ -1,0 +1,49 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 22, 2015, 8:48:47 PM
+    Author     : BunnyRailgun
+*/
+
+.horizontal_toolbar_hbox {
+    -fx-background-color: rgb(255, 241, 175);
+    -fx-border-color: rgb(200,200,200);
+}
+.horizontal_toolbar_button { //Top buttons
+    -fx-background-color: rgb(252, 226, 102);
+    -fx-padding-left: 10px;
+    -fx-padding-right: 20px;
+    -fx-spacing: 5;
+}
+.site_toolbar_vbox{
+    -fx-background-radius: 5.0;
+    -fx-background-color: rgb(255, 241, 175);
+    -fx-border-color: rgb(200, 200, 200);
+    -fx-spacing: 5;
+    -fx-alignment: center;
+}
+.vertical_toolbar_button { //Right buttons
+    -fx-background-color: rgb(252, 226, 102);
+    -fx-padding: 10px 10px 10px 10px;
+    -fx-spacing: 50px;
+}
+.selected_page_edit_view { //Slides untouched
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(255, 241, 175);
+    -fx-border-color: rgb(200, 200, 200);
+    -fx-border-thickness: 10px;
+    -fx-spacing: 60px;
+}
+.page_edit_view { //Selecting slide
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(255, 248, 215);
+    -fx-border-color: rgb(70, 5, 5);
+    -fx-border-thickness: 10px;
+    -fx-spacing: 60px;
+}
+.page_editor_pane > .viewport{
+    -fx-background-color: rgb(252, 226, 102);
+}

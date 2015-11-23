@@ -21,4 +21,6 @@ public enum LanguagePropertyType {
     //SITE TOOLBAR
     TOOLTIP_ADD_PAGE,
     TOOLTIP_REMOVE_PAGE,
+    DEFAULT_PORFOLIO_TITLE,
+    LABEL_PAGE_TITLE,
 }

@@ -16,20 +16,21 @@ public class StartupConstants {
     public static String PROPERTY_TYPES_LIST = "property_types.txt";
     public static String UI_PROPERTIES_FILE_NAME_English = "properties_EN.xml";
     public static String PROPERTIES_SCHEMA_FILE_NAME = "properties_schema.xsd";
+    public static String PATH_CSS = "/epg/style/";
+    public static String STYLE_SHEET_UI = PATH_CSS + "PortfolioGeneratorStyle.css";
     
     // CSS STYLE SHEET CLASSES
     public static String    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON = "vertical_toolbar_button";
-    public static String    CSS_CLASS_SITE_TOOLBAR_VBOX = "site_toolbar_vbox";
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX = "horizontal_toolbar_hbox";
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
-    public static String    CSS_CLASS_SELECTED_PAGE_VIEW = "selected_slide_edit_view";
+    public static String    CSS_CLASS_SITE_TOOLBAR_VBOX = "site_toolbar_vbox";
+    public static String    CSS_CLASS_PAGE_EDIT_VIEW = "page_edit_view";
+    public static String    CSS_CLASS_SELECTED_PAGE_EDIT_VIEW = "selected_page_edit_view";
     public static String    CSS_CLASS_SELECTED_WORKSPACE = "workspace";
     public static String    CSS_CLASS_TITLE_PANE = "title_pane";
     public static String    CSS_CLASS_PAGE_EDITOR_PANE = "page_editor_pane";
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
-    public static String PATH_CSS = "/ssm/style/";
-    public static String STYLE_SHEET_UI = PATH_CSS + "PortfolioGeneratorStyle.css";
 
      // HERE ARE THE LANGUAGE INDEPENDENT GUI ICONS
     public static String ICON_WINDOW_LOGO = "EPG_Logo.png";
@@ -39,8 +40,8 @@ public class StartupConstants {
     public static String ICON_SAVEAS_PORTFOLIO = "SaveAs.png";
     public static String ICON_EXPORT_PORTFOLIO = "Export.png";
     public static String ICON_EXIT = "Exit.png";
-    public static String ICON_ADD_PAGE = "AddPage.png";
-    public static String ICON_REMOVE_PAGE = "RemovePage.png";
+    public static String ICON_ADD_PAGE = "Add.png";
+    public static String ICON_REMOVE_PAGE = "Remove.png";
     public static String ICON_MOVE_UP = "MoveUp.png";
     public static String ICON_MOVE_DOWN = "MoveDown.png";
     public static String ICON_PREVIOUS = "Previous.png";

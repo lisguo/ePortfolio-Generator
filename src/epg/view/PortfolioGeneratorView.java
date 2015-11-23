@@ -13,6 +13,8 @@ import epg.PortfolioGenerator;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDITOR_PANE;
+import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_VIEW;
+import static epg.StartupConstants.CSS_CLASS_SELECTED_PAGE_EDIT_VIEW;
 import static epg.StartupConstants.CSS_CLASS_SELECTED_WORKSPACE;
 import static epg.StartupConstants.CSS_CLASS_SITE_TOOLBAR_VBOX;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
@@ -26,6 +28,9 @@ import static epg.StartupConstants.ICON_SAVEAS_PORTFOLIO;
 import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.controller.FileController;
+import epg.model.Page;
+import epg.model.PortfolioModel;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -79,21 +84,31 @@ public class PortfolioGeneratorView {
     
     //PAGE EDITOR
     HBox portfolioEditorPane;
+    VBox pageEditorPane;
+    Button addPageButton;
+    Button removePageButton;
     Label bannerImg;
     
     
     //SITE VIEWER
     Pane pageViewerPane;
     
+    //THE PORTFOLIO GENERATOR WE WILL BE WORKING ON
+    PortfolioModel portfolio;
+    
     public PortfolioGeneratorView(){
     }
     
+    public PortfolioModel getPortfolio(){
+        return portfolio;
+    }
     public void startUI(Stage initPrimaryStage, String windowTitle){
         initFileToolbar();
         initWorkspace();
         //initEventHandlers();
         primaryStage = initPrimaryStage;
         initWindow(windowTitle);
+        
     }
     private void initWindow(String windowTitle) {
 	// SET THE WINDOW TITLE
@@ -140,17 +155,16 @@ public class PortfolioGeneratorView {
         //INITIALIZING PORTFOLIO EDITOR
         portfolioEditor = new Tab();
         portfolioEditor.setText("Portfolio Editor");
-        portfolioEditor.setContent(portfolioEditorPane);
-        
+        portfolioEditor.getStyleClass().add(CSS_CLASS_SELECTED_WORKSPACE);
         portfolioEditorPane = new HBox();
         //SITE TOOLBAR
         VBox siteToolbar = new VBox();
 	siteToolbar.getStyleClass().add(CSS_CLASS_SITE_TOOLBAR_VBOX);
-	Button addPageButton = this.initChildButton(siteToolbar, ICON_ADD_PAGE, TOOLTIP_ADD_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-	Button removePageButton = this.initChildButton(siteToolbar, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
+	addPageButton = this.initChildButton(siteToolbar, ICON_ADD_PAGE, TOOLTIP_ADD_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+	removePageButton = this.initChildButton(siteToolbar, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
         
         //PAGE PANE
-        VBox pageEditorPane = new VBox();
+        pageEditorPane = new VBox();
 	ScrollPane pageEditorScrollPane = new ScrollPane(pageEditorPane);
         pageEditorScrollPane.getStyleClass().add(CSS_CLASS_PAGE_EDITOR_PANE);
         
@@ -194,8 +208,11 @@ public class PortfolioGeneratorView {
                 bannerSelection);
         
         //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR
-        portfolioEditorPane.getChildren().addAll(siteToolbar, pageEditorPane,
-                pageSettingsPane);
+        portfolioEditorPane.getChildren().add(siteToolbar);
+        portfolioEditorPane.getChildren().add(pageEditorScrollPane);
+        portfolioEditorPane.getChildren().add(pageSettingsPane);
+        
+        portfolioEditor.setContent(portfolioEditorPane);
         
         siteViewer = new Tab();
         siteViewer.setText("Site Viewer");
@@ -205,8 +222,47 @@ public class PortfolioGeneratorView {
     private void initEventHandlers() {
 	// FIRST THE FILE CONTROLS
 	
+	
+    }
+    public void reloadPageEditorPane() {
+	pageEditorPane.getChildren().clear();
+	for (Page page : portfolio.getPages()) {
+	    PageEditView pageEditor = new PageEditView(page);
+	    if (portfolio.isSelectedPage(page))
+		pageEditor.getStyleClass().add(CSS_CLASS_PAGE_EDIT_VIEW);
+	    else
+		pageEditor.getStyleClass().add(CSS_CLASS_SELECTED_PAGE_EDIT_VIEW);
+	    pageEditorPane.getChildren().add(pageEditor);
+	    pageEditor.setOnMousePressed(e -> {
+		portfolio.setSelectedPage(page);
+		this.reloadPortfolioPane();
+	    });
+	}
+	updateSiteToolbarControls();
+    }
+    public void reloadPortfolioPane() {
+	pageEditorPane.getChildren().clear();
+	for (Page page : portfolio.getPages()) {
+	    PageEditView pageEditor = new PageEditView(page);
+	    if (portfolio.isSelectedPage(page))
+		pageEditor.getStyleClass().add(CSS_CLASS_PAGE_EDIT_VIEW);
+	    else
+		pageEditor.getStyleClass().add(CSS_CLASS_SELECTED_PAGE_EDIT_VIEW);
+	    pageEditorPane.getChildren().add(pageEditor);
+	    pageEditor.setOnMousePressed(e -> {
+		portfolio.setSelectedPage(page);
+		this.reloadPortfolioPane();
+	    });
+	}
+	updateSiteToolbarControls();
     }
     
+    public void updateSiteToolbarControls() {
+	// AND THE SLIDESHOW EDIT TOOLBAR
+	addPageButton.setDisable(false);
+	boolean pageSelected = portfolio.isPageSelected();
+	removePageButton.setDisable(!pageSelected);
+    }
     public javafx.scene.control.Button initChildButton(
 	    Pane toolbar, 
 	    String iconFileName, 
