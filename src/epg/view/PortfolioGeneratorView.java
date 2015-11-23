@@ -14,6 +14,7 @@ import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDITOR_PANE;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_VIEW;
+import static epg.StartupConstants.CSS_CLASS_PAGE_SETTINGS_PANE;
 import static epg.StartupConstants.CSS_CLASS_SELECTED_PAGE_EDIT_VIEW;
 import static epg.StartupConstants.CSS_CLASS_SELECTED_WORKSPACE;
 import static epg.StartupConstants.CSS_CLASS_SITE_TOOLBAR_VBOX;
@@ -43,6 +44,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -85,6 +88,7 @@ public class PortfolioGeneratorView {
     //PAGE EDITOR
     HBox portfolioEditorPane;
     VBox pageEditorPane;
+    ScrollPane pageEditorScrollPane;
     Button addPageButton;
     Button removePageButton;
     Label bannerImg;
@@ -165,20 +169,32 @@ public class PortfolioGeneratorView {
         
         //PAGE PANE
         pageEditorPane = new VBox();
-	ScrollPane pageEditorScrollPane = new ScrollPane(pageEditorPane);
+	pageEditorScrollPane = new ScrollPane(pageEditorPane);
+        //SETTING THE WIDTH!!!!!! CHANGE LATER
+        pageEditorPane.setPrefWidth(400);
         pageEditorScrollPane.getStyleClass().add(CSS_CLASS_PAGE_EDITOR_PANE);
         
         //PAGE SETTINGS PANE
         VBox pageSettingsPane = new VBox();
+        //SETTING THE WIDTH!!!! CHANGE LATER
+        pageSettingsPane.setPrefWidth(900);
+        pageSettingsPane.getStyleClass().add(CSS_CLASS_PAGE_SETTINGS_PANE);
         
         //LAYOUT SELECTION
         VBox layoutSelection = new VBox();
         Label layoutLabel= new Label("Select Layout:");
+        ToggleGroup layoutButtons = new ToggleGroup();
         RadioButton layout1Button = new RadioButton("Layout 1");
         RadioButton layout2Button = new RadioButton("Layout 2");
         RadioButton layout3Button = new RadioButton("Layout 3");
         RadioButton layout4Button = new RadioButton("Layout 4");
         RadioButton layout5Button = new RadioButton("Layout 5");
+        //PUT BUTTONS ON SAME GROUP
+        layout1Button.setToggleGroup(layoutButtons);
+        layout2Button.setToggleGroup(layoutButtons);
+        layout3Button.setToggleGroup(layoutButtons);
+        layout4Button.setToggleGroup(layoutButtons);
+        layout5Button.setToggleGroup(layoutButtons);
         //PUT LABEL AND BUTTONS ON VBOX
         layoutSelection.getChildren().addAll(layoutLabel, layout1Button,
                 layout2Button, layout3Button, layout4Button, layout5Button);
@@ -186,26 +202,49 @@ public class PortfolioGeneratorView {
         //COLOR SELECTION
         VBox colorSelection = new VBox();
         Label colorLabel = new Label("Select Color Scheme:");
+        ToggleGroup colorButtons = new ToggleGroup();
         RadioButton color1Button = new RadioButton("Blue");
         RadioButton color2Button = new RadioButton("Red");
         RadioButton color3Button = new RadioButton("Green");
         RadioButton color4Button = new RadioButton("Beige");
         RadioButton color5Button = new RadioButton("Gray");
+        //PUT BUTTONS ON SAME GROUP
+        color1Button.setToggleGroup(colorButtons);
+        color2Button.setToggleGroup(colorButtons);
+        color3Button.setToggleGroup(colorButtons);
+        color4Button.setToggleGroup(colorButtons);
+        color5Button.setToggleGroup(colorButtons);
+        
         //PUT LABEL AND BUTTONS ON VBOX
         colorSelection.getChildren().addAll(colorLabel, color1Button,color2Button,
         color3Button,color4Button,color5Button);
         
         //BANNER SELECTION
-        GridPane bannerSelection = new GridPane();
+        VBox bannerSelection = new VBox();
         Label bannerLabel = new Label("Select Banner Image:");
         Button browse = new Button("Browse...");
-        bannerImg = new Label();
-        bannerSelection.add(bannerLabel, 0, 0);
-        bannerSelection.add(browse, 0 , 1);
-        bannerSelection.add(bannerImg, 1 , 1);
+        bannerImg = new Label("bannerImg.jpg");
+        bannerSelection.getChildren().addAll(bannerLabel, browse, bannerImg);
+        
+        //STUDENT NAME
+        VBox studentBox = new VBox();
+        Label nameLabel = new Label("Enter Student Name:");
+        TextField nameField = new TextField();
+        studentBox.getChildren().add(nameLabel);
+        studentBox.getChildren().add(nameField);
+        
+        //UPDATE FOOTER
+        VBox footerBox = new VBox();
+        Label footerLabel = new Label("Enter Footer:");
+        TextField footerField = new TextField();
+        footerField.positionCaret(0);
+        //CHANGE LATER
+        footerField.setPrefSize(300, 500);
+        footerBox.getChildren().addAll(footerLabel,footerField);
+        
         //ADD TO PAGE SETTINGS
         pageSettingsPane.getChildren().addAll(layoutSelection, colorSelection,
-                bannerSelection);
+                bannerSelection, studentBox, footerBox);
         
         //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR
         portfolioEditorPane.getChildren().add(siteToolbar);

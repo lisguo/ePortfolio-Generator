@@ -29,6 +29,7 @@ public class StartupConstants {
     public static String    CSS_CLASS_SELECTED_WORKSPACE = "workspace";
     public static String    CSS_CLASS_TITLE_PANE = "title_pane";
     public static String    CSS_CLASS_PAGE_EDITOR_PANE = "page_editor_pane";
+    public static String    CSS_CLASS_PAGE_SETTINGS_PANE = "page_settings_pane";
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
 
