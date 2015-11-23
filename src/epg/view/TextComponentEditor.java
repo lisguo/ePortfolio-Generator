@@ -77,9 +77,19 @@ public class TextComponentEditor extends Stage{
             }
             else if(type.equals("Paragraph")){
                 Label paragraph = new Label("Paragraph:");
+                //FONTS
+                ObservableList<String> fonts = FXCollections.observableArrayList();
+                fonts.add("Righteous");
+                fonts.add("Lora");
+                fonts.add("Roboto Slab");
+                fonts.add("Rock Salt");
+                ComboBox fontSelection = new ComboBox(fonts);
+                fontSelection.getSelectionModel().select("Righteous");
+                
                 text.setAlignment(Pos.TOP_LEFT);
                 text.setPrefHeight(200);
-                nextDialog.getChildren().addAll(paragraph, text, okButton);
+                nextDialog.getChildren().addAll(paragraph, fontSelection, 
+                        text, okButton);
             }
             else{
                 Label list = new Label("List:");
