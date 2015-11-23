@@ -9,7 +9,7 @@ package epg.model;
  *
  * @author BunnyRailgun
  */
-public class TextComponent {
+public class TextComponent extends Component{
     //CAN BE PARAGRAPH, HEADER, OR LIST
     String type; 
     String text;

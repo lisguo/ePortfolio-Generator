@@ -309,6 +309,9 @@ public class PortfolioGeneratorView {
         addTextComponent.setOnAction(e -> {
 	    componentController.handleAddTextComponent();
 	});
+        addImageComponent.setOnAction(e -> {
+           componentController.handleAddImageComponent(); 
+        });
 	
     }
     public void reloadPageEditorPane() {

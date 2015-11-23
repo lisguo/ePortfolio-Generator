@@ -9,6 +9,6 @@ package epg.model;
  *
  * @author BunnyRailgun
  */
-public class VideoComponent {
+public class VideoComponent extends Component{
     
 }

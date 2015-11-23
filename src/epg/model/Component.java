@@ -9,6 +9,6 @@ package epg.model;
  *
  * @author BunnyRailgun
  */
-public class ImageComponent extends Component{
-    
+public class Component {
+    String type;
 }

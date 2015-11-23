@@ -19,6 +19,8 @@ public class PortfolioModel {
     PortfolioGeneratorView ui;
     ObservableList<Page> pages;
     Page selectedPage;
+    ObservableList<Component> components;
+    Component selectedComponent;
     String title;
     
     public PortfolioModel(PortfolioGeneratorView initUI){
@@ -42,6 +44,19 @@ public class PortfolioModel {
     }
     public Page getSelectedPage(){
         return selectedPage;
+    }
+    public boolean isComponentSelected() {
+	return selectedComponent != null;
+    }
+    
+    public boolean isSelectedComponent(Component testComponent) {
+	return selectedComponent == testComponent;
+    }
+    public ObservableList<Component> getComponents(){
+        return components;
+    }
+    public Component getSelectedComponent(){
+        return selectedComponent;
     }
     public String getTitle(){
         return title;
@@ -98,5 +113,6 @@ public class PortfolioModel {
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 	title = props.getProperty(LanguagePropertyType.DEFAULT_PORFOLIO_TITLE);
 	selectedPage = null;
+        selectedComponent = null;
     }
 }
