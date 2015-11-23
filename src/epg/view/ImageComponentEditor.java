@@ -38,6 +38,7 @@ public class ImageComponentEditor extends Stage {
     TextField widthField;
     Label x;
     TextField heightField;
+    ComboBox imageFloat;
     
     public ImageComponentEditor(PortfolioModel portfolio){
         setTitle("Add an Image Component");
@@ -46,7 +47,7 @@ public class ImageComponentEditor extends Stage {
         imageSelection = new HBox();
         caption = new TextField();
         okButton = new Button("OK");
-        selectImage = new Button("Select Image");
+        selectImage = new Button("Select Image...");
         caption.setMinHeight(100);
         captionLabel = new Label("Caption:");
         imageSelection.getChildren().addAll(selectImage, imageName);
@@ -63,8 +64,16 @@ public class ImageComponentEditor extends Stage {
         size.getChildren().addAll(widthField, x , heightField);
         size.setAlignment(Pos.CENTER);
         
+        //FLOAT
+        ObservableList<String> floatOptions = FXCollections.observableArrayList();
+        floatOptions.add("Float Left");
+        floatOptions.add("Float Right");
+        floatOptions.add("Float Neither");
+        imageFloat = new ComboBox(floatOptions);
+        imageFloat.getSelectionModel().select("Float Neither");
+        
         vBox.getChildren().addAll(imageSelection, captionLabel,caption, 
-                displaySize, size, okButton);
+                displaySize, size, imageFloat, okButton);
         vBox.setAlignment(Pos.CENTER);
         
         scene = new Scene(vBox);

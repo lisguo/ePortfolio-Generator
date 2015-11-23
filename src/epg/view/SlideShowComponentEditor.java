@@ -5,7 +5,7 @@
  */
 package epg.view;
 
-import ssm.SlideShowMaker;
+//import ssm.SlideShowMaker;
 
 /**
  *
@@ -13,6 +13,6 @@ import ssm.SlideShowMaker;
  */
 public class SlideShowComponentEditor {
     public static void main(String[] args){
-        SlideShowMaker.launch(args);
+        //SlideShowMaker.launch(args);
     }
 }
