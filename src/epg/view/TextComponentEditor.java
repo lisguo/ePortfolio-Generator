@@ -6,6 +6,7 @@
 package epg.view;
 
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_EDITOR;
+import static epg.StartupConstants.CSS_SMALL_LABEL;
 import epg.model.PortfolioModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import static epg.StartupConstants.STYLE_SHEET_UI;
 
 /**
  *
@@ -50,14 +52,17 @@ public class TextComponentEditor extends Stage{
         types.add("List");
         textTypeComboBox = new ComboBox(types);
         textTypeComboBox.getSelectionModel().select("Header");
+        textTypeComboBox.getStyleClass().add(CSS_SMALL_LABEL);
         
         hBox.getChildren().addAll(textType, textTypeComboBox);
         hBox.setAlignment(Pos.CENTER);
         vbox.getChildren().addAll(hBox, text, okButton);
         vbox.setAlignment(Pos.CENTER);
-        
         vbox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
+        
         scene = new Scene(vbox);
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        
         setTitle("Add a Text Component");
         setScene(scene);
         

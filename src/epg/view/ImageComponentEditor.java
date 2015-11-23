@@ -5,9 +5,13 @@
  */
 package epg.view;
 
+import static epg.StartupConstants.CSS_CLASS_COMPONENT_EDITOR;
+import static epg.StartupConstants.CSS_SMALL_LABEL;
+import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.PortfolioModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -30,20 +34,46 @@ public class ImageComponentEditor extends Stage {
     Label captionLabel;
     TextField caption;
     Button okButton;
+    Label displaySize;
+    TextField widthField;
+    Label x;
+    TextField heightField;
     
     public ImageComponentEditor(PortfolioModel portfolio){
         vBox = new VBox();
-        imageName = new Label();
+        imageName = new Label("imgName.jpg");
         imageSelection = new HBox();
         caption = new TextField();
         okButton = new Button("OK");
         selectImage = new Button("Select Image");
-        caption.setMinHeight(100);
+        caption.setMinHeight(150);
         captionLabel = new Label("Caption:");
         imageSelection.getChildren().addAll(selectImage, imageName);
-        vBox.getChildren().addAll(imageSelection, captionLabel,caption, okButton);
+        imageSelection.setAlignment(Pos.CENTER);
+        
+        //SIZE
+        displaySize = new Label("Size (Width x Height): ");
+        HBox size = new HBox();
+        widthField = new TextField();
+        widthField.setPrefWidth(20);
+        x = new Label("x");
+        heightField = new TextField();
+        heightField.setPrefWidth(20);
+        size.getChildren().addAll(widthField, x , heightField);
+        size.setAlignment(Pos.CENTER);
+        
+        vBox.getChildren().addAll(imageSelection, captionLabel,caption, 
+                displaySize, size, okButton);
+        vBox.setAlignment(Pos.CENTER);
         
         scene = new Scene(vBox);
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        imageName.getStyleClass().add(CSS_SMALL_LABEL);
+        vBox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
         setScene(scene);
+        
+        okButton.setOnAction(e ->{
+            close();
+        });
     }
 }

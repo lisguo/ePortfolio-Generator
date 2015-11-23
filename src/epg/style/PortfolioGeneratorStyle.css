@@ -73,6 +73,7 @@ and open the template in the editor.
 }
 .component_editor{
     -fx-background-color: rgb(190, 190, 211);
+    -fx-spacing: 10px;
 }
 .label{
     -fx-font: 23px Rockwell;
