@@ -10,6 +10,7 @@ import static epg.LanguagePropertyType.TOOLTIP_REMOVE_PAGE;
 import static epg.LanguagePropertyType.TOOLTIP_SAVEAS_PORTFOLIO;
 import static epg.LanguagePropertyType.TOOLTIP_SAVE_PORTFOLIO;
 import epg.PortfolioGenerator;
+import static epg.StartupConstants.CSS_CLASS_COMPONENT_PANE;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDITOR_PANE;
@@ -188,7 +189,7 @@ public class PortfolioGeneratorView {
         pageEditorPane = new VBox();
 	pageEditorScrollPane = new ScrollPane(pageEditorPane);
         //SETTING THE WIDTH!!!!!! CHANGE LATER
-        pageEditorPane.setPrefWidth(400);
+        pageEditorPane.setPrefWidth(200);
         pageEditorScrollPane.getStyleClass().add(CSS_CLASS_PAGE_EDITOR_PANE);
         //ADD DUMMY PAGES
         PageEditView page1 = new PageEditView(new Page("Page 1", "layout1","blue",true));
@@ -283,8 +284,9 @@ public class PortfolioGeneratorView {
         //COMPONENT SCROLLPANE
         componentPane = new VBox();
         componentScrollPane = new ScrollPane(componentPane);
+        componentScrollPane.getStyleClass().add(CSS_CLASS_COMPONENT_PANE);
         //SETTING THE WIDTH!!!! CHANGE LATER
-        componentPane.setPrefWidth(900);
+        //componentPane.setPrefWidth(900);
         //ADD DUMMY COMPONENTS
         TextComponent tc1 = new TextComponent("header","Testing Text Component");
         TextComponentView t1 = new TextComponentView(tc1);

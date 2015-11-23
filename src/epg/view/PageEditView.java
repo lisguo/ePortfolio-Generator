@@ -7,6 +7,7 @@ package epg.view;
 
 import epg.LanguagePropertyType;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_VIEW;
+import static epg.StartupConstants.CSS_LABEL;
 import static epg.StartupConstants.CSS_SMALL_LABEL;
 import epg.model.Page;
 import javafx.scene.control.Label;
@@ -40,8 +41,9 @@ public class PageEditView extends VBox {
 
 	// SETUP THE TITLE CONTROLS
 	titleTextField = new TextField();
+        titleTextField.setMinHeight(100);
 	titleTextField.setText(page.getName());
-        titleTextField.getStyleClass().add(CSS_SMALL_LABEL);
+        titleTextField.getStyleClass().add(CSS_LABEL);
 
 	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
 	getChildren().addAll(titleTextField);

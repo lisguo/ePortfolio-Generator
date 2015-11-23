@@ -5,6 +5,7 @@
  */
 package epg.view;
 
+import static epg.StartupConstants.CSS_SMALL_LABEL;
 import epg.model.TextComponent;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -19,7 +20,7 @@ import javafx.scene.layout.VBox;
  *
  * @author BunnyRailgun
  */
-public class TextComponentView extends VBox{
+public class TextComponentView extends ComponentView{
     HBox fontControls = new HBox();
     
     HBox fontControl = new HBox();
@@ -36,6 +37,8 @@ public class TextComponentView extends VBox{
     Label fontSizeLabel;
     ObservableList<String> sizes;
     ComboBox sizeSelection;
+    
+    Label text;
     
     public TextComponentView(TextComponent textComponent){
         fontControls = new HBox();
@@ -92,7 +95,9 @@ public class TextComponentView extends VBox{
         
         fontControls.getChildren().addAll(fontControl,styleControl,sizeControl);
         
-        getChildren().addAll(fontControls,new Label(textComponent.getText()));
+        text = new Label(textComponent.getText());
+        text.getStyleClass().add(CSS_SMALL_LABEL);
+        getChildren().addAll(fontControls,text);
         
     }
     
