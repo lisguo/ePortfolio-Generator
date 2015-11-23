@@ -34,18 +34,17 @@ and open the template in the editor.
 }
 .selected_page_edit_view { //Slides untouched
     -fx-background-radius: 10.0;
-    -fx-background-color: rgb(255, 241, 175);
+    -fx-background-color: white;
     -fx-border-color: rgb(200, 200, 200);
     -fx-border-thickness: 10px;
-    -fx-spacing: 60px;
-    -fx-padding: 60px;
+    -fx-padding: 50px;
 }
 .page_edit_view { //Selecting slide
     -fx-background-radius: 10.0;
-    -fx-background-color: rgb(255, 248, 215);
+    -fx-background-color: white;
     -fx-border-color: rgb(43,43,143);
     -fx-border-thickness: 10px;
-    -fx-spacing: 60px;
+    -fx-padding: 20px;
 }
 .page_editor_pane > .viewport{
     -fx-background-color: rgb(190, 190, 211);

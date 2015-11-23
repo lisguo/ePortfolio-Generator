@@ -40,13 +40,14 @@ public class ImageComponentEditor extends Stage {
     TextField heightField;
     
     public ImageComponentEditor(PortfolioModel portfolio){
+        setTitle("Add an Image Component");
         vBox = new VBox();
         imageName = new Label("imgName.jpg");
         imageSelection = new HBox();
         caption = new TextField();
         okButton = new Button("OK");
         selectImage = new Button("Select Image");
-        caption.setMinHeight(150);
+        caption.setMinHeight(100);
         captionLabel = new Label("Caption:");
         imageSelection.getChildren().addAll(selectImage, imageName);
         imageSelection.setAlignment(Pos.CENTER);

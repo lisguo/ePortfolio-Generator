@@ -57,11 +57,14 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -225,9 +228,9 @@ public class PortfolioGeneratorView {
         pageEditorPane.setPrefWidth(200);
         pageEditorScrollPane.getStyleClass().add(CSS_CLASS_PAGE_EDITOR_PANE);
         //ADD DUMMY PAGES
-        PageEditView page1 = new PageEditView(new Page("Page 1", "layout1","blue",true));
-        PageEditView page2 = new PageEditView(new Page("Page 2", "layout1","blue",true));
-        pageEditorPane.getChildren().addAll(page1, page2);
+        //PageEditView page1 = new PageEditView(new Page("Page 1", "layout1","blue",true));
+        //PageEditView page2 = new PageEditView(new Page("Page 2", "layout1","blue",true));
+        //pageEditorPane.getChildren().addAll(page1, page2);
         
         //PAGE SETTINGS PANE
         VBox pageSettingsPane = new VBox();
@@ -274,6 +277,19 @@ public class PortfolioGeneratorView {
         colorSelection.getChildren().addAll(colorLabel, color1Button,color2Button,
         color3Button,color4Button,color5Button);
         
+        //PAGE FONT
+        VBox pageFontSettings = new VBox();
+        Label fontLabel = new Label("Select a Page Font:");
+        ObservableList<String> fonts = FXCollections.observableArrayList();
+        fonts.add("Righteous");
+        fonts.add("Lora");
+        fonts.add("Roboto Slab");
+        fonts.add("Rock Salt");
+        ComboBox pageFont = new ComboBox(fonts);
+        pageFont.getSelectionModel().select("Righteous");
+        pageFontSettings.getChildren().addAll(fontLabel, pageFont);
+        
+        
         //BANNER SELECTION
         VBox bannerSelection = new VBox();
         Label bannerLabel = new Label("Select Banner Image:");
@@ -298,7 +314,7 @@ public class PortfolioGeneratorView {
         
         //ADD TO PAGE SETTINGS
         pageSettingsPane.getChildren().addAll(layoutSelection, colorSelection,
-                bannerSelection, studentBox, footerBox);
+                pageFontSettings, bannerSelection, studentBox, footerBox);
         
         //COMPONENT TOOLBAR
         componentToolbar = new VBox();

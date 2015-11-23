@@ -34,7 +34,7 @@ public class ComponentController {
     public void handleAddImageComponent(){
         System.out.println("ADD IMAGE COMPONENT CLICKED!");
         ImageComponentEditor editor = new ImageComponentEditor(ui.getPortfolio());
-        editor.setHeight(300);
+        editor.setHeight(400);
         editor.setWidth(400);
         editor.showAndWait();
         //ui.reloadComponentPane();

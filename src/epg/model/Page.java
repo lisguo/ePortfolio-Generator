@@ -5,6 +5,7 @@
  */
 package epg.model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -16,10 +17,7 @@ public class Page {
     String layout;
     String color;
     boolean hasBannerImage;
-    ObservableList<TextComponent> textComponents;
-    ObservableList<ImageComponent> imageComponents;
-    ObservableList<SlideShowComponent> slideShowComponents;
-    ObservableList<VideoComponent> videoComponents;
+    ObservableList<Component> components;
     
     public Page(String initName, String initLayout, String initColor,
             boolean initHasBannerImage){
@@ -27,6 +25,7 @@ public class Page {
         layout = initLayout;
         color = initColor;
         hasBannerImage = initHasBannerImage;
+        components = FXCollections.observableArrayList();
     }
     
     //ACCESSOR
@@ -41,6 +40,9 @@ public class Page {
     }
     public boolean getHasBannerImage(){
         return hasBannerImage;
+    }
+    public ObservableList<Component> getComponents(){
+        return components;
     }
     
     //MUTATOR
