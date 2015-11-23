@@ -9,6 +9,6 @@ package epg.model;
  *
  * @author BunnyRailgun
  */
-public class SlideShowComponent extends Component{
+public class SlideShowComponent {
     
 }

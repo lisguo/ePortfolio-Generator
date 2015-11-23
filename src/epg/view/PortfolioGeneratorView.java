@@ -1,17 +1,24 @@
 package epg.view;
 
 import epg.LanguagePropertyType;
+import static epg.LanguagePropertyType.TOOLTIP_ADD_IMAGE_COMPONENT;
 import static epg.LanguagePropertyType.TOOLTIP_ADD_PAGE;
+import static epg.LanguagePropertyType.TOOLTIP_ADD_SS_COMPONENT;
+import static epg.LanguagePropertyType.TOOLTIP_ADD_TEXT_COMPONENT;
+import static epg.LanguagePropertyType.TOOLTIP_ADD_VIDEO_COMPONENT;
+import static epg.LanguagePropertyType.TOOLTIP_EDIT_COMPONENT;
 import static epg.LanguagePropertyType.TOOLTIP_EXIT;
 import static epg.LanguagePropertyType.TOOLTIP_EXPORT_PORTFOLIO;
 import static epg.LanguagePropertyType.TOOLTIP_LOAD_PORTFOLIO;
 import static epg.LanguagePropertyType.TOOLTIP_NEW_PORTFOLIO;
+import static epg.LanguagePropertyType.TOOLTIP_REMOVE_COMPONENT;
 import static epg.LanguagePropertyType.TOOLTIP_REMOVE_PAGE;
 import static epg.LanguagePropertyType.TOOLTIP_SAVEAS_PORTFOLIO;
 import static epg.LanguagePropertyType.TOOLTIP_SAVE_PORTFOLIO;
 import epg.PortfolioGenerator;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_PANE;
+import static epg.StartupConstants.CSS_CLASS_COMPONENT_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDITOR_PANE;
@@ -23,7 +30,12 @@ import static epg.StartupConstants.CSS_CLASS_SELECTED_WORKSPACE;
 import static epg.StartupConstants.CSS_CLASS_SITE_TOOLBAR_VBOX;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_WORKSPACE_MODE_TOOLBAR;
+import static epg.StartupConstants.ICON_ADD_IMAGE_COMPONENT;
 import static epg.StartupConstants.ICON_ADD_PAGE;
+import static epg.StartupConstants.ICON_ADD_SS_COMPONENT;
+import static epg.StartupConstants.ICON_ADD_TEXT_COMPONENT;
+import static epg.StartupConstants.ICON_ADD_VIDEO_COMPONENT;
+import static epg.StartupConstants.ICON_EDIT_COMPONENT;
 import static epg.StartupConstants.ICON_EXIT;
 import static epg.StartupConstants.ICON_EXPORT_PORTFOLIO;
 import static epg.StartupConstants.ICON_LOAD_PORTFOLIO;
@@ -46,6 +58,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -120,7 +133,7 @@ public class PortfolioGeneratorView {
     VBox componentPane;
     ScrollPane componentScrollPane;
     
-    
+
     //SITE VIEWER
     Pane pageViewerPane;
     String htmlPath;
@@ -279,9 +292,8 @@ public class PortfolioGeneratorView {
         VBox footerBox = new VBox();
         Label footerLabel = new Label("Enter Footer:");
         TextField footerField = new TextField();
-        footerField.positionCaret(0);
-        //CHANGE LATER
-        footerField.setMinHeight(300);
+        footerField.setAlignment(Pos.TOP_LEFT);
+        footerField.setPrefHeight(200);
         footerBox.getChildren().addAll(footerLabel,footerField);
         
         //ADD TO PAGE SETTINGS
@@ -291,15 +303,13 @@ public class PortfolioGeneratorView {
         //COMPONENT TOOLBAR
         componentToolbar = new VBox();
 	componentToolbar.getStyleClass().add(CSS_CLASS_SITE_TOOLBAR_VBOX);
-	addTextComponent = new Button("Add Text");
-        addImageComponent = new Button("Add Image");
-        addSlideShowComponent = new Button("Add SlideShow");
-        addVideoComponent = new Button("Add Video");
-        removeComponent = new Button("Remove");
-        editComponent = new Button("Edit");
-        componentToolbar.getChildren().addAll(addTextComponent,
-                addImageComponent,addSlideShowComponent,addVideoComponent,
-                removeComponent,editComponent);
+	addTextComponent = this.initChildButton(componentToolbar, ICON_ADD_TEXT_COMPONENT, TOOLTIP_ADD_TEXT_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);
+        addImageComponent = this.initChildButton(componentToolbar, ICON_ADD_IMAGE_COMPONENT, TOOLTIP_ADD_IMAGE_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
+        addSlideShowComponent = this.initChildButton(componentToolbar, ICON_ADD_SS_COMPONENT, TOOLTIP_ADD_SS_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
+        addVideoComponent = this.initChildButton(componentToolbar, ICON_ADD_VIDEO_COMPONENT, TOOLTIP_ADD_VIDEO_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
+        removeComponent = this.initChildButton(componentToolbar, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
+        editComponent = this.initChildButton(componentToolbar, ICON_EDIT_COMPONENT, TOOLTIP_EDIT_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
+        
         
         //COMPONENT SCROLLPANE
         componentPane = new VBox();
@@ -333,7 +343,7 @@ public class PortfolioGeneratorView {
         engine.load(loadStr);
         //System.out.println("Loading " + loadStr);
         //CHANGE SIZE
-        viewer.setPrefSize(1980, 1080);
+        viewer.setPrefSize(1980, 900);
         viewer.setManaged(true);
         pageViewerPane = new Pane();
         pageViewerPane.getChildren().add(viewer);

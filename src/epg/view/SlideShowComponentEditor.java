@@ -5,10 +5,14 @@
  */
 package epg.view;
 
+import ssm.SlideShowMaker;
+
 /**
  *
  * @author BunnyRailgun
  */
 public class SlideShowComponentEditor {
-    
+    public static void main(String[] args){
+        SlideShowMaker.launch(args);
+    }
 }

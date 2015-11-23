@@ -23,6 +23,12 @@
 	<property name="TOOLTIP_MOVE_DOWN"	    value="Move Page Down"></property>
 	<property name="TOOLTIP_PREVIOUS_PAGE"	    value="Previous Page"></property>
 	<property name="TOOLTIP_NEXT_PAGE"	    value="Next Page"></property>
+		<property name="TOOLTIP_ADD_TEXT_COMPONENT"	    value="Add a text component"></property>
+		<property name="TOOLTIP_ADD_IMAGE_COMPONENT"	    value="Add an image component"></property>
+		<property name="TOOLTIP_ADD_SS_COMPONENT"	    value="Add a slide show component"></property>
+		<property name="TOOLTIP_ADD_VIDEO_COMPONENT"	    value="Add a video component"></property>
+		<property name="TOOLTIP_EDIT_COMPONENT"	    value="Edit a component"></property>
+		<property name="TOOLTIP_REMOVE_COMPONENT"	    value="Remove a component"></property>
 	
 	<!-- DEFAULT VALUES -->
 	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION"></property>

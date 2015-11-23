@@ -71,6 +71,9 @@ and open the template in the editor.
     -fx-spacing: 60px;
     -fx-padding: 60px;
 }
+.component_editor{
+    -fx-background-color: rgb(190, 190, 211);
+}
 .label{
     -fx-font: 23px Rockwell;
     -fx-stroke: black;

@@ -25,6 +25,7 @@ public class StartupConstants {
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX = "horizontal_toolbar_hbox";
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
     public static String    CSS_CLASS_SITE_TOOLBAR_VBOX = "site_toolbar_vbox";
+    public static String    CSS_CLASS_COMPONENT_TOOLBAR_BUTTON = "component_toolbar_button";
     public static String    CSS_WORKSPACE_MODE_TOOLBAR = "workspace_mode_toolbar";
     public static String    CSS_CLASS_PAGE_EDIT_VIEW = "page_edit_view";
     public static String    CSS_CLASS_SELECTED_PAGE_EDIT_VIEW = "selected_page_edit_view";
@@ -35,6 +36,7 @@ public class StartupConstants {
     public static String    CSS_CLASS_COMPONENT_PANE = "component_pane";
     public static String    CSS_CLASS_COMPONENT = "component";
     public static String    CSS_CLASS_SELECTED_COMPONENT = "selected_component";
+    public static String    CSS_CLASS_COMPONENT_EDITOR = "component_editor";
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
 
@@ -45,6 +47,12 @@ public class StartupConstants {
     public static String ICON_SAVE_PORTFOLIO = "Save.png";
     public static String ICON_SAVEAS_PORTFOLIO = "SaveAs.png";
     public static String ICON_EXPORT_PORTFOLIO = "Export.png";
+    public static String ICON_ADD_TEXT_COMPONENT = "AddTextComponent.png";
+    public static String ICON_ADD_IMAGE_COMPONENT = "AddImageComponent.png";
+    public static String ICON_ADD_SS_COMPONENT = "AddSSComponent.png";
+    public static String ICON_ADD_VIDEO_COMPONENT = "AddVideoComponent.png";
+    public static String ICON_EDIT_COMPONENT = "Edit.png";
+    
     public static String ICON_EXIT = "Exit.png";
     public static String ICON_ADD_PAGE = "Add.png";
     public static String ICON_REMOVE_PAGE = "Remove.png";
