@@ -28,6 +28,7 @@ public class ComponentController {
         editor.setHeight(800);
         editor.setWidth(400);
         editor.showAndWait();
+        ui.reloadComponentPane();
     }
     public void handleAddImageComponent(){
         System.out.println("ADD IMAGE COMPONENT CLICKED!");
@@ -35,5 +36,6 @@ public class ComponentController {
         editor.setHeight(300);
         editor.setWidth(400);
         editor.showAndWait();
+        ui.reloadComponentPane();
     }
 }

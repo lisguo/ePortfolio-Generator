@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/slideshow_style.css">
+<title>Slide Show</title>
+<meta charset ="UTF-8">
+<meta name="viewport" content="width=device-width, initial-sale=.5"></head>
+<body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src = "./js/Slideshow.js"></script>
+<h1>Pikachu</h1>
+<img id = "slideImg" src = "./img/pikacap.jpg" alt="img">
+<p id = "cap">Pikachu wears a hat.</p>
+<p>
+<button type = "button" onclick = "changeSlide(1)">
+<span class="glyphicon glyphicon-backward"></span>
+</button>
+<button type = "button" id = "playPause" onclick = "startSlideShow()">
+<span class="glyphicon glyphicon-play"></span>
+ </button>
+<button type = "button" onclick = "changeSlide(0)">
+<span class="glyphicon glyphicon-forward"></span>
+</button>
+</p>
+</body>
+</html>

@@ -10,16 +10,19 @@ import static epg.LanguagePropertyType.TOOLTIP_REMOVE_PAGE;
 import static epg.LanguagePropertyType.TOOLTIP_SAVEAS_PORTFOLIO;
 import static epg.LanguagePropertyType.TOOLTIP_SAVE_PORTFOLIO;
 import epg.PortfolioGenerator;
+import static epg.StartupConstants.CSS_CLASS_COMPONENT;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_PANE;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDITOR_PANE;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_VIEW;
 import static epg.StartupConstants.CSS_CLASS_PAGE_SETTINGS_PANE;
+import static epg.StartupConstants.CSS_CLASS_SELECTED_COMPONENT;
 import static epg.StartupConstants.CSS_CLASS_SELECTED_PAGE_EDIT_VIEW;
 import static epg.StartupConstants.CSS_CLASS_SELECTED_WORKSPACE;
 import static epg.StartupConstants.CSS_CLASS_SITE_TOOLBAR_VBOX;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
+import static epg.StartupConstants.CSS_WORKSPACE_MODE_TOOLBAR;
 import static epg.StartupConstants.ICON_ADD_PAGE;
 import static epg.StartupConstants.ICON_EXIT;
 import static epg.StartupConstants.ICON_EXPORT_PORTFOLIO;
@@ -30,11 +33,14 @@ import static epg.StartupConstants.ICON_SAVEAS_PORTFOLIO;
 import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.controller.ComponentController;
 import epg.controller.FileController;
+import epg.model.Component;
 import epg.model.Page;
 import epg.model.PortfolioModel;
 import epg.model.TextComponent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -59,6 +65,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
@@ -68,6 +76,9 @@ import properties_manager.PropertiesManager;
  * @author BunnyRailgun
  */
 public class PortfolioGeneratorView {
+    //PORTFOLIO TITLE
+    String title = "sample";
+
     Stage primaryStage;
     Scene primaryScene;
     ComponentController componentController;
@@ -112,13 +123,20 @@ public class PortfolioGeneratorView {
     
     //SITE VIEWER
     Pane pageViewerPane;
-    
+    String htmlPath;
+   
+   
     //THE PORTFOLIO GENERATOR WE WILL BE WORKING ON
     //CREATIN A PORTFOLIO MODEL FOR HW 6
     PortfolioModel portfolio;
     
-    public PortfolioGeneratorView(){
+    public PortfolioGeneratorView() throws IOException{
         portfolio = new PortfolioModel(this);
+        //htmlPath = PATH_PORFOLIOS + portfolio.getTitle() + "/index.html";
+        htmlPath = PATH_PORTFOLIOS + title + "/index.html";
+        
+        File f = new File(htmlPath);
+        htmlPath = f.getCanonicalPath();
     }
     
     public PortfolioModel getPortfolio(){
@@ -174,8 +192,10 @@ public class PortfolioGeneratorView {
     }
     private void initWorkspace(){
         workspaceModeToolbarPane = new TabPane();
+        //workspaceModeToolbarPane.getStyleClass().add(CSS_WORKSPACE_MODE_TOOLBAR);
         //INITIALIZING PORTFOLIO EDITOR
         portfolioEditor = new Tab();
+        portfolioEditor.setClosable(false);
         portfolioEditor.setText("Portfolio Editor");
         portfolioEditor.getStyleClass().add(CSS_CLASS_SELECTED_WORKSPACE);
         portfolioEditorPane = new HBox();
@@ -283,15 +303,15 @@ public class PortfolioGeneratorView {
         
         //COMPONENT SCROLLPANE
         componentPane = new VBox();
-        componentScrollPane = new ScrollPane(componentPane);
+        componentScrollPane = new ScrollPane();
         componentScrollPane.getStyleClass().add(CSS_CLASS_COMPONENT_PANE);
         //SETTING THE WIDTH!!!! CHANGE LATER
-        //componentPane.setPrefWidth(900);
+        componentPane.setPrefWidth(1000);
         //ADD DUMMY COMPONENTS
         TextComponent tc1 = new TextComponent("header","Testing Text Component");
         TextComponentView t1 = new TextComponentView(tc1);
         componentPane.getChildren().addAll(t1);
-        
+        componentScrollPane.setContent(componentPane);
         //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR
         portfolioEditorPane.getChildren().add(siteToolbar);
         portfolioEditorPane.getChildren().add(pageEditorScrollPane);
@@ -302,7 +322,24 @@ public class PortfolioGeneratorView {
         portfolioEditor.setContent(portfolioEditorPane);
         
         siteViewer = new Tab();
+        siteViewer.setClosable(false);
         siteViewer.setText("Site Viewer");
+        
+        //WEB VIEWER
+        WebView viewer = new WebView();
+        WebEngine engine = viewer.getEngine();
+        String loadStr = "file:///" + htmlPath;
+        System.out.println("Loading " + loadStr);
+        engine.load(loadStr);
+        //System.out.println("Loading " + loadStr);
+        //CHANGE SIZE
+        viewer.setPrefSize(1980, 1080);
+        viewer.setManaged(true);
+        pageViewerPane = new Pane();
+        pageViewerPane.getChildren().add(viewer);
+        siteViewer.setContent(pageViewerPane);
+        
+        
         workspaceModeToolbarPane.getTabs().addAll(portfolioEditor, siteViewer);
     }
     
@@ -343,6 +380,23 @@ public class PortfolioGeneratorView {
 	    pageEditorPane.getChildren().add(pageEditor);
 	    pageEditor.setOnMousePressed(e -> {
 		portfolio.setSelectedPage(page);
+		this.reloadPortfolioPane();
+	    });
+	}
+	updateSiteToolbarControls();
+    }
+    
+    public void reloadComponentPane() {
+	componentPane.getChildren().clear();
+	for (Component component : portfolio.getComponents()) {
+	    ComponentView componentEditor = new ComponentView(component);
+	    if (portfolio.isSelectedComponent(component))
+		componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
+	    else
+		componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
+	    pageEditorPane.getChildren().add(componentEditor);
+	    componentEditor.setOnMousePressed(e -> {
+		portfolio.setSelectedComponent(component);
 		this.reloadPortfolioPane();
 	    });
 	}

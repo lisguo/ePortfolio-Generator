@@ -11,13 +11,17 @@ import epg.view.PortfolioGeneratorView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.IOException;
 import javafx.scene.image.Image;
 import properties_manager.PropertiesManager;
 import xml_utilities.InvalidXMLFileFormatException;
 
 public class PortfolioGenerator extends Application{
-    //The user interface
-    PortfolioGeneratorView ui = new PortfolioGeneratorView();
+    PortfolioGeneratorView ui;
+
+    public PortfolioGenerator() throws IOException {
+        this.ui = new PortfolioGeneratorView();
+    }
     
     @Override
     public void start(Stage primaryStage) throws Exception {

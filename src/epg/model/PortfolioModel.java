@@ -115,4 +115,8 @@ public class PortfolioModel {
 	selectedPage = null;
         selectedComponent = null;
     }
+
+    public void setSelectedComponent(Component component) {
+        selectedComponent = component;
+    }
 }

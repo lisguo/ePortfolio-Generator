@@ -18,12 +18,14 @@ public class StartupConstants {
     public static String PROPERTIES_SCHEMA_FILE_NAME = "properties_schema.xsd";
     public static String PATH_CSS = "/epg/style/";
     public static String STYLE_SHEET_UI = PATH_CSS + "PortfolioGeneratorStyle.css";
+    public static String PATH_PORTFOLIOS = "./portfolios/";
     
     // CSS STYLE SHEET CLASSES
     public static String    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON = "vertical_toolbar_button";
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX = "horizontal_toolbar_hbox";
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
     public static String    CSS_CLASS_SITE_TOOLBAR_VBOX = "site_toolbar_vbox";
+    public static String    CSS_WORKSPACE_MODE_TOOLBAR = "workspace_mode_toolbar";
     public static String    CSS_CLASS_PAGE_EDIT_VIEW = "page_edit_view";
     public static String    CSS_CLASS_SELECTED_PAGE_EDIT_VIEW = "selected_page_edit_view";
     public static String    CSS_CLASS_SELECTED_WORKSPACE = "workspace";
