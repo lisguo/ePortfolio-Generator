@@ -29,6 +29,7 @@ import static epg.StartupConstants.ICON_SAVEAS_PORTFOLIO;
 import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.controller.ComponentController;
 import epg.controller.FileController;
 import epg.model.Page;
 import epg.model.PortfolioModel;
@@ -37,6 +38,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -67,6 +69,7 @@ import properties_manager.PropertiesManager;
 public class PortfolioGeneratorView {
     Stage primaryStage;
     Scene primaryScene;
+    ComponentController componentController;
     
     //FileController fileController;
     //GENERAL GUI
@@ -123,7 +126,7 @@ public class PortfolioGeneratorView {
     public void startUI(Stage initPrimaryStage, String windowTitle){
         initFileToolbar();
         initWorkspace();
-        //initEventHandlers();
+        initEventHandlers();
         primaryStage = initPrimaryStage;
         initWindow(windowTitle);
         
@@ -257,7 +260,7 @@ public class PortfolioGeneratorView {
         TextField footerField = new TextField();
         footerField.positionCaret(0);
         //CHANGE LATER
-        footerField.setPrefSize(300, 300);
+        footerField.setMinHeight(300);
         footerBox.getChildren().addAll(footerLabel,footerField);
         
         //ADD TO PAGE SETTINGS
@@ -302,8 +305,10 @@ public class PortfolioGeneratorView {
     }
     
     private void initEventHandlers() {
-	// FIRST THE FILE CONTROLS
-	
+	componentController = new ComponentController(this);
+        addTextComponent.setOnAction(e -> {
+	    componentController.handleAddTextComponent();
+	});
 	
     }
     public void reloadPageEditorPane() {
