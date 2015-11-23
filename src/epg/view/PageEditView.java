@@ -53,5 +53,6 @@ public class PageEditView extends VBox {
 	    String text = titleTextField.getText();
 	    page.setName(text);	 
 	});
+        
     }
 }

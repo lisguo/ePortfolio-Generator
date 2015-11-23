@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import javafx.event.ActionEvent;
 
 /**
  *
@@ -34,17 +35,15 @@ public class TextComponentEditor extends Stage{
     ComboBox textTypeComboBox;
     TextField text;
     Button okButton;
-    
+    Button continueButton;
+    VBox nextDialog;
     public TextComponentEditor(PortfolioModel portfolio){
         vbox = new VBox();
         hBox = new HBox();
         text = new TextField();
         
-        text.setAlignment(Pos.TOP_LEFT);
-        text.setPrefHeight(200);
         
-        okButton = new Button("OK");
-        
+        //SELECT A TEXT TYPE
         textType = new Label("Text Type: ");
         ObservableList<String> types = FXCollections.observableArrayList();
         types.add("Header");
@@ -53,21 +52,50 @@ public class TextComponentEditor extends Stage{
         textTypeComboBox = new ComboBox(types);
         textTypeComboBox.getSelectionModel().select("Header");
         textTypeComboBox.getStyleClass().add(CSS_SMALL_LABEL);
-        
-        hBox.getChildren().addAll(textType, textTypeComboBox);
-        hBox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(hBox, text, okButton);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
-        
+        continueButton = new Button("Continue");
         scene = new Scene(vbox);
         scene.getStylesheets().add(STYLE_SHEET_UI);
-        
         setTitle("Add a Text Component");
+        hBox.getChildren().addAll(textType, textTypeComboBox);
+        hBox.setAlignment(Pos.CENTER);
+        vbox.getChildren().addAll(hBox, continueButton);
+        vbox.setAlignment(Pos.CENTER);
         setScene(scene);
+        okButton = new Button("OK");
+        vbox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
         
         okButton.setOnAction(e ->{
             close();
+        });
+        continueButton.setOnAction(e->{
+            String type = (String)textTypeComboBox.getSelectionModel().getSelectedItem();
+            nextDialog = new VBox();
+            nextDialog.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
+            if(type.equals("Header")){
+                Label header = new Label("Header:");
+                nextDialog.getChildren().addAll(header,text,okButton);
+            }
+            else if(type.equals("Paragraph")){
+                Label paragraph = new Label("Paragraph:");
+                text.setAlignment(Pos.TOP_LEFT);
+                text.setPrefHeight(200);
+                nextDialog.getChildren().addAll(paragraph, text, okButton);
+            }
+            else{
+                Label list = new Label("List:");
+                Button add = new Button("Add");
+                Button remove = new Button("Remove");
+                HBox addOrRemove = new HBox();
+                addOrRemove.getChildren().addAll(add,remove);
+                TextField text2 = new TextField();
+                nextDialog.getChildren().addAll(list,addOrRemove,text,text2);
+                addOrRemove.setAlignment(Pos.CENTER);
+                
+            }
+            nextDialog.setAlignment(Pos.CENTER);
+            scene = new Scene(nextDialog);
+            scene.getStylesheets().add(STYLE_SHEET_UI);
+            setScene(scene);
         });
     }
 }

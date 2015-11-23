@@ -48,6 +48,7 @@ import static epg.StartupConstants.STYLE_SHEET_UI;
 import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.controller.ComponentController;
 import epg.controller.FileController;
+import epg.controller.PageEditController;
 import epg.model.Component;
 import epg.model.Page;
 import epg.model.PortfolioModel;
@@ -98,6 +99,7 @@ public class PortfolioGeneratorView {
     Stage primaryStage;
     Scene primaryScene;
     ComponentController componentController;
+    PageEditController pageEditController;
     
     //FileController fileController;
     //GENERAL GUI
@@ -228,9 +230,9 @@ public class PortfolioGeneratorView {
         pageEditorPane.setPrefWidth(200);
         pageEditorScrollPane.getStyleClass().add(CSS_CLASS_PAGE_EDITOR_PANE);
         //ADD DUMMY PAGES
-        //PageEditView page1 = new PageEditView(new Page("Page 1", "layout1","blue",true));
-        //PageEditView page2 = new PageEditView(new Page("Page 2", "layout1","blue",true));
-        //pageEditorPane.getChildren().addAll(page1, page2);
+        PageEditView page1 = new PageEditView(new Page("Page 1", "layout1","blue",true));
+        PageEditView page2 = new PageEditView(new Page("Page 2", "layout1","blue",true));
+        pageEditorPane.getChildren().addAll(page1, page2);
         
         //PAGE SETTINGS PANE
         VBox pageSettingsPane = new VBox();
@@ -371,11 +373,15 @@ public class PortfolioGeneratorView {
     
     private void initEventHandlers() {
 	componentController = new ComponentController(this);
+        pageEditController = new PageEditController(this);
         addTextComponent.setOnAction(e -> {
 	    componentController.handleAddTextComponent();
 	});
         addImageComponent.setOnAction(e -> {
            componentController.handleAddImageComponent(); 
+        });
+        removePageButton.setOnAction(e->{
+            pageEditController.processRemovePageRequest();
         });
 	
     }

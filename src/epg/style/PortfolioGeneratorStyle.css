@@ -9,55 +9,60 @@ and open the template in the editor.
 */
 
 .horizontal_toolbar_hbox {
-    -fx-background-color: rgb(136, 136, 190); //DARK BLUE
+    -fx-background-color: rgb(116, 136, 202); //DARK BLUE
     -fx-border-color: rgb(200,200,200);
 }
 .horizontal_toolbar_button { //Top buttons
-    -fx-background-color: rgb(190, 190, 211); //LIGHT BLUE
+    -fx-background-color: rgb(183, 197, 246); //LIGHT BLUE
     -fx-padding-left: 10px;
     -fx-padding-right: 20px;
     -fx-spacing: 5;
 }
 .site_toolbar_vbox{
     -fx-background-radius: 5.0;
-    -fx-background-color: rgb(136, 136, 190);
+    -fx-background-color: rgb(116, 136, 202);
     -fx-spacing: 5;
     -fx-alignment: center;
 }
 .workspace_mode_toolbar{
-    -fx-background-color: rgb(61, 61, 147);
+    -fx-background-color: rgb(116, 136, 202);
 }
 .vertical_toolbar_button { //Right buttons
-    -fx-background-color: rgb(190, 190, 211); 
+    -fx-background-color: rgb(183, 197, 246); 
+    -fx-padding: 10px 10px 10px 10px;
+    -fx-spacing: 50px;
+}
+.component_toolbar_button{
+    -fx-background-color: rgb(183, 197, 246); 
     -fx-padding: 10px 10px 10px 10px;
     -fx-spacing: 50px;
 }
 .selected_page_edit_view { //Slides untouched
     -fx-background-radius: 10.0;
-    -fx-background-color: white;
+    -fx-background-color: rgb(116, 136, 202);
     -fx-border-color: rgb(200, 200, 200);
     -fx-border-thickness: 10px;
     -fx-padding: 50px;
 }
 .page_edit_view { //Selecting slide
     -fx-background-radius: 10.0;
-    -fx-background-color: white;
+    -fx-background-color: rgb(125, 149, 229);
     -fx-border-color: rgb(43,43,143);
     -fx-border-thickness: 10px;
     -fx-padding: 20px;
 }
 .page_editor_pane > .viewport{
-    -fx-background-color: rgb(190, 190, 211);
+    -fx-background-color: rgb(192, 206, 251);
     -fx-border-color: rgb(43,43,143);
     
 }
 .page_settings_pane{
-    -fx-background-color: rgb(190, 190, 211); //BASE BLUE
+    -fx-background-color: rgb(192, 206, 251); //BASE BLUE
     -fx-spacing: 50px;
     -fx-border-color: rgb(43,43,143);
 }
 .component_pane > .viewport{
-    -fx-background-color: rgb(190,190,211);
+    -fx-background-color: rgb(192, 206, 251);
 }
 .component{
     -fx-background-color: rgb(143, 143, 181);
@@ -71,7 +76,7 @@ and open the template in the editor.
     -fx-padding: 60px;
 }
 .component_editor{
-    -fx-background-color: rgb(190, 190, 211);
+    -fx-background-color: rgb(192, 206, 251);
     -fx-spacing: 10px;
 }
 .label{
@@ -85,5 +90,5 @@ and open the template in the editor.
     -fx-stroke-width: 1;
 }
 .workspace{
-    -fx-background-color: rgb(190,190,211)
+    -fx-background-color: rgb(192, 206, 251);
 }
