@@ -19,12 +19,13 @@ public class StartupConstants {
     
     // CSS STYLE SHEET CLASSES
     public static String    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON = "vertical_toolbar_button";
+    public static String    CSS_CLASS_SITE_TOOLBAR_VBOX = "site_toolbar_vbox";
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX = "horizontal_toolbar_hbox";
     public static String    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
-    public static String    CSS_CLASS_SELECTED_SLIDE_EDIT_VIEW = "selected_slide_edit_view";
+    public static String    CSS_CLASS_SELECTED_PAGE_VIEW = "selected_slide_edit_view";
     public static String    CSS_CLASS_SELECTED_WORKSPACE = "workspace";
     public static String    CSS_CLASS_TITLE_PANE = "title_pane";
-    public static String    CSS_CLASS_SLIDE_EDITOR_PANE = "slide_editor_pane";
+    public static String    CSS_CLASS_PAGE_EDITOR_PANE = "page_editor_pane";
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
     public static String PATH_CSS = "/ssm/style/";
