@@ -61,7 +61,7 @@ public class PortfolioModel {
                             boolean initHasBannerImage) {
 	Page slideToAdd = new Page(initName, initLayout, initColor,initHasBannerImage);
 	pages.add(slideToAdd);
-	ui.reloadPortfolioPane();
+	//ui.reloadPortfolioPane();
     }
     
      public void removeSelectedPage() {

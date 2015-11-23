@@ -98,9 +98,11 @@ public class PortfolioGeneratorView {
     Pane pageViewerPane;
     
     //THE PORTFOLIO GENERATOR WE WILL BE WORKING ON
+    //CREATIN A PORTFOLIO MODEL FOR HW 6
     PortfolioModel portfolio;
     
     public PortfolioGeneratorView(){
+        portfolio = new PortfolioModel(this);
     }
     
     public PortfolioModel getPortfolio(){
@@ -173,6 +175,10 @@ public class PortfolioGeneratorView {
         //SETTING THE WIDTH!!!!!! CHANGE LATER
         pageEditorPane.setPrefWidth(400);
         pageEditorScrollPane.getStyleClass().add(CSS_CLASS_PAGE_EDITOR_PANE);
+        //ADD DUMMY PAGES
+        PageEditView page1 = new PageEditView(new Page("Page 1", "layout1","blue",true));
+        PageEditView page2 = new PageEditView(new Page("Page 2", "layout1","blue",true));
+        pageEditorPane.getChildren().addAll(page1, page2);
         
         //PAGE SETTINGS PANE
         VBox pageSettingsPane = new VBox();

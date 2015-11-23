@@ -11,7 +11,6 @@ import static epg.StartupConstants.CSS_SMALL_LABEL;
 import epg.model.Page;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import properties_manager.PropertiesManager;
 
@@ -19,13 +18,11 @@ import properties_manager.PropertiesManager;
  *
  * @author BunnyRailgun
  */
-public class PageEditView extends HBox {
+public class PageEditView extends VBox {
     // SLIDE THIS COMPONENT EDITS
     Page page;
     
     // CONTROLS FOR EDITING THE PAGE TITLE
-    VBox titleVBox;
-    Label titleLabel;
     TextField titleTextField;
 
     /**
@@ -42,17 +39,12 @@ public class PageEditView extends HBox {
 	page = initPage;
 
 	// SETUP THE TITLE CONTROLS
-	titleVBox = new VBox();
-	PropertiesManager props = PropertiesManager.getPropertiesManager();
-	titleLabel = new Label(props.getProperty(LanguagePropertyType.LABEL_PAGE_TITLE));
 	titleTextField = new TextField();
 	titleTextField.setText(page.getName());
         titleTextField.getStyleClass().add(CSS_SMALL_LABEL);
-	titleVBox.getChildren().add(titleLabel);
-	titleVBox.getChildren().add(titleTextField);
 
 	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
-	getChildren().add(titleVBox);
+	getChildren().addAll(titleTextField);
 
 	// SETUP THE EVENT HANDLERS
 	titleTextField.textProperty().addListener(e -> {
