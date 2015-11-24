@@ -57,10 +57,10 @@ public class ImageComponentEditor extends Stage {
         displaySize = new Label("Size (Width x Height): ");
         HBox size = new HBox();
         widthField = new TextField();
-        widthField.setPrefWidth(20);
+        widthField.setPrefWidth(80);
         x = new Label("x");
         heightField = new TextField();
-        heightField.setPrefWidth(20);
+        heightField.setPrefWidth(80);
         size.getChildren().addAll(widthField, x , heightField);
         size.setAlignment(Pos.CENTER);
         

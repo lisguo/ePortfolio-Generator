@@ -401,6 +401,9 @@ public class PortfolioGeneratorView {
         addImageComponent.setOnAction(e -> {
            componentController.handleAddImageComponent(); 
         });
+        addVideoComponent.setOnAction(e ->{
+            componentController.handleAddVideoComponent();
+        });
         removePageButton.setOnAction(e->{
             pageEditController.processRemovePageRequest();
         });

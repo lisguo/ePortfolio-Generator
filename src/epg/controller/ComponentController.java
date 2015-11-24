@@ -12,6 +12,7 @@ import epg.view.ImageComponentEditor;
 import epg.view.PortfolioGeneratorView;
 import epg.view.SlideShowComponentEditor;
 import epg.view.TextComponentEditor;
+import epg.view.VideoComponentEditor;
 import javafx.stage.Stage;
 
 /**
@@ -45,7 +46,10 @@ public class ComponentController {
         SlideShowComponentEditor editor = new SlideShowComponentEditor();
     }
     public void handleAddVideoComponent(){
-        
+        VideoComponentEditor editor = new VideoComponentEditor();
+        editor.setHeight(350);
+        editor.setWidth(400);
+        editor.showAndWait();
     }
     public void handleEditComponent(Component compToEdit){
         System.out.println("EDIT COMPONENT CLICKED");
