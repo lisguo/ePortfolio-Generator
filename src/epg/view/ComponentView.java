@@ -6,6 +6,7 @@
 package epg.view;
 
 import static epg.StartupConstants.CSS_CLASS_COMPONENT;
+import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import javafx.scene.layout.VBox;
 
@@ -14,16 +15,13 @@ import javafx.scene.layout.VBox;
  * @author BunnyRailgun
  */
 public class ComponentView extends VBox{
-    double width = 800;
-    double height = 200;
     Component comp;
     
     public ComponentView(){
-        setWidth(width);
-        setHeight(height);
+        getStylesheets().add(STYLE_SHEET_UI);
+        getStyleClass().add(CSS_CLASS_COMPONENT);
     }
     public ComponentView(Component initComponent){
-        setWidth(width);
         comp = initComponent;
     }
     

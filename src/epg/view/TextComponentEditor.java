@@ -5,8 +5,16 @@
  */
 package epg.view;
 
+import epg.LanguagePropertyType;
+import static epg.LanguagePropertyType.TOOLTIP_ADD_LIST;
+import static epg.LanguagePropertyType.TOOLTIP_REMOVE_LIST;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_EDITOR;
+import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_SMALL_LABEL;
+import static epg.StartupConstants.CSS_STYLE_LIST_BUTTONS;
+import static epg.StartupConstants.ICON_ADD_PAGE;
+import static epg.StartupConstants.ICON_REMOVE_PAGE;
+import static epg.StartupConstants.PATH_ICONS;
 import epg.model.PortfolioModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +29,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.TextComponent;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -36,12 +50,11 @@ public class TextComponentEditor extends Stage{
     TextField text;
     Button okButton;
     Button continueButton;
-    VBox nextDialog;
+    boolean edit;
     public TextComponentEditor(PortfolioModel portfolio){
         vbox = new VBox();
         hBox = new HBox();
         text = new TextField();
-        
         
         //SELECT A TEXT TYPE
         textType = new Label("Text Type: ");
@@ -64,14 +77,29 @@ public class TextComponentEditor extends Stage{
         okButton = new Button("OK");
         vbox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
         
+        
         okButton.setOnAction(e ->{
             close();
         });
         continueButton.setOnAction(e->{
             String type = (String)textTypeComboBox.getSelectionModel().getSelectedItem();
-            nextDialog = new VBox();
-            nextDialog.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
-            if(type.equals("Header")){
+            textEditDialog(type);
+        });
+    }
+    public TextComponentEditor(TextComponent tc){
+        String type = tc.getType();
+        text = new TextField();
+        text.setText(tc.getText());
+        okButton = new Button("OK");
+        textEditDialog(type);
+        okButton.setOnAction(e ->{
+            close();
+        });
+    }
+    public void textEditDialog(String type){
+        VBox nextDialog = new VBox();
+        nextDialog.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
+        if(type.equals("Header")){
                 Label header = new Label("Header:");
                 nextDialog.getChildren().addAll(header,text,okButton);
             }
@@ -93,10 +121,10 @@ public class TextComponentEditor extends Stage{
             }
             else{
                 Label list = new Label("List:");
-                Button add = new Button("Add");
-                Button remove = new Button("Remove");
                 HBox addOrRemove = new HBox();
-                addOrRemove.getChildren().addAll(add,remove);
+                Button add = initChildButton(addOrRemove, ICON_ADD_PAGE, TOOLTIP_ADD_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
+                Button remove = initChildButton(addOrRemove, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
+                addOrRemove.getStyleClass().add(CSS_STYLE_LIST_BUTTONS);
                 TextField text2 = new TextField();
                 nextDialog.getChildren().addAll(list,addOrRemove,text,text2);
                 addOrRemove.setAlignment(Pos.CENTER);
@@ -106,6 +134,23 @@ public class TextComponentEditor extends Stage{
             scene = new Scene(nextDialog);
             scene.getStylesheets().add(STYLE_SHEET_UI);
             setScene(scene);
-        });
+    }
+    public javafx.scene.control.Button initChildButton(
+	    Pane toolbar, 
+	    String iconFileName, 
+	    LanguagePropertyType tooltip, 
+	    String cssClass,
+	    boolean disabled) {
+	PropertiesManager props = PropertiesManager.getPropertiesManager();
+	String imagePath = "file:" + PATH_ICONS + iconFileName;
+	Image buttonImage = new Image(imagePath);
+	javafx.scene.control.Button button = new javafx.scene.control.Button();
+	button.getStyleClass().add(cssClass);
+	button.setDisable(disabled);
+	button.setGraphic(new ImageView(buttonImage));
+	Tooltip buttonTooltip = new Tooltip(props.getProperty(tooltip.toString()));
+	button.setTooltip(buttonTooltip);
+	toolbar.getChildren().add(button);
+	return button;
     }
 }

@@ -39,6 +39,7 @@ public class StartupConstants {
     public static String    CSS_CLASS_COMPONENT_EDITOR = "component_editor";
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
+    public static String    CSS_STYLE_LIST_BUTTONS = "list_buttons";
 
      // HERE ARE THE LANGUAGE INDEPENDENT GUI ICONS
     public static String ICON_WINDOW_LOGO = "EPG_Logo.png";

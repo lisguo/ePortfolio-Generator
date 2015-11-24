@@ -101,6 +101,8 @@ public class PortfolioGeneratorView {
     ComponentController componentController;
     PageEditController pageEditController;
     
+    Component selectedComponent;
+    
     //FileController fileController;
     //GENERAL GUI
     BorderPane epgPane;
@@ -336,9 +338,28 @@ public class PortfolioGeneratorView {
         //SETTING THE WIDTH!!!! CHANGE LATER
         componentPane.setPrefWidth(1000);
         //ADD DUMMY COMPONENTS
-        TextComponent tc1 = new TextComponent("header","Testing Text Component");
+        TextComponent tc1 = new TextComponent("Header","This is a header");
+        TextComponent tc2 = new TextComponent("Paragraph","This is a paragraph."
+                + "This is a paragraph.This is a paragraph.This is a paragraph."
+                + "This is a paragraph.This is a paragraph.This is a paragraph."
+                + "This is a paragraph.This is a paragraph.This is a paragraph."
+                + "This is a paragraph.This is a paragraph.This is a paragraph.");
+        TextComponent tc3 = new TextComponent("List","This\nIs\nA\nList");
         TextComponentView t1 = new TextComponentView(tc1);
-        componentPane.getChildren().addAll(t1);
+        TextComponentView t2 = new TextComponentView(tc2);
+        TextComponentView t3 = new TextComponentView(tc3);
+        componentPane.getChildren().addAll(t1,t2,t3);
+        
+        //HANDLER
+        t1.setOnMouseClicked(e ->{
+            selectedComponent = tc1;
+        });
+        t2.setOnMouseClicked(e ->{
+            selectedComponent = tc2;
+        });
+        t3.setOnMouseClicked(e ->{
+            selectedComponent = tc3;
+        });
         componentScrollPane.setContent(componentPane);
         //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR
         portfolioEditorPane.getChildren().add(siteToolbar);
@@ -382,6 +403,9 @@ public class PortfolioGeneratorView {
         });
         removePageButton.setOnAction(e->{
             pageEditController.processRemovePageRequest();
+        });
+        editComponent.setOnAction(e -> {
+            componentController.handleEditComponent(selectedComponent);
         });
 	
     }

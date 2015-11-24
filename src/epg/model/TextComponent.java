@@ -17,6 +17,7 @@ public class TextComponent extends Component{
     public TextComponent(String initType, String initText){
         type = initType;
         text = initText;
+        super.setComponentType("text");
     }
     //ACCESSOR
     public String getText(){

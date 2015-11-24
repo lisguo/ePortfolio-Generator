@@ -63,9 +63,12 @@ and open the template in the editor.
 }
 .component_pane > .viewport{
     -fx-background-color: rgb(192, 206, 251);
+    -fx-spacing: 50px;
 }
 .component{
     -fx-background-color: rgb(143, 143, 181);
+    -fx-border-thickness:10px;
+    -fx-border-color: black;
 }
 .selected_component{
     -fx-background-radius: 10.0;
@@ -91,4 +94,7 @@ and open the template in the editor.
 }
 .workspace{
     -fx-background-color: rgb(192, 206, 251);
+}
+.list_buttons{
+    -fx-spacing: 20px;
 }

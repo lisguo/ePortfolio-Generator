@@ -29,6 +29,9 @@
 		<property name="TOOLTIP_ADD_VIDEO_COMPONENT"	    value="Add a video component"></property>
 		<property name="TOOLTIP_EDIT_COMPONENT"	    value="Edit a component"></property>
 		<property name="TOOLTIP_REMOVE_COMPONENT"	    value="Remove a component"></property>
+	<property name="TOOLTIP_ADD_LIST"	value="Add an item"></property>
+	<property name="TOOLTIP_REMOVE_LIST"	value="Remove an item"></property>
+	
 	
 	<!-- DEFAULT VALUES -->
 	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION"></property>

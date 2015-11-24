@@ -6,6 +6,8 @@
 package epg.controller;
 
 import epg.PortfolioGenerator;
+import epg.model.Component;
+import epg.model.TextComponent;
 import epg.view.ImageComponentEditor;
 import epg.view.PortfolioGeneratorView;
 import epg.view.SlideShowComponentEditor;
@@ -41,5 +43,18 @@ public class ComponentController {
     }
     public void handleAddSlideShowComponent(){
         SlideShowComponentEditor editor = new SlideShowComponentEditor();
+    }
+    public void handleAddVideoComponent(){
+        
+    }
+    public void handleEditComponent(Component compToEdit){
+        System.out.println("EDIT COMPONENT CLICKED");
+        if(compToEdit.getComponentType().equals("text")){
+            TextComponent tc = ((TextComponent)compToEdit);
+            TextComponentEditor editor = new TextComponentEditor(tc);
+            editor.setHeight(350);
+            editor.setWidth(400);
+            editor.showAndWait();
+        }
     }
 }
