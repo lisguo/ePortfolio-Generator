@@ -38,7 +38,7 @@ public class ComponentController {
         System.out.println("ADD IMAGE COMPONENT CLICKED!");
         ImageComponentEditor editor = new ImageComponentEditor(ui.getPortfolio());
         editor.setHeight(400);
-        editor.setWidth(400);
+        editor.setWidth(500);
         editor.showAndWait();
         //ui.reloadComponentPane();
     }
@@ -48,7 +48,7 @@ public class ComponentController {
     public void handleAddVideoComponent(){
         VideoComponentEditor editor = new VideoComponentEditor();
         editor.setHeight(350);
-        editor.setWidth(400);
+        editor.setWidth(500);
         editor.showAndWait();
     }
     public void handleEditComponent(Component compToEdit){

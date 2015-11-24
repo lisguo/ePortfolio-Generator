@@ -7,12 +7,15 @@ package epg.view;
 
 import epg.LanguagePropertyType;
 import static epg.LanguagePropertyType.TOOLTIP_ADD_LIST;
+import static epg.LanguagePropertyType.TOOLTIP_HYPERLINK;
 import static epg.LanguagePropertyType.TOOLTIP_REMOVE_LIST;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_EDITOR;
+import static epg.StartupConstants.CSS_CLASS_HYPERLINK_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_SMALL_LABEL;
 import static epg.StartupConstants.CSS_STYLE_LIST_BUTTONS;
 import static epg.StartupConstants.ICON_ADD_PAGE;
+import static epg.StartupConstants.ICON_HYPERLINK;
 import static epg.StartupConstants.ICON_REMOVE_PAGE;
 import static epg.StartupConstants.PATH_ICONS;
 import epg.model.PortfolioModel;
@@ -31,6 +34,7 @@ import javafx.stage.Stage;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.TextComponent;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -114,10 +118,34 @@ public class TextComponentEditor extends Stage{
                 ComboBox fontSelection = new ComboBox(fonts);
                 fontSelection.getSelectionModel().select("Righteous");
                 
+                //HYPERLINK CONTROLS
                 text.setAlignment(Pos.TOP_LEFT);
                 text.setPrefHeight(200);
-                nextDialog.getChildren().addAll(paragraph, fontSelection, 
-                        text, okButton);
+                nextDialog.getChildren().addAll(paragraph, fontSelection);
+                Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
+                nextDialog.getChildren().addAll(text, okButton);
+                
+                hyperLink.setOnAction(e -> {
+                    Stage dialog = new Stage();
+                    dialog.setHeight(200);
+                    dialog.setWidth(500);
+                    VBox hyperLinkBox = new VBox();
+                    Label hyperLabel = new Label("Hyperlink:");
+                    TextField field = new TextField();
+                    Button ok = new Button("OK");
+                    hyperLinkBox.getChildren().addAll(hyperLabel,field,ok);
+                    hyperLinkBox.setAlignment(Pos.CENTER);
+                    hyperLinkBox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
+                    Scene s = new Scene(hyperLinkBox);
+                    
+                    //AFTER HITTING OK, GET THE HYPERLINK
+                    ok.setOnAction(e2 -> {
+                        Hyperlink link = new Hyperlink(field.getText());
+                        text.setText(text.getText().concat(link.getText()));
+                    });
+                    dialog.setScene(s);
+                    dialog.showAndWait();
+                });
             }
             else{
                 Label list = new Label("List:");

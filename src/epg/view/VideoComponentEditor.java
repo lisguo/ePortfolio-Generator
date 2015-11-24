@@ -37,7 +37,7 @@ public class VideoComponentEditor extends Stage{
     Label x;
     TextField heightField;
     public VideoComponentEditor(){
-        setTitle("Add an Image Component");
+        setTitle("Add a Video Component");
         vBox = new VBox();
         videoName = new Label("videoName.mp4");
         videoSelection = new HBox();

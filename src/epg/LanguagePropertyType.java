@@ -33,6 +33,7 @@ public enum LanguagePropertyType {
     
     TOOLTIP_ADD_LIST,
     TOOLTIP_REMOVE_LIST,
+    TOOLTIP_HYPERLINK,
     
     DEFAULT_PORFOLIO_TITLE,
     LABEL_PAGE_TITLE,

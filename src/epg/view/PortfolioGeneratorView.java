@@ -212,12 +212,11 @@ public class PortfolioGeneratorView {
     }
     private void initWorkspace(){
         workspaceModeToolbarPane = new TabPane();
-        //workspaceModeToolbarPane.getStyleClass().add(CSS_WORKSPACE_MODE_TOOLBAR);
+        //workspaceModeToolbarPane.getStyleClass().add(CSS_CLASS_SELECTED_WORKSPACE);
         //INITIALIZING PORTFOLIO EDITOR
         portfolioEditor = new Tab();
         portfolioEditor.setClosable(false);
         portfolioEditor.setText("Portfolio Editor");
-        portfolioEditor.getStyleClass().add(CSS_CLASS_SELECTED_WORKSPACE);
         portfolioEditorPane = new HBox();
         //SITE TOOLBAR
         VBox siteToolbar = new VBox();
@@ -353,12 +352,15 @@ public class PortfolioGeneratorView {
         //HANDLER
         t1.setOnMouseClicked(e ->{
             selectedComponent = tc1;
+            t1.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
         });
         t2.setOnMouseClicked(e ->{
             selectedComponent = tc2;
+            t2.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
         });
         t3.setOnMouseClicked(e ->{
             selectedComponent = tc3;
+            t3.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
         });
         componentScrollPane.setContent(componentPane);
         //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR

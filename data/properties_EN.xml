@@ -31,7 +31,7 @@
 		<property name="TOOLTIP_REMOVE_COMPONENT"	    value="Remove a component"></property>
 	<property name="TOOLTIP_ADD_LIST"	value="Add an item"></property>
 	<property name="TOOLTIP_REMOVE_LIST"	value="Remove an item"></property>
-	
+	<property name="TOOLTIP_HYPERLINK"	value="Add a Hyperlink"></property>
 	
 	<!-- DEFAULT VALUES -->
 	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION"></property>

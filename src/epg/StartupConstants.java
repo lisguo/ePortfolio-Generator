@@ -37,6 +37,7 @@ public class StartupConstants {
     public static String    CSS_CLASS_COMPONENT = "component";
     public static String    CSS_CLASS_SELECTED_COMPONENT = "selected_component";
     public static String    CSS_CLASS_COMPONENT_EDITOR = "component_editor";
+    public static String    CSS_CLASS_HYPERLINK_BUTTON = "hyperlink_button";
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
     public static String    CSS_STYLE_LIST_BUTTONS = "list_buttons";
@@ -53,6 +54,7 @@ public class StartupConstants {
     public static String ICON_ADD_SS_COMPONENT = "AddSSComponent.png";
     public static String ICON_ADD_VIDEO_COMPONENT = "AddVideoComponent.png";
     public static String ICON_EDIT_COMPONENT = "Edit.png";
+    public static String ICON_HYPERLINK = "Hyperlink.png";
     
     public static String ICON_EXIT = "Exit.png";
     public static String ICON_ADD_PAGE = "Add.png";
