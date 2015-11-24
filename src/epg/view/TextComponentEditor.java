@@ -121,6 +121,7 @@ public class TextComponentEditor extends Stage{
                 //HYPERLINK CONTROLS
                 text.setAlignment(Pos.TOP_LEFT);
                 text.setPrefHeight(200);
+                text.setPrefColumnCount(50);
                 nextDialog.getChildren().addAll(paragraph, fontSelection);
                 Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
                 nextDialog.getChildren().addAll(text, okButton);
@@ -142,6 +143,7 @@ public class TextComponentEditor extends Stage{
                     ok.setOnAction(e2 -> {
                         Hyperlink link = new Hyperlink(field.getText());
                         text.setText(text.getText().concat(link.getText()));
+                        dialog.close();
                     });
                     dialog.setScene(s);
                     dialog.showAndWait();

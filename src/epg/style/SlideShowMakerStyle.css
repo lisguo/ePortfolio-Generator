@@ -1,0 +1,70 @@
+/** 
+ *  This CSS provides all the style settings for
+ *  our JavaFX controls.
+ *
+ *  @author McKilla Gorilla & Lisa Guo (Bunny Railgun)
+ */
+
+.slide_show_edit_vbox { // Side Bar
+    -fx-background-radius: 5.0;
+    -fx-background-color: rgb(255, 241, 175);
+    -fx-border-color: rgb(200, 200, 200);
+    -fx-spacing: 5;
+    -fx-alignment: center;
+}
+
+.slide_edit_view { //Selecting slide
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(255, 248, 215);
+    -fx-border-color: rgb(70, 5, 5);
+    -fx-border-thickness: 10px;
+    -fx-spacing: 60px;
+}
+
+.selected_slide_edit_view { //Slides untouched
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(255, 241, 175);
+    -fx-border-color: rgb(200, 200, 200);
+    -fx-border-thickness: 10px;
+    -fx-spacing: 60px;
+}
+.vertical_toolbar_button { //Right buttons
+    -fx-background-color: rgb(252, 226, 102);
+    -fx-padding: 10px 10px 10px 10px;
+    -fx-spacing: 50px;
+}
+
+.horizontal_toolbar_button { //Top buttons
+    -fx-background-color: rgb(252, 226, 102);
+    -fx-padding-left: 10px;
+    -fx-padding-right: 20px;
+    -fx-spacing: 5;
+}
+
+.horizontal_toolbar_hbox {
+    -fx-background-color: rgb(255, 241, 175);
+    -fx-border-color: rgb(200,200,200);
+}
+.workspace{
+    -fx-background-color: rgb(255, 235, 138);
+}
+.title_pane{
+    -fx-background-color: rgb(252, 226, 102);
+}
+.slide_editor_pane > .viewport{
+    -fx-background-color: rgb(252, 226, 102);
+}
+.lang_dialog{
+    -fx-background-color: rgb(255, 235, 138);
+    -fx-spacing: 15;
+}
+.label{
+    -fx-font: 23px Rockwell;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}
+.small_label{
+    -fx-font: 18px Rockwell;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}

@@ -42,8 +42,13 @@ public class ComponentController {
         editor.showAndWait();
         //ui.reloadComponentPane();
     }
-    public void handleAddSlideShowComponent(){
+    public void handleAddSlideShowComponent() throws Exception{
+        System.out.println("ADD SLIDE SHOW COMPONENT CLICKED!");
         SlideShowComponentEditor editor = new SlideShowComponentEditor();
+        Stage s = new Stage();
+        s.setHeight(900);
+        s.setWidth(1080);
+        editor.start(s);
     }
     public void handleAddVideoComponent(){
         VideoComponentEditor editor = new VideoComponentEditor();

@@ -339,10 +339,7 @@ public class PortfolioGeneratorView {
         //ADD DUMMY COMPONENTS
         TextComponent tc1 = new TextComponent("Header","This is a header");
         TextComponent tc2 = new TextComponent("Paragraph","This is a paragraph."
-                + "This is a paragraph.This is a paragraph.This is a paragraph."
-                + "This is a paragraph.This is a paragraph.This is a paragraph."
-                + "This is a paragraph.This is a paragraph.This is a paragraph."
-                + "This is a paragraph.This is a paragraph.This is a paragraph.");
+                + "This is a paragraph.");
         TextComponent tc3 = new TextComponent("List","This\nIs\nA\nList");
         TextComponentView t1 = new TextComponentView(tc1);
         TextComponentView t2 = new TextComponentView(tc2);
@@ -402,6 +399,13 @@ public class PortfolioGeneratorView {
 	});
         addImageComponent.setOnAction(e -> {
            componentController.handleAddImageComponent(); 
+        });
+        addSlideShowComponent.setOnAction(e ->{
+            try {
+                componentController.handleAddSlideShowComponent();
+            } catch (Exception ex) {
+                Logger.getLogger(PortfolioGeneratorView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         addVideoComponent.setOnAction(e ->{
             componentController.handleAddVideoComponent();

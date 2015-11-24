@@ -32,6 +32,8 @@
 	<property name="TOOLTIP_ADD_LIST"	value="Add an item"></property>
 	<property name="TOOLTIP_REMOVE_LIST"	value="Remove an item"></property>
 	<property name="TOOLTIP_HYPERLINK"	value="Add a Hyperlink"></property>
+		<property name="TOOLTIP_ADD_SLIDE"	    value="Add Slide"></property>
+		<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Slide"></property>
 	
 	<!-- DEFAULT VALUES -->
 	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION"></property>
