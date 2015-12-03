@@ -232,10 +232,6 @@ public class PortfolioGeneratorView {
         //SETTING THE WIDTH!!!!!! CHANGE LATER
         pageEditorPane.setPrefWidth(200);
         pageEditorScrollPane.getStyleClass().add(CSS_CLASS_PAGE_EDITOR_PANE);
-        //ADD DUMMY PAGES
-        PageEditView page1 = new PageEditView(new Page("Page 1", "layout1","blue",true));
-        PageEditView page2 = new PageEditView(new Page("Page 2", "layout1","blue",true));
-        pageEditorPane.getChildren().addAll(page1, page2);
         
         
         portfolioEditorPane.getChildren().add(siteToolbar);
@@ -405,6 +401,9 @@ public class PortfolioGeneratorView {
         
         //PAGE EDIT CONTROLS
         pageEditController = new PageEditController(this);
+        addPageButton.setOnAction(e ->{
+            pageEditController.processAddPageRequest();
+        });
         removePageButton.setOnAction(e->{
             pageEditController.processRemovePageRequest();
         });
@@ -443,23 +442,7 @@ public class PortfolioGeneratorView {
 	    pageEditorPane.getChildren().add(pageEditor);
 	    pageEditor.setOnMousePressed(e -> {
 		portfolio.setSelectedPage(page);
-		this.reloadPortfolioPane();
-	    });
-	}
-	updateSiteToolbarControls(false);
-    }
-    public void reloadPortfolioPane() {
-	pageEditorPane.getChildren().clear();
-	for (Page page : portfolio.getPages()) {
-	    PageEditView pageEditor = new PageEditView(page);
-	    if (portfolio.isSelectedPage(page))
-		pageEditor.getStyleClass().add(CSS_CLASS_PAGE_EDIT_VIEW);
-	    else
-		pageEditor.getStyleClass().add(CSS_CLASS_SELECTED_PAGE_EDIT_VIEW);
-	    pageEditorPane.getChildren().add(pageEditor);
-	    pageEditor.setOnMousePressed(e -> {
-		portfolio.setSelectedPage(page);
-		this.reloadPortfolioPane();
+		this.reloadPageEditorPane();
 	    });
 	}
 	updateSiteToolbarControls(false);
@@ -476,7 +459,7 @@ public class PortfolioGeneratorView {
 	    pageEditorPane.getChildren().add(componentEditor);
 	    componentEditor.setOnMousePressed(e -> {
 		portfolio.setSelectedComponent(component);
-		this.reloadPortfolioPane();
+		this.reloadComponentPane();
 	    });
 	}
 	updateSiteToolbarControls(false);
@@ -488,13 +471,19 @@ public class PortfolioGeneratorView {
         //ENABLE ADD PAGE BUTTON
 	addPageButton.setDisable(false);
         
-        if(isSaved){
-            savePortfolioButton.setDisable(false);
-        }
+        savePortfolioButton.setDisable(isSaved);
         
+        
+        updatePortfolioEditToolbarControls();
+    }
+    public void updatePortfolioEditToolbarControls() {
+	// AND THE SLIDESHOW EDIT TOOLBAR
+	addPageButton.setDisable(false);
 	boolean pageSelected = portfolio.isPageSelected();
 	removePageButton.setDisable(!pageSelected);
     }
+    
+    
     public javafx.scene.control.Button initChildButton(
 	    Pane toolbar, 
 	    String iconFileName, 

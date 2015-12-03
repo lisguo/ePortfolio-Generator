@@ -26,8 +26,6 @@ public class PortfolioModel {
     public PortfolioModel(PortfolioGeneratorView initUI){
         ui = initUI;
         pages = FXCollections.observableArrayList();
-        //FOR HOMEWORK 6 ONLY
-        addPage("Homepage","layout1","blue", true);
         reset();
     }
     
@@ -71,8 +69,8 @@ public class PortfolioModel {
     }
     
     public void addPage(   String initName,
-			    String initLayout,
-			    String initColor,
+			    int initLayout,
+			    int initColor,
                             boolean initHasBannerImage) {
 	Page slideToAdd = new Page(initName, initLayout, initColor,initHasBannerImage);
 	pages.add(slideToAdd);
@@ -83,31 +81,9 @@ public class PortfolioModel {
 	if (isPageSelected()) {
 	    pages.remove(selectedPage);
 	    selectedPage = null;
-	    ui.reloadPortfolioPane();
+	    ui.reloadPageEditorPane();
 	}
-    }
-     public void previous() {
-	if (selectedPage == null)
-	    return;
-	else {
-	    int index = pages.indexOf(selectedPage);
-	    index--;
-	    if (index < 0)
-		index = pages.size() - 1;
-	    selectedPage = pages.get(index);
-	}
-    }
-     public void next() {
-    	if (selectedPage == null)
-	    return;
-	else {
-	    int index = pages.indexOf(selectedPage);
-	    index++;
-	    if (index >= pages.size())
-		index = 0;
-	    selectedPage = pages.get(index);
-	}
-    }    
+    } 
     public void reset() {
 	pages.clear();
 	PropertiesManager props = PropertiesManager.getPropertiesManager();

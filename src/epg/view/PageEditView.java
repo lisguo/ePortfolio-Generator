@@ -34,14 +34,11 @@ public class PageEditView extends VBox {
      */
     public PageEditView(Page initPage) {
 	// FIRST SELECT THE CSS STYLE CLASS FOR THIS CONTAINER
-	this.getStyleClass().add(CSS_CLASS_PAGE_EDIT_VIEW);
-	
 	// KEEP THE SLIDE FOR LATER
 	page = initPage;
 
 	// SETUP THE TITLE CONTROLS
 	titleTextField = new TextField();
-        titleTextField.setMinHeight(100);
 	titleTextField.setText(page.getName());
         titleTextField.getStyleClass().add(CSS_LABEL);
 
@@ -51,8 +48,11 @@ public class PageEditView extends VBox {
 	// SETUP THE EVENT HANDLERS
 	titleTextField.textProperty().addListener(e -> {
 	    String text = titleTextField.getText();
-	    page.setName(text);	 
+	    page.setName(text);
 	});
         
+    }
+    public TextField getTitleField(){
+        return titleTextField;
     }
 }

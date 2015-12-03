@@ -65,9 +65,9 @@ public class StartupConstants {
     public static String ICON_NEXT = "Next.png";
     
     // UI LABELS
-    public static String    LABEL_PORTFOLIO_TITLE = "portfolio_title";
-    public static String    OK_BUTTON_TEXT = "OK";
-    
+    public static String LABEL_PORTFOLIO_TITLE = "portfolio_title";
+    public static String OK_BUTTON_TEXT = "OK";
+    public static String DEFAULT_PAGE_TITLE = "default_page_title";
     //FOR SLIDE SHOW MAKER
     
     public static String SSM_STYLE_SHEET_UI = PATH_CSS + "SlideShowMakerStyle.css";

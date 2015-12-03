@@ -7,6 +7,7 @@ package epg.controller;
 
 import epg.model.PortfolioModel;
 import epg.view.PortfolioGeneratorView;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -17,11 +18,20 @@ public class PageEditController {
     public PageEditController(PortfolioGeneratorView initUi){
         ui = initUi;
     }
+     public void processAddPageRequest() {
+         System.out.println("ADD PAGE");
+	PortfolioModel portfolio = ui.getPortfolio();
+	PropertiesManager props = PropertiesManager.getPropertiesManager();
+        portfolio.addPage("New Page", 1, 1, false);
+        //Enable save
+        ui.updateSiteToolbarControls(false);
+        ui.reloadPageEditorPane();
+    }
     public void processRemovePageRequest() {
 	PortfolioModel portfolio = ui.getPortfolio();
-	//portfolio.removeSelectedPage();
-	//ui.reloadPortfolioPane();
+	portfolio.removeSelectedPage();
+	ui.reloadPageEditorPane();
         //Enable save
-        //ui.updateToolbarControls(false);
+        ui.updateSiteToolbarControls(false);
     }
 }

@@ -44,7 +44,7 @@ public class FileController {
     
     public void markAsEdited() {
         saved = false;
-        //ui.updateToolbarControls(saved);
+        ui.updateSiteToolbarControls(saved);
     }
 
     /**

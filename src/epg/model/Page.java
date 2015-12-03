@@ -14,12 +14,12 @@ import javafx.collections.ObservableList;
  */
 public class Page {
     String name;
-    String layout;
-    String color;
+    int layout;
+    int color;
     boolean hasBannerImage;
     ObservableList<Component> components;
     
-    public Page(String initName, String initLayout, String initColor,
+    public Page(String initName, int initLayout, int initColor,
             boolean initHasBannerImage){
         name = initName;
         layout = initLayout;
@@ -32,10 +32,10 @@ public class Page {
     public String getName(){
         return name;
     }
-    public String getLayout(){
+    public int getLayout(){
         return layout;
     }
-    public String getColor(){
+    public int getColor(){
         return color;
     }
     public boolean getHasBannerImage(){
@@ -84,10 +84,10 @@ public class Page {
     public void setName(String newName){
         name = newName;
     }
-    public void setLayout(String newLayout){
+    public void setLayout(int newLayout){
         layout = newLayout;
     }
-    public void setColor(String newColor){
+    public void setColor(int newColor){
         color = newColor;
     }
     public void setHasBannerImage(boolean newHasBannerImage){
