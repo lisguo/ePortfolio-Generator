@@ -23,6 +23,8 @@ public class PageEditController {
 	PortfolioModel portfolio = ui.getPortfolio();
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
         portfolio.addPage("New Page", 1, 1, false);
+        //SET NEW PAGE AS SELECTED
+        portfolio.setSelectedPage(portfolio.getPages().get(portfolio.getPages().size()-1));
         //Enable save
         ui.updateSiteToolbarControls(false);
         ui.reloadPageEditorPane();
