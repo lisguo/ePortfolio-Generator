@@ -20,7 +20,7 @@ public class PageEditController {
     public void processRemovePageRequest() {
 	PortfolioModel portfolio = ui.getPortfolio();
 	//portfolio.removeSelectedPage();
-	ui.reloadPortfolioPane();
+	//ui.reloadPortfolioPane();
         //Enable save
         //ui.updateToolbarControls(false);
     }

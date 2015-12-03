@@ -49,6 +49,7 @@ import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.controller.ComponentController;
 import epg.controller.FileController;
 import epg.controller.PageEditController;
+import epg.file.PortfolioFileManager;
 import epg.model.Component;
 import epg.model.Page;
 import epg.model.PortfolioModel;
@@ -99,6 +100,8 @@ public class PortfolioGeneratorView {
     Stage primaryStage;
     Scene primaryScene;
     ComponentController componentController;
+    FileController fileController;
+    PortfolioFileManager fileManager;
     PageEditController pageEditController;
     
     Component selectedComponent;
@@ -187,7 +190,6 @@ public class PortfolioGeneratorView {
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER
 	epgPane = new BorderPane();
 	epgPane.setTop(fileToolbarPane);
-        epgPane.setCenter(workspaceModeToolbarPane);
         epgPane.getStyleClass().add(CSS_CLASS_SELECTED_WORKSPACE);
 	primaryScene = new Scene(epgPane);
 	
@@ -205,9 +207,9 @@ public class PortfolioGeneratorView {
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 	newPortfolioButton = initChildButton(fileToolbarPane, ICON_NEW_PORTFOLIO, TOOLTIP_NEW_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         loadPortfolioButton = initChildButton(fileToolbarPane, ICON_LOAD_PORTFOLIO, TOOLTIP_LOAD_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        savePortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_PORTFOLIO, TOOLTIP_SAVE_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVEAS_PORTFOLIO, TOOLTIP_SAVEAS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        savePortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_PORTFOLIO, TOOLTIP_SAVE_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
+        saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVEAS_PORTFOLIO, TOOLTIP_SAVEAS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
+        exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
 	exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
     }
     private void initWorkspace(){
@@ -221,8 +223,8 @@ public class PortfolioGeneratorView {
         //SITE TOOLBAR
         VBox siteToolbar = new VBox();
 	siteToolbar.getStyleClass().add(CSS_CLASS_SITE_TOOLBAR_VBOX);
-	addPageButton = this.initChildButton(siteToolbar, ICON_ADD_PAGE, TOOLTIP_ADD_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
-	removePageButton = this.initChildButton(siteToolbar, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+	addPageButton = this.initChildButton(siteToolbar, ICON_ADD_PAGE, TOOLTIP_ADD_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
+	removePageButton = this.initChildButton(siteToolbar, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
         
         //PAGE PANE
         pageEditorPane = new VBox();
@@ -235,6 +237,31 @@ public class PortfolioGeneratorView {
         PageEditView page2 = new PageEditView(new Page("Page 2", "layout1","blue",true));
         pageEditorPane.getChildren().addAll(page1, page2);
         
+        
+        portfolioEditorPane.getChildren().add(siteToolbar);
+        portfolioEditorPane.getChildren().add(pageEditorScrollPane);
+        portfolioEditor.setContent(portfolioEditorPane);
+        
+        //WEB VIEWER
+        WebView viewer = new WebView();
+        WebEngine engine = viewer.getEngine();
+        String loadStr = "file:///" + htmlPath;
+        System.out.println("Loading " + loadStr);
+        engine.load(loadStr);
+        //System.out.println("Loading " + loadStr);
+        //CHANGE SIZE
+        viewer.setPrefSize(1980, 900);
+        viewer.setManaged(true);
+        pageViewerPane = new Pane();
+        pageViewerPane.getChildren().add(viewer);
+        siteViewer = new Tab();
+        siteViewer.setClosable(false);
+        siteViewer.setText("Site Viewer");
+        siteViewer.setContent(pageViewerPane);
+        workspaceModeToolbarPane.getTabs().addAll(portfolioEditor, siteViewer);
+    }
+    
+    private void initPageSettingsWorkspace(){
         //PAGE SETTINGS PANE
         VBox pageSettingsPane = new VBox();
         //SETTING THE WIDTH!!!! CHANGE LATER
@@ -361,39 +388,30 @@ public class PortfolioGeneratorView {
         });
         componentScrollPane.setContent(componentPane);
         //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR
-        portfolioEditorPane.getChildren().add(siteToolbar);
-        portfolioEditorPane.getChildren().add(pageEditorScrollPane);
         portfolioEditorPane.getChildren().add(pageSettingsPane);
         portfolioEditorPane.getChildren().add(componentToolbar);
         portfolioEditorPane.getChildren().add(componentScrollPane);
         
         portfolioEditor.setContent(portfolioEditorPane);
         
-        siteViewer = new Tab();
-        siteViewer.setClosable(false);
-        siteViewer.setText("Site Viewer");
-        
-        //WEB VIEWER
-        WebView viewer = new WebView();
-        WebEngine engine = viewer.getEngine();
-        String loadStr = "file:///" + htmlPath;
-        System.out.println("Loading " + loadStr);
-        engine.load(loadStr);
-        //System.out.println("Loading " + loadStr);
-        //CHANGE SIZE
-        viewer.setPrefSize(1980, 900);
-        viewer.setManaged(true);
-        pageViewerPane = new Pane();
-        pageViewerPane.getChildren().add(viewer);
-        siteViewer.setContent(pageViewerPane);
-        
-        
-        workspaceModeToolbarPane.getTabs().addAll(portfolioEditor, siteViewer);
     }
-    
     private void initEventHandlers() {
-	componentController = new ComponentController(this);
+        //FILE TOOLBAR CONTROLS
+        fileController = new FileController(this, fileManager);
+        newPortfolioButton.setOnAction(e ->{
+            fileController.handleNewPortfolioRequest();
+        });
+        
+        
+        //PAGE EDIT CONTROLS
         pageEditController = new PageEditController(this);
+        removePageButton.setOnAction(e->{
+            pageEditController.processRemovePageRequest();
+        });
+	
+    }
+    private void initComponentHandlers(){
+        componentController = new ComponentController(this);
         addTextComponent.setOnAction(e -> {
 	    componentController.handleAddTextComponent();
 	});
@@ -410,13 +428,9 @@ public class PortfolioGeneratorView {
         addVideoComponent.setOnAction(e ->{
             componentController.handleAddVideoComponent();
         });
-        removePageButton.setOnAction(e->{
-            pageEditController.processRemovePageRequest();
-        });
         editComponent.setOnAction(e -> {
             componentController.handleEditComponent(selectedComponent);
         });
-	
     }
     public void reloadPageEditorPane() {
 	pageEditorPane.getChildren().clear();
@@ -432,7 +446,7 @@ public class PortfolioGeneratorView {
 		this.reloadPortfolioPane();
 	    });
 	}
-	updateSiteToolbarControls();
+	updateSiteToolbarControls(false);
     }
     public void reloadPortfolioPane() {
 	pageEditorPane.getChildren().clear();
@@ -448,7 +462,7 @@ public class PortfolioGeneratorView {
 		this.reloadPortfolioPane();
 	    });
 	}
-	updateSiteToolbarControls();
+	updateSiteToolbarControls(false);
     }
     
     public void reloadComponentPane() {
@@ -465,12 +479,19 @@ public class PortfolioGeneratorView {
 		this.reloadPortfolioPane();
 	    });
 	}
-	updateSiteToolbarControls();
+	updateSiteToolbarControls(false);
     }
     
-    public void updateSiteToolbarControls() {
-	// AND THE SLIDESHOW EDIT TOOLBAR
+    public void updateSiteToolbarControls(boolean isSaved) {
+	//SET WORKSPACE
+        epgPane.setCenter(workspaceModeToolbarPane);
+        //ENABLE ADD PAGE BUTTON
 	addPageButton.setDisable(false);
+        
+        if(isSaved){
+            savePortfolioButton.setDisable(false);
+        }
+        
 	boolean pageSelected = portfolio.isPageSelected();
 	removePageButton.setDisable(!pageSelected);
     }

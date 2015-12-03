@@ -44,7 +44,42 @@ public class Page {
     public ObservableList<Component> getComponents(){
         return components;
     }
-    
+    public ObservableList<TextComponent> getTextComponents(){
+        ObservableList<TextComponent> tc = FXCollections.observableArrayList();
+        for(Component c : components){
+            if(c instanceof TextComponent){
+                tc.add((TextComponent)c);
+            }
+        }
+        return tc;
+    }
+    public ObservableList<ImageComponent> getImageComponents(){
+        ObservableList<ImageComponent> ic = FXCollections.observableArrayList();
+        for(Component c : components){
+            if(c instanceof ImageComponent){
+                ic.add((ImageComponent)c);
+            }
+        }
+        return ic;
+    }
+    public ObservableList<SlideShowComponent> getSlideShowComponents(){
+        ObservableList<SlideShowComponent> sc = FXCollections.observableArrayList();
+        for(Component c : components){
+            if(c instanceof SlideShowComponent){
+                sc.add((SlideShowComponent)c);
+            }
+        }
+        return sc;
+    }
+    public ObservableList<VideoComponent> getVideoComponents(){
+        ObservableList<VideoComponent> vc = FXCollections.observableArrayList();
+        for(Component c : components){
+            if (c instanceof VideoComponent){
+                vc.add((VideoComponent) c);
+            }
+        }
+        return vc;
+    }
     //MUTATOR
     public void setName(String newName){
         name = newName;

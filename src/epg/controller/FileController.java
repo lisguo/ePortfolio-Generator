@@ -51,7 +51,7 @@ public class FileController {
      * This method starts the process of editing a new slide show. If a pose is
      * already being edited, it will prompt the user to save it first.
      */
-    public void handleNewPortfolioGeneratorRequest() {
+    public void handleNewPortfolioRequest() {
         try {
             // WE MAY HAVE TO SAVE CURRENT WORK
             boolean continueToMakeNew = true;
@@ -69,7 +69,7 @@ public class FileController {
 
                 // REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
                 // THE APPROPRIATE CONTROLS
-                //ui.updateToolbarControls(saved);	
+                ui.updateSiteToolbarControls(saved);	
             }
         } catch (IOException ioe) {
             //ErrorHandler eH = ui.getErrorHandler();
@@ -172,5 +172,9 @@ public class FileController {
      */
     public boolean isSaved() {
         return saved;
+    }
+
+    public void processNewPortfolioRequest() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
