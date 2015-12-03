@@ -5,6 +5,7 @@
  */
 package epg.controller;
 
+import epg.model.Page;
 import epg.model.PortfolioModel;
 import epg.view.PortfolioGeneratorView;
 import properties_manager.PropertiesManager;
@@ -24,10 +25,13 @@ public class PageEditController {
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
         portfolio.addPage("New Page", 1, 1, false);
         //SET NEW PAGE AS SELECTED
-        portfolio.setSelectedPage(portfolio.getPages().get(portfolio.getPages().size()-1));
+        Page newPage = portfolio.getPages().get(portfolio.getPages().size()-1);
+        portfolio.setSelectedPage(newPage);
         //Enable save
         ui.updateSiteToolbarControls(false);
         ui.reloadPageEditorPane();
+        //ADD SETTINGS
+        ui.initPageSettingsWorkspace(newPage);
     }
     public void processRemovePageRequest() {
 	PortfolioModel portfolio = ui.getPortfolio();

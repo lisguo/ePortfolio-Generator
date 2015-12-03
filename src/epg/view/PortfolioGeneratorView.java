@@ -73,6 +73,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -132,6 +133,8 @@ public class PortfolioGeneratorView {
     Button removePageButton;
     Label bannerImg;
     
+    //PAGE SETTINGS
+    VBox pageSettingsPane;
     VBox componentToolbar;
     Button addTextComponent;
     Button addImageComponent;
@@ -144,6 +147,7 @@ public class PortfolioGeneratorView {
     ScrollPane componentScrollPane;
     
 
+    
     //SITE VIEWER
     Pane pageViewerPane;
     String htmlPath;
@@ -257,9 +261,9 @@ public class PortfolioGeneratorView {
         workspaceModeToolbarPane.getTabs().addAll(portfolioEditor, siteViewer);
     }
     
-    private void initPageSettingsWorkspace(){
+    public void initPageSettingsWorkspace(Page pageToEdit){
         //PAGE SETTINGS PANE
-        VBox pageSettingsPane = new VBox();
+        pageSettingsPane = new VBox();
         //SETTING THE WIDTH!!!! CHANGE LATER
         pageSettingsPane.setPrefWidth(450);
         pageSettingsPane.getStyleClass().add(CSS_CLASS_PAGE_SETTINGS_PANE);
@@ -279,6 +283,9 @@ public class PortfolioGeneratorView {
         layout3Button.setToggleGroup(layoutButtons);
         layout4Button.setToggleGroup(layoutButtons);
         layout5Button.setToggleGroup(layoutButtons);
+        //SET THE INITIAL TOGGLE
+        layoutButtons.selectToggle(layoutButtons.getToggles()
+                .get(pageToEdit.getLayout()-1));
         //PUT LABEL AND BUTTONS ON VBOX
         layoutSelection.getChildren().addAll(layoutLabel, layout1Button,
                 layout2Button, layout3Button, layout4Button, layout5Button);
