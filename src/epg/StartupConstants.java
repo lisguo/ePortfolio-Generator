@@ -19,6 +19,7 @@ public class StartupConstants {
     public static String PATH_CSS = "/epg/style/";
     public static String STYLE_SHEET_UI = PATH_CSS + "PortfolioGeneratorStyle.css";
     public static String PATH_PORTFOLIOS = "./portfolios/";
+    public static String PATH_SITE_IMAGES = PATH_IMAGES + "site_images/";
     
     // CSS STYLE SHEET CLASSES
     public static String    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON = "vertical_toolbar_button";
@@ -41,6 +42,7 @@ public class StartupConstants {
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
     public static String    CSS_STYLE_LIST_BUTTONS = "list_buttons";
+    public static String    CSS_STYLE_HYPERLINK = "hyperlink";
 
      // HERE ARE THE LANGUAGE INDEPENDENT GUI ICONS
     public static String ICON_WINDOW_LOGO = "EPG_Logo.png";
@@ -68,6 +70,8 @@ public class StartupConstants {
     public static String LABEL_PORTFOLIO_TITLE = "portfolio_title";
     public static String OK_BUTTON_TEXT = "OK";
     public static String DEFAULT_PAGE_TITLE = "default_page_title";
+    
+    
     //FOR SLIDE SHOW MAKER
     
     public static String SSM_STYLE_SHEET_UI = PATH_CSS + "SlideShowMakerStyle.css";

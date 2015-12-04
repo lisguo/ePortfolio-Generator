@@ -160,9 +160,11 @@ public class PageSettingsView extends HBox{
         //BANNER SELECTION
         VBox bannerSelection = new VBox();
         Label bannerLabel = new Label("Select Banner Image:");
+        HBox bannerButtonAndName = new HBox();
         browse = new Button("Browse...");
-        bannerFileName = new Label("");
-        bannerSelection.getChildren().addAll(bannerLabel, browse, bannerFileName);
+        bannerFileName = new Label(pageToEdit.getBannerFileName());
+        bannerButtonAndName.getChildren().addAll(browse,bannerFileName);
+        bannerSelection.getChildren().addAll(bannerLabel, bannerButtonAndName);
         
         //STUDENT NAME
         VBox studentBox = new VBox();
@@ -212,36 +214,13 @@ public class PageSettingsView extends HBox{
         componentScrollPane.getStyleClass().add(CSS_CLASS_COMPONENT_PANE);
         //SETTING THE WIDTH!!!! CHANGE LATER
         componentPane.setPrefWidth(1000);
-        //ADD DUMMY COMPONENTS
-        TextComponent tc1 = new TextComponent("Header","This is a header");
-        TextComponent tc2 = new TextComponent("Paragraph","This is a paragraph."
-                + "This is a paragraph.");
-        TextComponent tc3 = new TextComponent("List","This\nIs\nA\nList");
-        TextComponentView t1 = new TextComponentView(tc1);
-        TextComponentView t2 = new TextComponentView(tc2);
-        TextComponentView t3 = new TextComponentView(tc3);
-        componentPane.getChildren().addAll(t1,t2,t3);
-        /**
-        //HANDLER
-        t1.setOnMouseClicked(e ->{
-            selectedComponent = tc1;
-            t1.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-        });
-        t2.setOnMouseClicked(e ->{
-            selectedComponent = tc2;
-            t2.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-        });
-        t3.setOnMouseClicked(e ->{
-            selectedComponent = tc3;
-            t3.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-        });
-        * */
         componentScrollPane.setContent(componentPane);
+        
         //FINALLY ADD EVERYTHING TO PORTFOLIO SETTINGS VIEW
         getChildren().addAll(pageSettingsPane,componentToolbar,componentScrollPane);
         
-        
         initPageSettingHandlers();
+        initComponentHandlers();
     }
     private void initPageSettingHandlers(){
         //SETTING THE LAYOUT
@@ -271,6 +250,11 @@ public class PageSettingsView extends HBox{
         //SETTING FOOTER
         footerField.setOnAction(e ->{
             pageSettingsController.handleSetFooter(footerField);
+        });
+        
+        //SETTING BANNER
+        browse.setOnAction(e ->{
+            pageSettingsController.handleBannerSelection();
         });
     }
     private void initComponentHandlers(){

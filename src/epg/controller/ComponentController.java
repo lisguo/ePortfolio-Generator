@@ -28,7 +28,7 @@ public class ComponentController {
     
     public void handleAddTextComponent(){
         System.out.println("ADD TEXT COMPONENT CLICKED");
-        TextComponentEditor editor = new TextComponentEditor(ui.getPortfolio());
+        TextComponentEditor editor = new TextComponentEditor(ui.getPageToEdit());
         editor.setHeight(350);
         editor.setWidth(400);
         editor.showAndWait();

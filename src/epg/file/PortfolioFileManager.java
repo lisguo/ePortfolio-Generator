@@ -28,6 +28,7 @@ import javax.json.stream.JsonGenerator;
 import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.model.Page;
 import epg.model.PortfolioModel;
+import java.math.BigDecimal;
 
 
 public class PortfolioFileManager {
@@ -68,7 +69,6 @@ public class PortfolioFileManager {
      */
     public void saveSlideShow(PortfolioModel portfolioToSave) throws IOException {
 	StringWriter sw = new StringWriter();
-        
         
         /**
 	// BUILD THE SLIDES ARRAY

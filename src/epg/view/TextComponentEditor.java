@@ -32,9 +32,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Page;
 import epg.model.TextComponent;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,19 +51,24 @@ public class TextComponentEditor extends Stage{
     Scene scene;
     VBox vbox;
     HBox hBox;
-    Label textType;
+    Label textTypeLabel;
     ComboBox textTypeComboBox;
-    TextField text;
+    TextField textField;
     Button okButton;
     Button continueButton;
     boolean edit;
-    public TextComponentEditor(PortfolioModel portfolio){
+    
+    //COMPONENTS OF THE COMPONENT
+    String type;
+    String text;
+    
+    public TextComponentEditor(Page pageToEdit){
         vbox = new VBox();
         hBox = new HBox();
-        text = new TextField();
+        textField = new TextField();
         
         //SELECT A TEXT TYPE
-        textType = new Label("Text Type: ");
+        textTypeLabel = new Label("Text Type: ");
         ObservableList<String> types = FXCollections.observableArrayList();
         types.add("Header");
         types.add("Paragraph");
@@ -73,7 +80,7 @@ public class TextComponentEditor extends Stage{
         scene = new Scene(vbox);
         scene.getStylesheets().add(STYLE_SHEET_UI);
         setTitle("Add a Text Component");
-        hBox.getChildren().addAll(textType, textTypeComboBox);
+        hBox.getChildren().addAll(textTypeLabel, textTypeComboBox);
         hBox.setAlignment(Pos.CENTER);
         vbox.getChildren().addAll(hBox, continueButton);
         vbox.setAlignment(Pos.CENTER);
@@ -91,9 +98,9 @@ public class TextComponentEditor extends Stage{
         });
     }
     public TextComponentEditor(TextComponent tc){
-        String type = tc.getType();
-        text = new TextField();
-        text.setText(tc.getText());
+        type = tc.getType();
+        textField = new TextField();
+        textField.setText(tc.getText());
         okButton = new Button("OK");
         textEditDialog(type);
         okButton.setOnAction(e ->{
@@ -105,7 +112,7 @@ public class TextComponentEditor extends Stage{
         nextDialog.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
         if(type.equals("Header")){
                 Label header = new Label("Header:");
-                nextDialog.getChildren().addAll(header,text,okButton);
+                nextDialog.getChildren().addAll(header,textField,okButton);
             }
             else if(type.equals("Paragraph")){
                 Label paragraph = new Label("Paragraph:");
@@ -119,14 +126,18 @@ public class TextComponentEditor extends Stage{
                 fontSelection.getSelectionModel().select("Righteous");
                 
                 //HYPERLINK CONTROLS
-                text.setAlignment(Pos.TOP_LEFT);
-                text.setPrefHeight(200);
-                text.setPrefColumnCount(50);
+                textField.setAlignment(Pos.TOP_LEFT);
+                textField.setPrefHeight(200);
+                textField.setPrefColumnCount(50);
                 nextDialog.getChildren().addAll(paragraph, fontSelection);
                 Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
-                nextDialog.getChildren().addAll(text, okButton);
+                nextDialog.getChildren().addAll(textField, okButton);
                 
                 hyperLink.setOnAction(e -> {
+                    //FIND WHAT THE USER HIGHLIGHTED AND MAKE IT HYPERLINK'D
+                    int startingIndex = textField.getSelection().getStart();
+                    int endingIndex = textField.getSelection().getEnd();
+                    String hyperlinkText = textField.getText(startingIndex, endingIndex);
                     Stage dialog = new Stage();
                     dialog.setHeight(200);
                     dialog.setWidth(500);
@@ -142,7 +153,7 @@ public class TextComponentEditor extends Stage{
                     //AFTER HITTING OK, GET THE HYPERLINK
                     ok.setOnAction(e2 -> {
                         Hyperlink link = new Hyperlink(field.getText());
-                        text.setText(text.getText().concat(link.getText()));
+                        textField.setText(textField.getText().concat(link.getText()));
                         dialog.close();
                     });
                     dialog.setScene(s);
@@ -155,8 +166,16 @@ public class TextComponentEditor extends Stage{
                 Button add = initChildButton(addOrRemove, ICON_ADD_PAGE, TOOLTIP_ADD_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 Button remove = initChildButton(addOrRemove, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 addOrRemove.getStyleClass().add(CSS_STYLE_LIST_BUTTONS);
-                TextField text2 = new TextField();
-                nextDialog.getChildren().addAll(list,addOrRemove,text,text2);
+                
+                //HYPERLINK CONTROLS
+                textField.setAlignment(Pos.TOP_LEFT);
+                textField.setPrefHeight(200);
+                textField.setPrefColumnCount(50);
+                Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
+                nextDialog.getChildren().addAll(textField, okButton);
+                
+                TextField textField2 = new TextField();
+                nextDialog.getChildren().addAll(list,addOrRemove,hyperLink,textField,textField2);
                 addOrRemove.setAlignment(Pos.CENTER);
                 
             }

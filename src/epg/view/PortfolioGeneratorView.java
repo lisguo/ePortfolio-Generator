@@ -96,8 +96,6 @@ import properties_manager.PropertiesManager;
  * @author BunnyRailgun
  */
 public class PortfolioGeneratorView {
-    //PORTFOLIO TITLE
-    String title = "sample";
 
     Stage primaryStage;
     Scene primaryScene;
@@ -149,13 +147,12 @@ public class PortfolioGeneratorView {
    
    
     //THE PORTFOLIO GENERATOR WE WILL BE WORKING ON
-    //CREATIN A PORTFOLIO MODEL FOR HW 6
     PortfolioModel portfolio;
     
     public PortfolioGeneratorView() throws IOException{
         portfolio = new PortfolioModel(this);
         //htmlPath = PATH_PORFOLIOS + portfolio.getTitle() + "/index.html";
-        htmlPath = PATH_PORTFOLIOS + title + "/index.html";
+        htmlPath = PATH_PORTFOLIOS + portfolio.getTitle() + "/index.html";
         
         File f = new File(htmlPath);
         htmlPath = f.getCanonicalPath();
@@ -239,16 +236,16 @@ public class PortfolioGeneratorView {
         
         //INITIALIZE PAGE SETTINGS
         pageSettingsPaneWithComponents = new HBox();
-        /**
+        
+        
         //WEB VIEWER
         WebView viewer = new WebView();
         WebEngine engine = viewer.getEngine();
         String loadStr = "file:///" + htmlPath;
         System.out.println("Loading " + loadStr);
         engine.load(loadStr);
-        //System.out.println("Loading " + loadStr);
         //CHANGE SIZE
-        viewer.setPrefSize(1980, 900);
+        viewer.setPrefSize(1900, 900);
         viewer.setManaged(true);
         pageViewerPane = new Pane();
         pageViewerPane.getChildren().add(viewer);
@@ -257,9 +254,6 @@ public class PortfolioGeneratorView {
         siteViewer.setText("Site Viewer");
         siteViewer.setContent(pageViewerPane);
         workspaceModeToolbarPane.getTabs().addAll(portfolioEditor, siteViewer);
-        * */
-        
-        workspaceModeToolbarPane.getTabs().addAll(portfolioEditor);
     }
     
     

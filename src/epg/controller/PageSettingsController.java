@@ -1,12 +1,16 @@
 package epg.controller;
 
+import static epg.StartupConstants.PATH_SITE_IMAGES;
+import static epg.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
 import epg.model.Page;
 import epg.view.PageSettingsView;
 import epg.view.PortfolioGeneratorView;
+import java.io.File;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.FileChooser;
 
 public class PageSettingsController{
     PageSettingsView ui;
@@ -54,6 +58,34 @@ public class PageSettingsController{
         String footer = textField.getText();
         selectedPage.setFooter(footer);
         System.out.println("FOOTER CHANGD TO : " + footer);
+    }
+    public void handleBannerSelection(){
+        FileChooser imageFileChooser = new FileChooser();
+	
+	// SET THE STARTING DIRECTORY
+	imageFileChooser.setInitialDirectory(new File(PATH_SITE_IMAGES));
+	
+	// LET'S ONLY SEE IMAGE FILES
+	FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+	FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+	FileChooser.ExtensionFilter gifFilter = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.GIF");
+	imageFileChooser.getExtensionFilters().addAll(jpgFilter, pngFilter, gifFilter);
+	
+	// LET'S OPEN THE FILE CHOOSER
+	File file = imageFileChooser.showOpenDialog(null);
+	if (file != null) {
+	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
+	    String fileName = file.getName();
+	    selectedPage.setBannerFileName(fileName);
+            selectedPage.setBannerImgPath(path);
+            //REFRESH
+            ui.getChildren().clear();
+            ui.showPageSettingsWorkspace();
+	}
+        
+        System.out.println("BANNER : " + selectedPage.getBannerImgPath()
+                                         + selectedPage.getBannerFileName());
+    
     }
     
 }

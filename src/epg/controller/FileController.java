@@ -5,8 +5,11 @@
  */
 package epg.controller;
 
+import epg.LanguagePropertyType;
+import epg.error.ErrorHandler;
 import epg.file.PortfolioFileManager;
 import epg.model.PortfolioModel;
+import epg.model.SlideShowModel;
 import epg.view.PortfolioGeneratorView;
 import java.io.File;
 import java.io.IOException;
@@ -105,10 +108,7 @@ public class FileController {
      * This method will save the current slideshow to a file. Note that we already
      * know the name of the file, so we won't need to prompt the user.
      */
-    public boolean handleSavePortfolioGeneratorRequest() {
-       return true;
-    }
-
+     
     /**
      * This method shows the current slide show in a separate window.
      */

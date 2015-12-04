@@ -82,6 +82,9 @@ public class Page {
         }
         return tc;
     }
+    public void addTextComponent(TextComponent tc){
+        components.add(tc);
+    }
     public ObservableList<ImageComponent> getImageComponents(){
         ObservableList<ImageComponent> ic = FXCollections.observableArrayList();
         for(Component c : components){
