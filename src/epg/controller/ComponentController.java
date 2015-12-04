@@ -9,7 +9,7 @@ import epg.PortfolioGenerator;
 import epg.model.Component;
 import epg.model.TextComponent;
 import epg.view.ImageComponentEditor;
-import epg.view.PortfolioGeneratorView;
+import epg.view.PageSettingsView;
 import epg.view.SlideShowComponentEditor;
 import epg.view.TextComponentEditor;
 import epg.view.VideoComponentEditor;
@@ -20,9 +20,9 @@ import javafx.stage.Stage;
  * @author BunnyRailgun
  */
 public class ComponentController {
-    PortfolioGeneratorView ui;
+    PageSettingsView ui;
     
-    public ComponentController(PortfolioGeneratorView initUI){
+    public ComponentController(PageSettingsView initUI){
         ui = initUI;
     }
     

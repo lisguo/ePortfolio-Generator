@@ -23,15 +23,12 @@ public class PageEditController {
          System.out.println("ADD PAGE");
 	PortfolioModel portfolio = ui.getPortfolio();
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
-        portfolio.addPage("New Page", 1, 1, false);
+        portfolio.addPage("New Page", 0, 0, "Righteous",true);
         //SET NEW PAGE AS SELECTED
-        Page newPage = portfolio.getPages().get(portfolio.getPages().size()-1);
-        portfolio.setSelectedPage(newPage);
+        portfolio.setSelectedPage(portfolio.getPages().get(portfolio.getPages().size()-1));
         //Enable save
         ui.updateSiteToolbarControls(false);
-        ui.reloadPageEditorPane();
-        //ADD SETTINGS
-        ui.initPageSettingsWorkspace(newPage);
+	ui.reloadPageEditorPane();
     }
     public void processRemovePageRequest() {
 	PortfolioModel portfolio = ui.getPortfolio();

@@ -49,6 +49,7 @@ import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.controller.ComponentController;
 import epg.controller.FileController;
 import epg.controller.PageEditController;
+import epg.controller.PageSettingsController;
 import epg.file.PortfolioFileManager;
 import epg.model.Component;
 import epg.model.Page;
@@ -104,6 +105,7 @@ public class PortfolioGeneratorView {
     FileController fileController;
     PortfolioFileManager fileManager;
     PageEditController pageEditController;
+    PageSettingsController pageSettingsController;
     
     Component selectedComponent;
     
@@ -132,21 +134,14 @@ public class PortfolioGeneratorView {
     Button addPageButton;
     Button removePageButton;
     Label bannerImg;
+    PageSettingsView settingsView = new PageSettingsView();
     
     //PAGE SETTINGS
+    HBox pageSettingsPaneWithComponents;
     VBox pageSettingsPane;
-    VBox componentToolbar;
-    Button addTextComponent;
-    Button addImageComponent;
-    Button addSlideShowComponent;
-    Button addVideoComponent;
-    Button removeComponent;
-    Button editComponent;
     
-    VBox componentPane;
-    ScrollPane componentScrollPane;
     
-
+    
     
     //SITE VIEWER
     Pane pageViewerPane;
@@ -242,6 +237,9 @@ public class PortfolioGeneratorView {
         portfolioEditorPane.getChildren().add(pageEditorScrollPane);
         portfolioEditor.setContent(portfolioEditorPane);
         
+        //INITIALIZE PAGE SETTINGS
+        pageSettingsPaneWithComponents = new HBox();
+        /**
         //WEB VIEWER
         WebView viewer = new WebView();
         WebEngine engine = viewer.getEngine();
@@ -259,145 +257,12 @@ public class PortfolioGeneratorView {
         siteViewer.setText("Site Viewer");
         siteViewer.setContent(pageViewerPane);
         workspaceModeToolbarPane.getTabs().addAll(portfolioEditor, siteViewer);
+        * */
+        
+        workspaceModeToolbarPane.getTabs().addAll(portfolioEditor);
     }
     
-    public void initPageSettingsWorkspace(Page pageToEdit){
-        //PAGE SETTINGS PANE
-        pageSettingsPane = new VBox();
-        //SETTING THE WIDTH!!!! CHANGE LATER
-        pageSettingsPane.setPrefWidth(450);
-        pageSettingsPane.getStyleClass().add(CSS_CLASS_PAGE_SETTINGS_PANE);
-        
-        //LAYOUT SELECTION
-        VBox layoutSelection = new VBox();
-        Label layoutLabel= new Label("Select Layout:");
-        ToggleGroup layoutButtons = new ToggleGroup();
-        RadioButton layout1Button = new RadioButton("Layout 1");
-        RadioButton layout2Button = new RadioButton("Layout 2");
-        RadioButton layout3Button = new RadioButton("Layout 3");
-        RadioButton layout4Button = new RadioButton("Layout 4");
-        RadioButton layout5Button = new RadioButton("Layout 5");
-        //PUT BUTTONS ON SAME GROUP
-        layout1Button.setToggleGroup(layoutButtons);
-        layout2Button.setToggleGroup(layoutButtons);
-        layout3Button.setToggleGroup(layoutButtons);
-        layout4Button.setToggleGroup(layoutButtons);
-        layout5Button.setToggleGroup(layoutButtons);
-        //SET THE INITIAL TOGGLE
-        layoutButtons.selectToggle(layoutButtons.getToggles()
-                .get(pageToEdit.getLayout()-1));
-        //PUT LABEL AND BUTTONS ON VBOX
-        layoutSelection.getChildren().addAll(layoutLabel, layout1Button,
-                layout2Button, layout3Button, layout4Button, layout5Button);
-        
-        //COLOR SELECTION
-        VBox colorSelection = new VBox();
-        Label colorLabel = new Label("Select Color Scheme:");
-        ToggleGroup colorButtons = new ToggleGroup();
-        RadioButton color1Button = new RadioButton("Blue");
-        RadioButton color2Button = new RadioButton("Red");
-        RadioButton color3Button = new RadioButton("Green");
-        RadioButton color4Button = new RadioButton("Beige");
-        RadioButton color5Button = new RadioButton("Gray");
-        //PUT BUTTONS ON SAME GROUP
-        color1Button.setToggleGroup(colorButtons);
-        color2Button.setToggleGroup(colorButtons);
-        color3Button.setToggleGroup(colorButtons);
-        color4Button.setToggleGroup(colorButtons);
-        color5Button.setToggleGroup(colorButtons);
-        
-        //PUT LABEL AND BUTTONS ON VBOX
-        colorSelection.getChildren().addAll(colorLabel, color1Button,color2Button,
-        color3Button,color4Button,color5Button);
-        
-        //PAGE FONT
-        VBox pageFontSettings = new VBox();
-        Label fontLabel = new Label("Select a Page Font:");
-        ObservableList<String> fonts = FXCollections.observableArrayList();
-        fonts.add("Righteous");
-        fonts.add("Lora");
-        fonts.add("Roboto Slab");
-        fonts.add("Rock Salt");
-        ComboBox pageFont = new ComboBox(fonts);
-        pageFont.getSelectionModel().select("Righteous");
-        pageFontSettings.getChildren().addAll(fontLabel, pageFont);
-        
-        
-        //BANNER SELECTION
-        VBox bannerSelection = new VBox();
-        Label bannerLabel = new Label("Select Banner Image:");
-        Button browse = new Button("Browse...");
-        bannerImg = new Label("bannerImg.jpg");
-        bannerSelection.getChildren().addAll(bannerLabel, browse, bannerImg);
-        
-        //STUDENT NAME
-        VBox studentBox = new VBox();
-        Label nameLabel = new Label("Enter Student Name:");
-        TextField nameField = new TextField();
-        studentBox.getChildren().add(nameLabel);
-        studentBox.getChildren().add(nameField);
-        
-        //UPDATE FOOTER
-        VBox footerBox = new VBox();
-        Label footerLabel = new Label("Enter Footer:");
-        TextField footerField = new TextField();
-        footerField.setAlignment(Pos.TOP_LEFT);
-        footerField.setPrefHeight(200);
-        footerBox.getChildren().addAll(footerLabel,footerField);
-        
-        //ADD TO PAGE SETTINGS
-        pageSettingsPane.getChildren().addAll(layoutSelection, colorSelection,
-                pageFontSettings, bannerSelection, studentBox, footerBox);
-        
-        //COMPONENT TOOLBAR
-        componentToolbar = new VBox();
-	componentToolbar.getStyleClass().add(CSS_CLASS_SITE_TOOLBAR_VBOX);
-	addTextComponent = this.initChildButton(componentToolbar, ICON_ADD_TEXT_COMPONENT, TOOLTIP_ADD_TEXT_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);
-        addImageComponent = this.initChildButton(componentToolbar, ICON_ADD_IMAGE_COMPONENT, TOOLTIP_ADD_IMAGE_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
-        addSlideShowComponent = this.initChildButton(componentToolbar, ICON_ADD_SS_COMPONENT, TOOLTIP_ADD_SS_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
-        addVideoComponent = this.initChildButton(componentToolbar, ICON_ADD_VIDEO_COMPONENT, TOOLTIP_ADD_VIDEO_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
-        removeComponent = this.initChildButton(componentToolbar, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
-        editComponent = this.initChildButton(componentToolbar, ICON_EDIT_COMPONENT, TOOLTIP_EDIT_COMPONENT, CSS_CLASS_COMPONENT_TOOLBAR_BUTTON,  false);;
-        
-        
-        //COMPONENT SCROLLPANE
-        componentPane = new VBox();
-        componentScrollPane = new ScrollPane();
-        componentScrollPane.getStyleClass().add(CSS_CLASS_COMPONENT_PANE);
-        //SETTING THE WIDTH!!!! CHANGE LATER
-        componentPane.setPrefWidth(1000);
-        //ADD DUMMY COMPONENTS
-        TextComponent tc1 = new TextComponent("Header","This is a header");
-        TextComponent tc2 = new TextComponent("Paragraph","This is a paragraph."
-                + "This is a paragraph.");
-        TextComponent tc3 = new TextComponent("List","This\nIs\nA\nList");
-        TextComponentView t1 = new TextComponentView(tc1);
-        TextComponentView t2 = new TextComponentView(tc2);
-        TextComponentView t3 = new TextComponentView(tc3);
-        componentPane.getChildren().addAll(t1,t2,t3);
-        
-        //HANDLER
-        t1.setOnMouseClicked(e ->{
-            selectedComponent = tc1;
-            t1.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-        });
-        t2.setOnMouseClicked(e ->{
-            selectedComponent = tc2;
-            t2.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-        });
-        t3.setOnMouseClicked(e ->{
-            selectedComponent = tc3;
-            t3.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-        });
-        componentScrollPane.setContent(componentPane);
-        //FINALLY ADD EVERYTHING TO PORTFOLIO EDITOR
-        portfolioEditorPane.getChildren().add(pageSettingsPane);
-        portfolioEditorPane.getChildren().add(componentToolbar);
-        portfolioEditorPane.getChildren().add(componentScrollPane);
-        
-        portfolioEditor.setContent(portfolioEditorPane);
-        
-    }
+    
     private void initEventHandlers() {
         //FILE TOOLBAR CONTROLS
         fileController = new FileController(this, fileManager);
@@ -416,61 +281,33 @@ public class PortfolioGeneratorView {
         });
 	
     }
-    private void initComponentHandlers(){
-        componentController = new ComponentController(this);
-        addTextComponent.setOnAction(e -> {
-	    componentController.handleAddTextComponent();
-	});
-        addImageComponent.setOnAction(e -> {
-           componentController.handleAddImageComponent(); 
-        });
-        addSlideShowComponent.setOnAction(e ->{
-            try {
-                componentController.handleAddSlideShowComponent();
-            } catch (Exception ex) {
-                Logger.getLogger(PortfolioGeneratorView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        addVideoComponent.setOnAction(e ->{
-            componentController.handleAddVideoComponent();
-        });
-        editComponent.setOnAction(e -> {
-            componentController.handleEditComponent(selectedComponent);
-        });
-    }
+    
     public void reloadPageEditorPane() {
 	pageEditorPane.getChildren().clear();
 	for (Page page : portfolio.getPages()) {
 	    PageEditView pageEditor = new PageEditView(page);
 	    if (portfolio.isSelectedPage(page))
-		pageEditor.getStyleClass().add(CSS_CLASS_PAGE_EDIT_VIEW);
-	    else
 		pageEditor.getStyleClass().add(CSS_CLASS_SELECTED_PAGE_EDIT_VIEW);
+	    else
+		pageEditor.getStyleClass().add(CSS_CLASS_PAGE_EDIT_VIEW);
 	    pageEditorPane.getChildren().add(pageEditor);
 	    pageEditor.setOnMousePressed(e -> {
 		portfolio.setSelectedPage(page);
 		this.reloadPageEditorPane();
 	    });
 	}
+        //SHOW SETTINGS AND ADD THEM
+        if(portfolio.getSelectedPage() != null){
+            //showPageSettingsWorkspace(portfolio.getSelectedPage());
+            settingsView.getChildren().clear();
+            settingsView = new PageSettingsView(portfolio, 
+                                                portfolio.getSelectedPage());
+            portfolioEditorPane.getChildren().add(settingsView);
+            System.out.println("SELECTED PAGE: " + portfolio.getSelectedPage().getName());
+        }
 	updateSiteToolbarControls(false);
     }
     
-    public void reloadComponentPane() {
-	componentPane.getChildren().clear();
-	for (Component component : portfolio.getComponents()) {
-	    ComponentView componentEditor = new ComponentView(component);
-	    if (portfolio.isSelectedComponent(component))
-		componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
-	    else
-		componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-	    pageEditorPane.getChildren().add(componentEditor);
-	    componentEditor.setOnMousePressed(e -> {
-		portfolio.setSelectedComponent(component);
-		this.reloadComponentPane();
-	    });
-	}
-	updateSiteToolbarControls(false);
-    }
     
     public void updateSiteToolbarControls(boolean isSaved) {
 	//SET WORKSPACE

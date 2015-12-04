@@ -22,6 +22,7 @@ public class PortfolioModel {
     ObservableList<Component> components;
     Component selectedComponent;
     String title;
+    String studentName;
     
     public PortfolioModel(PortfolioGeneratorView initUI){
         ui = initUI;
@@ -59,6 +60,9 @@ public class PortfolioModel {
     public String getTitle(){
         return title;
     }
+    public String getStudentName(){
+        return studentName;
+    }
     
     //MUTATOR
     public void setSelectedPage(Page newPage){
@@ -67,14 +71,19 @@ public class PortfolioModel {
     public void setTitle(String newTitle){
         title = newTitle;
     }
+    public void setStudentName(String newName){
+        studentName = newName;
+    }
     
     public void addPage(   String initName,
 			    int initLayout,
-			    int initColor,
+			    int initColor, 
+                            String initFont,
                             boolean initHasBannerImage) {
-	Page slideToAdd = new Page(initName, initLayout, initColor,initHasBannerImage);
-	pages.add(slideToAdd);
-	//ui.reloadPortfolioPane();
+	Page pageToAdd = new Page(initName, initLayout, 
+                initColor,initFont, initHasBannerImage);
+	pages.add(pageToAdd);
+	ui.reloadPageEditorPane();
     }
     
      public void removeSelectedPage() {
@@ -90,6 +99,7 @@ public class PortfolioModel {
 	title = props.getProperty(LanguagePropertyType.DEFAULT_PORFOLIO_TITLE);
 	selectedPage = null;
         selectedComponent = null;
+        studentName = "ENTER STUDENT NAME";
     }
 
     public void setSelectedComponent(Component component) {
