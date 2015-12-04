@@ -28,6 +28,7 @@ import javax.json.stream.JsonGenerator;
 import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.model.Page;
 import epg.model.PortfolioModel;
+import epg.model.TextComponent;
 import java.math.BigDecimal;
 
 
@@ -36,25 +37,24 @@ public class PortfolioFileManager {
     // JSON FILE READING AND WRITING CONSTANTS
 
     public static String JSON_TITLE = "title";
+    public static String JSON_STUDENT_NAME = "student_name";
     public static String JSON_PAGES = "pages";
-    public static String JSON_PAGE_TITLE = "page_title";
+    
+    //PAGE
+    public static String JSON_PAGE_NAME = "page_name";
     public static String JSON_LAYOUT = "layout";
     public static String JSON_COLOR = "color";
+    public static String JSON_PAGE_FONT = "page_font";
+    public static String JSON_BANNER_PATH = "banner_path";
+    public static String JSON_BANNER_FILE_NAME = "banner_file_name";
+    public static String JSON_FOOTER = "footer";
+    //TEXT COMPONENTS
     public static String JSON_TEXT_COMPONENTS = "text_components";
-    public static String JSON_IMAGE_COMPONENTS = "image_components";
-    public static String JSON_SLIDESHOW_COMPONENTS = "slideshow_components";
-    public static String JSON_VIDEO_COMPONENTS = "video_components";
-    public static String JSON_HEADERS = "headers";
-    public static String JSON_PARAGRAPHS = "paragraphs";
-    public static String JSON_LISTS = "lists";
-    public static String JSON_IMAGE_FILE_NAME = "image_file_name";
-    public static String JSON_IMAGE_PATH = "image_path";
-    public static String JSON_SLIDES = "slides";
-    public static String JSON_SS_IMAGE_FILE_NAME = "image_file_name";
-    public static String JSON_SS_IMAGE_PATH = "image_path";
-    public static String JSON_CAPTION = "caption";
-    public static String JSON_VIDEO_FILE_NAME = "video_file_name";
-    public static String JSON_VIDEO_PATH = "video_path";
+    public static String JSON_TEXT_TYPE = "text_type";
+    public static String JSON_STYLE = "style";
+    public static String JSON_FONT = "font";
+    public static String JSON_SIZE = "size";
+            
     public static String JSON_EXT = ".json";
     public static String SLASH = "/";
 
@@ -67,77 +67,63 @@ public class PortfolioFileManager {
      * @throws IOException Thrown when there are issues writing to the JSON
      * file.
      */
-    public void saveSlideShow(PortfolioModel portfolioToSave) throws IOException {
+    public void savePortfolio(PortfolioModel portfolioToSave) throws IOException {
 	StringWriter sw = new StringWriter();
         
-        /**
-	// BUILD THE SLIDES ARRAY
-	JsonArray slidesJsonArray = makePagesJsonArray(portfolioToSave.getPages());
-
-	// NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
-	JsonObject slideShowJsonObject = Json.createObjectBuilder()
-		.add(JSON_TITLE, portfolioToSave.getTitle())
-		.add(JSON_PAGES, makePagesJsonArray)
-		.build();
-
-	Map<String, Object> properties = new HashMap<>(1);
-	properties.put(JsonGenerator.PRETTY_PRINTING, true);
-
-	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
-	JsonWriter jsonWriter = writerFactory.createWriter(sw);
-	jsonWriter.writeObject(slideShowJsonObject);
-	jsonWriter.close();
-
-	// INIT THE WRITER
-	String slideShowTitle = "" + portfolioToSave.getTitle();
-	String jsonFilePath = PATH_PORTFOLIOS + SLASH + slideShowTitle + JSON_EXT;
-	OutputStream os = new FileOutputStream(jsonFilePath);
-	JsonWriter jsonFileWriter = Json.createWriter(os);
-	jsonFileWriter.writeObject(slideShowJsonObject);
-	String prettyPrinted = sw.toString();
-	PrintWriter pw = new PrintWriter(jsonFilePath);
+        //BUILD PAGESARRAY
+        JsonArray pagesJsonArray = makePagesJsonArray(portfolioToSave.getPages());
+        //BUILD PORTFOLIO
+        System.out.println("PORTFOLIO TITLE : " + portfolioToSave.getTitle());
+        JsonObject portfolioJsonObject = Json.createObjectBuilder()
+                .add(JSON_TITLE, portfolioToSave.getTitle())
+                .add(JSON_STUDENT_NAME, portfolioToSave.getStudentName())
+                .add(JSON_PAGES, pagesJsonArray)
+                .build();
+        
+        Map<String, Object> properties = new HashMap<>(1);
+        properties.put(JsonGenerator.PRETTY_PRINTING, true);
+        
+        JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+        JsonWriter jsonWriter = writerFactory.createWriter(sw);
+        jsonWriter.writeObject(portfolioJsonObject);
+        jsonWriter.close();
+        
+        //INIT WRITER
+        String portfolioTitle = "" + portfolioToSave.getTitle();
+        String jsonFilePath = PATH_PORTFOLIOS + SLASH + portfolioTitle + JSON_EXT;
+        OutputStream os = new FileOutputStream(jsonFilePath);
+        JsonWriter jsonFileWriter = Json.createWriter(os);
+        jsonFileWriter.writeObject(portfolioJsonObject);
+        String prettyPrinted = sw.toString();
+        PrintWriter pw = new PrintWriter(jsonFilePath);
 	pw.write(prettyPrinted);
 	pw.close();
 	System.out.println(prettyPrinted);
-        */
     }
-
-    /**
-     * This method loads the contents of a JSON file representing a slide show
-     * into a SlideSShowModel objecct.
-     *
-     * @param portfolioToLoad The slide show to load
-     * @param jsonFilePath The JSON file to load.
-     * @throws IOException
-     */
-    
-    /**
-    public void loadSlideShow(PortfolioModel portfolioToLoad, String jsonFilePath) throws IOException {
-	// LOAD THE JSON FILE WITH ALL THE DATA
-	JsonObject json = loadJSONFile(jsonFilePath);
-
-	// NOW LOAD THE COURSE
-	portfolioToLoad.reset();
-	portfolioToLoad.setTitle(json.getString(JSON_TITLE));
-	JsonArray jsonSlidesArray = json.getJsonArray(JSON_SLIDES);
-	for (int i = 0; i < jsonSlidesArray.size(); i++) {
-	    JsonObject slideJso = jsonSlidesArray.getJsonObject(i);
-	    portfolioToLoad.addPage(slideJso.getString(JSON_IMAGE_FILE_NAME),
-		    slideJso.getString(JSON_IMAGE_PATH),
-		    slideJso.getString(JSON_CAPTION));
-	}
+    public void loadPortfolio(PortfolioModel portfolioToLoad, String jsonFilePath) throws IOException{
+        JsonObject json = loadJSONFile(jsonFilePath);
+        
+        portfolioToLoad.reset();;
+        portfolioToLoad.setTitle(json.getString(JSON_TITLE));
+        JsonArray jsonPagesArray = json.getJsonArray(JSON_PAGES);
+        for(int i = 0 ; i < jsonPagesArray.size(); i++){
+            JsonObject pageJso = jsonPagesArray.getJsonObject(i);
+            boolean hasBannerImg = !pageJso.getString(JSON_BANNER_FILE_NAME).equals("");
+            portfolioToLoad.addPage(pageJso.getString(JSON_PAGE_NAME),
+                    pageJso.getInt(JSON_LAYOUT),
+                    pageJso.getInt(JSON_COLOR),
+                    pageJso.getString(JSON_PAGE_FONT),
+                    hasBannerImg);
+        }
     }
-
-    // AND HERE ARE THE PRIVATE HELPER METHODS TO HELP THE PUBLIC ONES
-    private JsonObject loadJSONFile(String jsonFilePath) throws IOException {
-	InputStream is = new FileInputStream(jsonFilePath);
+    private JsonObject loadJSONFile(String jsonFilePath) throws IOException{
+        InputStream is = new FileInputStream(jsonFilePath);
 	JsonReader jsonReader = Json.createReader(is);
 	JsonObject json = jsonReader.readObject();
 	jsonReader.close();
 	is.close();
 	return json;
     }
-
     private ArrayList<String> loadArrayFromJSONFile(String jsonFilePath, String arrayName) throws IOException {
 	JsonObject json = loadJSONFile(jsonFilePath);
 	ArrayList<String> items = new ArrayList();
@@ -147,25 +133,48 @@ public class PortfolioFileManager {
 	}
 	return items;
     }
-
-    private JsonArray makePagesJsonArray(List<Page> pages) {
-	JsonArrayBuilder jsb = Json.createArrayBuilder();
-	for (Page page : pages) {
-	    JsonObject jso = makePageJsonObject(page);
-	    jsb.add(jso);
-	}
-	JsonArray jA = jsb.build();
-	return jA;
+    private JsonArray makePagesJsonArray(List<Page> pages){
+        System.out.println("MAKING PAGES ARRAY");
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for(Page page : pages){
+            JsonObject jso = makePageJsonObject(page);
+            jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;
     }
-
-    private JsonObject makePageJsonObject(Page page) {
-	JsonObject jso = Json.createObjectBuilder()
-                .add(JSON_PAGE_TITLE, page.getName())
-		.add(JSON_LAYOUT, page.getLayout())
-		.add(JSON_COLOR, page.getColor())
-                .add(JSON_TEXT_COMPONENTS, )
-		.build();
-	return jso;
+    private JsonObject makePageJsonObject(Page page){
+        System.out.println("MAKING PAGE OBJECT");
+        JsonObject jso = Json.createObjectBuilder()
+                .add(JSON_PAGE_NAME, page.getName())
+                .add(JSON_LAYOUT, page.getLayout())
+                .add(JSON_COLOR, page.getColor())
+                .add(JSON_PAGE_FONT, page.getPageFont())
+                .add(JSON_FOOTER, page.getFooter())
+                .add(JSON_BANNER_PATH, page.getBannerImgPath())
+                .add(JSON_BANNER_FILE_NAME, page.getBannerFileName())       
+                .add(JSON_TEXT_COMPONENTS, makeTextComponentsJsonArray(page.getTextComponents()))
+                .build();
+        return jso;
     }
-    */
+    private JsonArray makeTextComponentsJsonArray(List<TextComponent> tcs){
+        System.out.println("MAKING TEXT COMPONENT ARRAY");
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for(TextComponent tc : tcs){
+            JsonObject jso = makeTextComponentJsonObject(tc);
+            jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;
+    }
+    private JsonObject makeTextComponentJsonObject(TextComponent tc){
+        System.out.println("MAKING TEXT COMPONENT OBJECT");
+        JsonObject jso = Json.createObjectBuilder()
+                .add(JSON_TEXT_TYPE, tc.getType())
+                .add(JSON_STYLE, tc.getStyle())
+                .add(JSON_FONT, tc.getFont())
+                .add(JSON_SIZE, tc.getSize())
+                .build();
+        return jso;
+    }
 }

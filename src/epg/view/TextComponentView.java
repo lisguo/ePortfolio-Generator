@@ -44,9 +44,10 @@ public class TextComponentView extends ComponentView{
     Label text;
     
     Page pageToEdit;
-    
+    TextComponent textComponent;
     public TextComponentView(Page p, TextComponent textComponent){
         pageToEdit = p;
+        this.textComponent = textComponent;
         textType = new Label("Type: " + textComponent.getType());
         fontControls = new HBox();
         fontLabel = new Label("Font: ");
@@ -106,10 +107,17 @@ public class TextComponentView extends ComponentView{
         text.getStyleClass().add(CSS_SMALL_LABEL);
         getChildren().addAll(textType,fontControls,text);
         
+        initTextComponentHandlers();
     }
 
-    TextComponentView(Component component) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void initTextComponentHandlers(){
+        //IF USER CHANGES FONT
+        fontSelection.setOnAction(e -> {
+            textComponent.setFont(
+                    (String)fontSelection.getSelectionModel().getSelectedItem());
+            System.out.println("FONT UPDATED TO : " + 
+                    (String)fontSelection.getSelectionModel().getSelectedItem());
+        });
     }
     
 }

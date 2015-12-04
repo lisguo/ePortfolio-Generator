@@ -1,0 +1,23 @@
+
+{
+    "title":"ENTER TITLE",
+    "student_name":"ENTER STUDENT NAME",
+    "pages":[
+        {
+            "page_name":"New Page",
+            "layout":0,
+            "color":0,
+            "footer":"",
+            "banner_path":"",
+            "banner_file_name":"",
+            "text_components":[
+                {
+                    "text_type":"Header",
+                    "style":"None",
+                    "font":"Righteous",
+                    "size":12
+                }
+            ]
+        }
+    ]
+}

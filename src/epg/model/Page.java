@@ -38,8 +38,8 @@ public class Page {
         hasBannerImage = initHasBannerImage;
         components = FXCollections.observableArrayList();
         footer = "";
-        bannerImgPath = null;
-        bannerFileName = null;
+        bannerImgPath = "";
+        bannerFileName = "";
     }
     
     //ACCESSOR

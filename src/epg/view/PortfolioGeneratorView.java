@@ -156,6 +156,7 @@ public class PortfolioGeneratorView {
         
         File f = new File(htmlPath);
         htmlPath = f.getCanonicalPath();
+        fileManager = new PortfolioFileManager();
     }
     
     public PortfolioModel getPortfolio(){
@@ -263,7 +264,12 @@ public class PortfolioGeneratorView {
         newPortfolioButton.setOnAction(e ->{
             fileController.handleNewPortfolioRequest();
         });
-        
+        savePortfolioButton.setOnAction(e ->{
+            fileController.handleSavePortfolioRequest();
+        });
+        loadPortfolioButton.setOnAction(e ->{
+            fileController.handleLoadPortfolioRequest();
+        });
         
         //PAGE EDIT CONTROLS
         pageEditController = new PageEditController(this);
@@ -310,7 +316,7 @@ public class PortfolioGeneratorView {
 	addPageButton.setDisable(false);
         
         savePortfolioButton.setDisable(isSaved);
-        
+        saveAsPortfolioButton.setDisable(false);
         
         updatePortfolioEditToolbarControls();
     }

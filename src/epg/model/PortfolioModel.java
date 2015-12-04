@@ -81,7 +81,7 @@ public class PortfolioModel {
     public void reset() {
 	pages.clear();
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
-	title = props.getProperty(LanguagePropertyType.DEFAULT_PORFOLIO_TITLE);
+	title = props.getProperty(LanguagePropertyType.DEFAULT_PORTFOLIO_TITLE);
 	selectedPage = null;
         studentName = "ENTER STUDENT NAME";
     }
