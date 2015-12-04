@@ -30,6 +30,9 @@ public class PageSettingsController{
             selectedPage.setHasBannerImage(false);
         }
         System.out.println("PAGE HAS BANNER IMAGE : " + selectedPage.getHasBannerImage());
+        //REFRESH
+        ui.getChildren().clear();
+        ui.showPageSettingsWorkspace();
     }
 
     public void handleSetColor(ToggleGroup colorButtons) {

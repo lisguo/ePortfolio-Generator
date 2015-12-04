@@ -87,7 +87,6 @@ public class PageSettingsView extends HBox{
         portfolio = p;
         pageToEdit = page;
         showPageSettingsWorkspace();
-        initPageSettingHandlers();
     }
     public PortfolioModel getPortfolio(){
         return portfolio;
@@ -190,6 +189,9 @@ public class PageSettingsView extends HBox{
         //ADD BANNER IF LAYOUT HAS ONE
         if(pageToEdit.getHasBannerImage()){
             pageSettingsPane.getChildren().add(bannerSelection);
+        }//ELSE REMOVE
+        else{
+            pageSettingsPane.getChildren().remove(bannerSelection);
         }
         
         //COMPONENT TOOLBAR
@@ -237,6 +239,9 @@ public class PageSettingsView extends HBox{
         componentScrollPane.setContent(componentPane);
         //FINALLY ADD EVERYTHING TO PORTFOLIO SETTINGS VIEW
         getChildren().addAll(pageSettingsPane,componentToolbar,componentScrollPane);
+        
+        
+        initPageSettingHandlers();
     }
     private void initPageSettingHandlers(){
         //SETTING THE LAYOUT
