@@ -37,6 +37,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -86,6 +87,7 @@ public class PageSettingsView extends HBox{
         portfolio = p;
         pageToEdit = page;
         showPageSettingsWorkspace();
+        initPageSettingHandlers();
     }
     public PortfolioModel getPortfolio(){
         return portfolio;
@@ -231,18 +233,40 @@ public class PageSettingsView extends HBox{
             selectedComponent = tc3;
             t3.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
         });
+        * */
         componentScrollPane.setContent(componentPane);
-        */
         //FINALLY ADD EVERYTHING TO PORTFOLIO SETTINGS VIEW
         getChildren().addAll(pageSettingsPane,componentToolbar,componentScrollPane);
     }
     private void initPageSettingHandlers(){
         //SETTING THE LAYOUT
         pageSettingsController = new PageSettingsController(this);
-        pageSettingsController.handleSetLayout(layoutButtons);
-        
+        for(Toggle t : layoutButtons.getToggles()){
+            RadioButton b = (RadioButton) t;
+            b.setOnAction(e ->{
+                pageSettingsController.handleSetLayout(layoutButtons); 
+            });
+        }
         //SETTING COLOR
-        pageSettingsController.handleSetColor(colorButtons);
+        for(Toggle t : colorButtons.getToggles()){
+            RadioButton b = (RadioButton) t;
+            b.setOnAction(e ->{
+                pageSettingsController.handleSetColor(colorButtons); 
+            });
+        }
+        //SETTING PAGE FONT
+        pageFont.setOnAction(e ->{
+            pageSettingsController.handleSetPageFont(pageFont);
+        });
+        
+        //SETTING STUDENT NAME
+        studentField.setOnAction(e ->{
+            pageSettingsController.handleSetStudentName(studentField);
+        });
+        //SETTING FOOTER
+        footerField.setOnAction(e ->{
+            pageSettingsController.handleSetFooter(footerField);
+        });
     }
     private void initComponentHandlers(){
         componentController = new ComponentController(this);
