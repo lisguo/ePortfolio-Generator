@@ -32,7 +32,7 @@ public class ComponentController {
         editor.setHeight(350);
         editor.setWidth(400);
         editor.showAndWait();
-        //ui.reloadComponentPane();
+        ui.reloadTextComponentPane();
     }
     public void handleAddImageComponent(){
         System.out.println("ADD IMAGE COMPONENT CLICKED!");
@@ -49,12 +49,14 @@ public class ComponentController {
         s.setHeight(900);
         s.setWidth(1080);
         editor.start(s);
+        //ui.reloadComponentPane();
     }
     public void handleAddVideoComponent(){
         VideoComponentEditor editor = new VideoComponentEditor();
         editor.setHeight(350);
         editor.setWidth(500);
         editor.showAndWait();
+        //ui.reloadComponentPane();
     }
     public void handleEditComponent(Component compToEdit){
         System.out.println("EDIT COMPONENT CLICKED");
@@ -64,6 +66,7 @@ public class ComponentController {
             editor.setHeight(350);
             editor.setWidth(400);
             editor.showAndWait();
+            //ui.reloadComponentPane();
         }
     }
 }

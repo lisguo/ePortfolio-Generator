@@ -140,4 +140,11 @@ public class Page {
     public void setSelectedComponent(Component c){
         selectedComponent = c;
     }
+    public boolean isComponentSelected() {
+	return selectedComponent != null;
+    }
+    
+    public boolean isSelectedComponent(Component testComponent) {
+	return selectedComponent == testComponent;
+    }
 }

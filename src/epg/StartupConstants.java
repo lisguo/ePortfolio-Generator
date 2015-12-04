@@ -42,6 +42,7 @@ public class StartupConstants {
     public static String    CSS_LABEL = "label";
     public static String    CSS_SMALL_LABEL = "small_label";
     public static String    CSS_STYLE_LIST_BUTTONS = "list_buttons";
+    public static String    CSS_CLASS_COMPONENT_LABEL = "component_label";
     public static String    CSS_STYLE_HYPERLINK = "hyperlink";
 
      // HERE ARE THE LANGUAGE INDEPENDENT GUI ICONS

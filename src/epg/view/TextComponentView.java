@@ -6,6 +6,8 @@
 package epg.view;
 
 import static epg.StartupConstants.CSS_SMALL_LABEL;
+import epg.model.Component;
+import epg.model.Page;
 import epg.model.TextComponent;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -38,9 +40,14 @@ public class TextComponentView extends ComponentView{
     ObservableList<String> sizes;
     ComboBox sizeSelection;
     
+    Label textType;
     Label text;
     
-    public TextComponentView(TextComponent textComponent){
+    Page pageToEdit;
+    
+    public TextComponentView(Page p, TextComponent textComponent){
+        pageToEdit = p;
+        textType = new Label("Type: " + textComponent.getType());
         fontControls = new HBox();
         fontLabel = new Label("Font: ");
         styleLabel = new Label("Style: ");
@@ -81,7 +88,7 @@ public class TextComponentView extends ComponentView{
         sizes.add("44");
         
         fontSelection = new ComboBox(fonts);
-        fontSelection.getSelectionModel().select("Righteous");
+        fontSelection.getSelectionModel().select(textComponent.getFont());
         
         styleSelection = new ComboBox(styles);
         styleSelection.getSelectionModel().select("None");
@@ -97,8 +104,12 @@ public class TextComponentView extends ComponentView{
         
         text = new Label(textComponent.getText());
         text.getStyleClass().add(CSS_SMALL_LABEL);
-        getChildren().addAll(fontControls,text);
+        getChildren().addAll(textType,fontControls,text);
         
+    }
+
+    TextComponentView(Component component) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

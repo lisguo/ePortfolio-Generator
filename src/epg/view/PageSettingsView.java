@@ -8,6 +8,7 @@ import static epg.LanguagePropertyType.TOOLTIP_ADD_VIDEO_COMPONENT;
 import static epg.LanguagePropertyType.TOOLTIP_EDIT_COMPONENT;
 import static epg.LanguagePropertyType.TOOLTIP_REMOVE_COMPONENT;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT;
+import static epg.StartupConstants.CSS_CLASS_COMPONENT_LABEL;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_PANE;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_PAGE_SETTINGS_PANE;
@@ -74,10 +75,10 @@ public class PageSettingsView extends HBox{
     //COMPONENTS
     VBox componentPane;
     ScrollPane componentScrollPane;
-    VBox textCompPane;
-    VBox imageCompPane;
-    VBox slideShowCompPane;
-    VBox videoCompPane;
+    VBox textComponentPane;
+    VBox imageComponentPane;
+    VBox slideShowComponentPane;
+    VBox videoComponentPane;
 
     PortfolioModel portfolio;
     public PageSettingsView(){
@@ -212,13 +213,32 @@ public class PageSettingsView extends HBox{
         componentPane = new VBox();
         componentScrollPane = new ScrollPane();
         componentScrollPane.getStyleClass().add(CSS_CLASS_COMPONENT_PANE);
-        //SETTING THE WIDTH!!!! CHANGE LATER
-        componentPane.setPrefWidth(1000);
         componentScrollPane.setContent(componentPane);
+        //MAKE VBOXES PER EACH COMPONENT TYPE
+        textComponentPane = new VBox();
+        //MAKE LABEL FOR COMPONENT BOX
+        Label textComponentLabel = new Label("TEXT COMPONENTS");
+        textComponentLabel.getStyleClass().add(CSS_CLASS_COMPONENT_LABEL);
+        
+        imageComponentPane = new VBox();
+        Label imageComponentLabel = new Label("IMAGE COMPONENTS");
+        imageComponentLabel.getStyleClass().add(CSS_CLASS_COMPONENT_LABEL);
+        
+        slideShowComponentPane = new VBox();
+        Label slideShowComponentLabel = new Label("SLIDE SHOW COMPONENTS");
+        slideShowComponentLabel.getStyleClass().add(CSS_CLASS_COMPONENT_LABEL);
+        
+        videoComponentPane = new VBox();
+        Label videoComponentLabel = new Label("VIDEO COMPONENTS");
+        videoComponentLabel.getStyleClass().add(CSS_CLASS_COMPONENT_LABEL);
         
         //FINALLY ADD EVERYTHING TO PORTFOLIO SETTINGS VIEW
+        componentPane.getChildren().addAll(textComponentLabel, textComponentPane,
+                imageComponentLabel,imageComponentPane,
+                slideShowComponentLabel, slideShowComponentPane, videoComponentPane);
         getChildren().addAll(pageSettingsPane,componentToolbar,componentScrollPane);
         
+        reloadTextComponentPane();
         initPageSettingHandlers();
         initComponentHandlers();
     }
@@ -279,21 +299,28 @@ public class PageSettingsView extends HBox{
             componentController.handleEditComponent(pageToEdit.getSelectedComponent());
         });
     }
-     public void reloadComponentPane() {
-	componentPane.getChildren().clear();
-	for (Component component : portfolio.getComponents()) {
-	    ComponentView componentEditor = new ComponentView(component);
-	    if (portfolio.isSelectedComponent(component))
-		componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
-	    else
+     public void reloadTextComponentPane() {
+	textComponentPane.getChildren().clear();
+	for (TextComponent component : pageToEdit.getTextComponents()) {
+	    TextComponentView componentEditor = new TextComponentView(pageToEdit, component);
+	    if (pageToEdit.isSelectedComponent(component))
 		componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-	    getChildren().add(componentEditor);
+	    else
+		componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
+	    textComponentPane.getChildren().add(componentEditor);
 	    componentEditor.setOnMousePressed(e -> {
-		portfolio.setSelectedComponent(component);
-		this.reloadComponentPane();
+		pageToEdit.setSelectedComponent(component);
+                System.out.println("SELECTED COMPONENT : " + component.getText());
+		this.reloadTextComponentPane();
 	    });
 	}
     }
+     public void reloadImageComponentPane(){
+         imageComponentPane.getChildren().clear();
+        // for(ImageComponent component : pageToEdit.getImageComponents()){
+             
+         //}
+     }
     public javafx.scene.control.Button initChildButton(
 	    Pane toolbar, 
 	    String iconFileName, 

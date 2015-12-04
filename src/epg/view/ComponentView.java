@@ -16,12 +16,14 @@ import javafx.scene.layout.VBox;
  */
 public class ComponentView extends VBox{
     Component comp;
-    
+
     public ComponentView(){
         getStylesheets().add(STYLE_SHEET_UI);
-        getStyleClass().add(CSS_CLASS_COMPONENT);
+        setPrefWidth(1060);
     }
     public ComponentView(Component initComponent){
+        getStylesheets().add(STYLE_SHEET_UI);
+        setPrefWidth(1060);
         comp = initComponent;
     }
     

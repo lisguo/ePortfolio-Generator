@@ -57,15 +57,17 @@ public class TextComponentEditor extends Stage{
     Button okButton;
     Button continueButton;
     boolean edit;
-    
+    Page pageToEdit;
+    ComboBox fontSelection;
     //COMPONENTS OF THE COMPONENT
     String type;
     String text;
     
-    public TextComponentEditor(Page pageToEdit){
+    public TextComponentEditor(Page initPageToEdit){
         vbox = new VBox();
         hBox = new HBox();
         textField = new TextField();
+        pageToEdit = initPageToEdit;
         
         //SELECT A TEXT TYPE
         textTypeLabel = new Label("Text Type: ");
@@ -103,9 +105,6 @@ public class TextComponentEditor extends Stage{
         textField.setText(tc.getText());
         okButton = new Button("OK");
         textEditDialog(type);
-        okButton.setOnAction(e ->{
-            close();
-        });
     }
     public void textEditDialog(String type){
         VBox nextDialog = new VBox();
@@ -122,7 +121,7 @@ public class TextComponentEditor extends Stage{
                 fonts.add("Lora");
                 fonts.add("Roboto Slab");
                 fonts.add("Rock Salt");
-                ComboBox fontSelection = new ComboBox(fonts);
+                fontSelection = new ComboBox(fonts);
                 fontSelection.getSelectionModel().select("Righteous");
                 
                 //HYPERLINK CONTROLS
@@ -134,10 +133,8 @@ public class TextComponentEditor extends Stage{
                 nextDialog.getChildren().addAll(textField, okButton);
                 
                 hyperLink.setOnAction(e -> {
-                    //FIND WHAT THE USER HIGHLIGHTED AND MAKE IT HYPERLINK'D
                     int startingIndex = textField.getSelection().getStart();
                     int endingIndex = textField.getSelection().getEnd();
-                    String hyperlinkText = textField.getText(startingIndex, endingIndex);
                     Stage dialog = new Stage();
                     dialog.setHeight(200);
                     dialog.setWidth(500);
@@ -153,6 +150,7 @@ public class TextComponentEditor extends Stage{
                     //AFTER HITTING OK, GET THE HYPERLINK
                     ok.setOnAction(e2 -> {
                         Hyperlink link = new Hyperlink(field.getText());
+                        String hyperlinkText = "<a href='" + " '>"+ textField.getText(startingIndex, endingIndex) + "</a> ";
                         textField.setText(textField.getText().concat(link.getText()));
                         dialog.close();
                     });
@@ -183,6 +181,24 @@ public class TextComponentEditor extends Stage{
             scene = new Scene(nextDialog);
             scene.getStylesheets().add(STYLE_SHEET_UI);
             setScene(scene);
+            okButton.setOnAction(e ->{
+            text = textField.getText();
+            TextComponent createdComponent = new TextComponent(type, text);
+            //IF IT WAS A PARAGRAPH
+            if(type.equals("Paragraph")){
+                createdComponent.setFont(
+                        (String) fontSelection.getSelectionModel().getSelectedItem());
+            }
+            else{
+                createdComponent.setFont(pageToEdit.getPageFont());
+            }
+            pageToEdit.addTextComponent(createdComponent);
+            System.out.println("ADDED TEXT COMPONENT : " + type + "-" + text);
+            //SET TEXT COMPONENT AS SELECTED
+            pageToEdit.setSelectedComponent(createdComponent);
+            close();
+        });
+            
     }
     public javafx.scene.control.Button initChildButton(
 	    Pane toolbar, 
