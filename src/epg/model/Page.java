@@ -94,6 +94,9 @@ public class Page {
         }
         return ic;
     }
+    public void addImageComponent(ImageComponent ic){
+        components.add(ic);
+    }
     public ObservableList<SlideShowComponent> getSlideShowComponents(){
         ObservableList<SlideShowComponent> sc = FXCollections.observableArrayList();
         for(Component c : components){

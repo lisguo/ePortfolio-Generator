@@ -23,6 +23,10 @@ public class ErrorHandler {
 	ui = initUI;
     }
     
+    public ErrorHandler(){
+        
+    }
+    
     /**
      * This method provides all error feedback. It gets the feedback text,
      * which changes depending on the type of error, and presents it to
@@ -31,6 +35,12 @@ public class ErrorHandler {
      * @param errorType Identifies the type of error that happened, which
      * allows us to get and display different text for different errors.
      */
+    public void processError(String errorFeedbackText)
+    {
+        // POP OPEN A DIALOG TO DISPLAY TO THE USER
+        Alert alertDialog = new Alert(AlertType.WARNING, errorFeedbackText);
+	alertDialog.showAndWait();
+    }    
     public void processError(LanguagePropertyType errorType)
     {
         // GET THE FEEDBACK TEXT
@@ -39,6 +49,9 @@ public class ErrorHandler {
              
         // POP OPEN A DIALOG TO DISPLAY TO THE USER
         Alert alertDialog = new Alert(AlertType.WARNING, errorFeedbackText);
+        alertDialog.setOnCloseRequest(e ->{
+            alertDialog.close();
+        });
 	alertDialog.showAndWait();
     }    
 }

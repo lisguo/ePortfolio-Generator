@@ -24,6 +24,7 @@ import static epg.StartupConstants.PATH_ICONS;
 import epg.controller.ComponentController;
 import epg.controller.PageSettingsController;
 import epg.model.Component;
+import epg.model.ImageComponent;
 import epg.model.Page;
 import epg.model.PortfolioModel;
 import epg.model.TextComponent;
@@ -238,7 +239,7 @@ public class PageSettingsView extends HBox{
                 slideShowComponentLabel, slideShowComponentPane, videoComponentPane);
         getChildren().addAll(pageSettingsPane,componentToolbar,componentScrollPane);
         
-        reloadTextComponentPane();
+        reloadComponentPane();
         initPageSettingHandlers();
         initComponentHandlers();
     }
@@ -323,10 +324,20 @@ public class PageSettingsView extends HBox{
 	}
     }
      public void reloadImageComponentPane(){
-         imageComponentPane.getChildren().clear();
-        // for(ImageComponent component : pageToEdit.getImageComponents()){
-             
-         //}
+        imageComponentPane.getChildren().clear();
+        for(ImageComponent component : pageToEdit.getImageComponents()){
+             ImageComponentView componentEditor = new ImageComponentView(pageToEdit,component);
+             if(pageToEdit.isSelectedComponent(component))
+                 componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
+             else
+                 componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
+             imageComponentPane.getChildren().add(componentEditor);
+             componentEditor.setOnMousePressed(e->{
+                 pageToEdit.setSelectedComponent(component);
+                 System.out.println("SELECTED COMPONENT : " + component.getCaption());
+                 this.reloadImageComponentPane();
+             });
+        }
      }
     public javafx.scene.control.Button initChildButton(
 	    Pane toolbar, 
