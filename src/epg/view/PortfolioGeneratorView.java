@@ -326,7 +326,9 @@ public class PortfolioGeneratorView {
 	boolean pageSelected = portfolio.isPageSelected();
 	removePageButton.setDisable(!pageSelected);
     }
-    
+    public void removePageSettings(){
+        portfolioEditorPane.getChildren().remove(settingsView);
+    }
     
     public javafx.scene.control.Button initChildButton(
 	    Pane toolbar, 

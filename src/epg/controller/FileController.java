@@ -72,7 +72,9 @@ public class FileController {
 
                 // REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
                 // THE APPROPRIATE CONTROLS
-                ui.updateSiteToolbarControls(saved);	
+                ui.updateSiteToolbarControls(saved);
+                ui.removePageSettings();
+                ui.reloadPageEditorPane();
             }
         } catch (IOException ioe) {
             //ErrorHandler eH = ui.getErrorHandler();
