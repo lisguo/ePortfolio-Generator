@@ -8,6 +8,7 @@ package epg.view;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
+import epg.model.Page;
 import javafx.scene.layout.VBox;
 
 /**
@@ -16,16 +17,20 @@ import javafx.scene.layout.VBox;
  */
 public class ComponentView extends VBox{
     Component comp;
-
+    Page pageToEdit;
+    
     public ComponentView(){
         getStylesheets().add(STYLE_SHEET_UI);
         setPrefWidth(1060);
     }
-    public ComponentView(Component initComponent){
+    public ComponentView(Page pageToEdit, Component initComponent){
         getStylesheets().add(STYLE_SHEET_UI);
         setPrefWidth(1060);
         comp = initComponent;
+        this.pageToEdit = pageToEdit;
     }
-    
+    public Component getComponent(){
+        return comp;
+    }
     
 }

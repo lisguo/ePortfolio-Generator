@@ -15,9 +15,11 @@
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/controller/ComponentController.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/controller/FileController.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/view/SlideShowComponentEditor.java</file>
+            <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/web/style1.css</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/view/PortfolioGeneratorView.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/file/PortfolioFileManager.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/file/SlideShowFileManager.java</file>
+            <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/error/ErrorHandler.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/view/SlideEditView.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/style/PortfolioGeneratorStyle.css</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/view/TextComponentView.java</file>
@@ -28,6 +30,8 @@
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/view/TextComponentEditor.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/controller/SlideShowFileController.java</file>
             <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/view/PageSettingsView.java</file>
+            <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/web/layout1.css</file>
+            <file>file:/C:/Users/BunnyRailgun/Documents/School/Java/CSE%20219/ePortfolioGenerator/src/epg/controller/ImageSelectionController.java</file>
         </group>
     </open-files>
 </project-private>

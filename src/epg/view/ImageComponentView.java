@@ -49,10 +49,10 @@ public class ImageComponentView extends ComponentView{
     
     HBox fontControl,styleControl,sizeControl;
     
-    ImageComponent ic;
+    ImageComponent imageComponent;
     public ImageComponentView(Page pageToEdit, ImageComponent imageComponent){
         super();
-        ic = imageComponent;
+        this.imageComponent = imageComponent;
         imageViewer = new ImageView();
         updateImage();
         caption = imageComponent.getCaption();
@@ -129,7 +129,7 @@ public class ImageComponentView extends ComponentView{
         
     }
     public void updateImage(){
-        String imgPath = ic.getImagePath() + SLASH + ic.getImageFileName();
+        String imgPath = imageComponent.getImagePath() + SLASH + imageComponent.getImageFileName();
         File file = new File(imgPath);
         try{
             URL fileURL = file.toURI().toURL();
@@ -146,5 +146,22 @@ public class ImageComponentView extends ComponentView{
             ErrorHandler eH = new ErrorHandler();
             eH.processError("ERROR IN SHOWING IMAGE");
         }
+    }
+    public void initImageComponentHandlers(){
+        fontSelection.setOnAction(e -> {
+            String font = (String)fontSelection.getSelectionModel().getSelectedItem();
+            imageComponent.setCaptionFont(font);
+            System.out.println("FONT UPDATED TO : " + font);
+        });
+        styleSelection.setOnAction(e ->{
+            String style = (String)styleSelection.getSelectionModel().getSelectedItem();
+            imageComponent.setCaptionStyle(style);
+            System.out.println("STYLE UPDATED TO : " + style);
+        });
+        sizeSelection.setOnAction(e->{
+            int size = Integer.getInteger((String)sizeSelection.getSelectionModel().getSelectedItem());
+            imageComponent.setCaptionSize(size);
+            System.out.println("SIZE CHANGED TO " + size);
+        });
     }
 }

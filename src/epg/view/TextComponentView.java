@@ -111,12 +111,20 @@ public class TextComponentView extends ComponentView{
     }
 
     public void initTextComponentHandlers(){
-        //IF USER CHANGES FONT
         fontSelection.setOnAction(e -> {
-            textComponent.setFont(
-                    (String)fontSelection.getSelectionModel().getSelectedItem());
-            System.out.println("FONT UPDATED TO : " + 
-                    (String)fontSelection.getSelectionModel().getSelectedItem());
+            String font = (String)fontSelection.getSelectionModel().getSelectedItem();
+            textComponent.setFont(font);
+            System.out.println("FONT UPDATED TO : " + font);
+        });
+        styleSelection.setOnAction(e ->{
+            String style = (String)styleSelection.getSelectionModel().getSelectedItem();
+            textComponent.setStyle(style);
+            System.out.println("STYLE UPDATED TO : " + style);
+        });
+        sizeSelection.setOnAction(e->{
+            int size = Integer.getInteger((String)sizeSelection.getSelectionModel().getSelectedItem());
+            textComponent.setSize(size);
+            System.out.println("SIZE CHANGED TO " + size);
         });
     }
     

@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -306,37 +307,36 @@ public class PageSettingsView extends HBox{
     public void reloadComponentPane(){
         reloadTextComponentPane();
         reloadImageComponentPane();
+        
     }
      public void reloadTextComponentPane() {
 	textComponentPane.getChildren().clear();
 	for (TextComponent component : pageToEdit.getTextComponents()) {
 	    TextComponentView componentEditor = new TextComponentView(pageToEdit, component);
-	    if (pageToEdit.isSelectedComponent(component))
-		componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-	    else
-		componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
+            if(pageToEdit.isSelectedComponent(component))
+                componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
+            else
+                componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
 	    textComponentPane.getChildren().add(componentEditor);
-	    componentEditor.setOnMousePressed(e -> {
-		pageToEdit.setSelectedComponent(component);
-                System.out.println("SELECTED COMPONENT : " + component.getText());
-		this.reloadTextComponentPane();
-	    });
+            componentEditor.setOnMousePressed(e ->{
+                pageToEdit.setSelectedComponent(component);
+                reloadComponentPane();
+            });
 	}
     }
      public void reloadImageComponentPane(){
         imageComponentPane.getChildren().clear();
         for(ImageComponent component : pageToEdit.getImageComponents()){
              ImageComponentView componentEditor = new ImageComponentView(pageToEdit,component);
-             if(pageToEdit.isSelectedComponent(component))
-                 componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
-             else
-                 componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
+            if(pageToEdit.isSelectedComponent(component))
+                componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
+            else
+                componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
              imageComponentPane.getChildren().add(componentEditor);
-             componentEditor.setOnMousePressed(e->{
-                 pageToEdit.setSelectedComponent(component);
-                 System.out.println("SELECTED COMPONENT : " + component.getCaption());
-                 this.reloadImageComponentPane();
-             });
+            componentEditor.setOnMousePressed(e ->{
+                pageToEdit.setSelectedComponent(component);
+                reloadComponentPane();
+            });
         }
      }
     public javafx.scene.control.Button initChildButton(

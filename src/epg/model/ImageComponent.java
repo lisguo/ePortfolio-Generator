@@ -19,7 +19,7 @@ public class ImageComponent extends Component{
     
     String captionFont;
     String captionStyle;
-    String captionSize;
+    int captionSize;
     
     public ImageComponent(String initImagePath, String initImageFileName,
           String initCaption, int initWidth, int initHeight, String initFloatOption){
@@ -29,7 +29,7 @@ public class ImageComponent extends Component{
         //CAPTION CONTROLS
         captionFont = "Righteous";
         captionStyle = "None";
-        captionSize = "12";
+        captionSize = 12;
         width = initWidth;
         height = initHeight;
         floatOption = initFloatOption;
@@ -58,7 +58,7 @@ public class ImageComponent extends Component{
     public String getCaptionStyle(){
         return captionStyle;
     }
-    public String getCaptionSize(){
+    public int getCaptionSize(){
         return captionSize;
     }
     public void setImagePath(String initImagePath){
@@ -85,7 +85,7 @@ public class ImageComponent extends Component{
     public void setCaptionStyle(String style){
         captionStyle = style;
     }
-    public void setCaptionSize(String size){
+    public void setCaptionSize(int size){
         captionSize = size;
     }
 }
