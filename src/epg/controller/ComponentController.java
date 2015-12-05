@@ -49,7 +49,7 @@ public class ComponentController {
         Stage s = new Stage();
         s.setHeight(900);
         s.setWidth(1080);
-        editor.start(s);
+        editor.showAndWait();
         ui.reloadComponentPane();
     }
     public void handleAddVideoComponent(){

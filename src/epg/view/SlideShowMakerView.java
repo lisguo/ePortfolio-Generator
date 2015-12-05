@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -41,6 +40,7 @@ import static epg.StartupConstants.CSS_CLASS_SLIDE_SHOW_EDIT_VBOX;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_SELECTED_WORKSPACE;
+import static epg.StartupConstants.CSS_CLASS_SLIDESHOW_READY;
 import static epg.StartupConstants.CSS_CLASS_SLIDE_EDITOR_PANE;
 import static epg.StartupConstants.CSS_CLASS_TITLE_PANE;
 import static epg.StartupConstants.CSS_LABEL;
@@ -62,6 +62,7 @@ import epg.model.SlideShowModel;
 import epg.error.ErrorHandler;
 import epg.file.SlideShowFileManager;
 import epg.model.Page;
+import epg.model.SlideShowComponent;
 import javafx.geometry.Pos;
 
 /**
@@ -217,6 +218,7 @@ public class SlideShowMakerView {
         Label ready2 = new Label("to your ePortfolio?");
         addToPortfolio = new Button("Add to ePortfolio");
         portfolioSettings.setAlignment(Pos.CENTER);
+        portfolioSettings.getStyleClass().add(CSS_CLASS_SLIDESHOW_READY);
         portfolioSettings.getChildren().addAll(ready,ready2,addToPortfolio);
     }
 
@@ -262,7 +264,11 @@ public class SlideShowMakerView {
         
         //PORTFOLIO CONTROLS
         addToPortfolio.setOnAction(e ->{
-            fileController.handleSaveSlideShowRequest();
+            SlideShowComponent ssc = new SlideShowComponent(slideShow.getTitle(),
+                                                    slideShow.getSlides());
+            pageToEdit.addSlideShowComponent(ssc);
+            System.out.println("ADDED SLIDESHOW : " + slideShow.getTitle());
+            primaryStage.close();
         });
     }
 
@@ -307,7 +313,6 @@ public class SlideShowMakerView {
 	// WE'LL USE TO STYLIZE OUR GUI CONTROLS, AND OPEN THE WINDOW
 	primaryScene.getStylesheets().add(SSM_STYLE_SHEET_UI);
 	primaryStage.setScene(primaryScene);
-	primaryStage.show();
     }
     
     /**
@@ -394,9 +399,9 @@ public class SlideShowMakerView {
 	titleTextField = new TextField();
         titleTextField.getStyleClass().add(CSS_LABEL);
 	
+	titleTextField.setText("ENTER TITLE");
 	titlePane.getChildren().add(titleLabel);
 	titlePane.getChildren().add(titleTextField);
-	titleTextField.setText("ENTER TITLE");
 	
 	titleTextField.textProperty().addListener(e -> {
 	    slideShow.setTitle(titleTextField.getText());

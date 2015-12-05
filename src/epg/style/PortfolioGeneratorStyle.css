@@ -103,3 +103,6 @@ and open the template in the editor.
     -fx-border-thickness: 10px;
     -fx-font: 25px Rockwell;
 }
+.slideshow_ready{ //THE READY BUTTON WHEN EDITING SLIDESHOW
+    -fx-padding: 20px;
+}

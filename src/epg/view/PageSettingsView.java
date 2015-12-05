@@ -27,6 +27,7 @@ import epg.model.Component;
 import epg.model.ImageComponent;
 import epg.model.Page;
 import epg.model.PortfolioModel;
+import epg.model.SlideShowComponent;
 import epg.model.TextComponent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -307,7 +308,7 @@ public class PageSettingsView extends HBox{
     public void reloadComponentPane(){
         reloadTextComponentPane();
         reloadImageComponentPane();
-        
+        reloadSlideShowComponentPane();
     }
      public void reloadTextComponentPane() {
 	textComponentPane.getChildren().clear();
@@ -338,6 +339,21 @@ public class PageSettingsView extends HBox{
                 reloadComponentPane();
             });
         }
+     }
+     public void reloadSlideShowComponentPane(){
+         slideShowComponentPane.getChildren().clear();
+         for(SlideShowComponent component : pageToEdit.getSlideShowComponents()){
+             SlideShowComponentView componentEditor = new SlideShowComponentView(pageToEdit, component);
+             if(pageToEdit.isSelectedComponent(component))
+                componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
+            else
+                componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
+             slideShowComponentPane.getChildren().add(componentEditor);
+            componentEditor.setOnMousePressed(e ->{
+                pageToEdit.setSelectedComponent(component);
+                reloadComponentPane();
+            });
+         }
      }
     public javafx.scene.control.Button initChildButton(
 	    Pane toolbar, 

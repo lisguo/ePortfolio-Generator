@@ -16,6 +16,7 @@ public class SlideShowComponent extends Component{
     ObservableList<Slide> slides;
     
     public SlideShowComponent(String title, ObservableList<Slide> slides){
+        super.setComponentType("slideshow");
         this.title = title;
         this.slides = slides;
     }

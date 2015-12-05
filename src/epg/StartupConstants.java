@@ -44,6 +44,7 @@ public class StartupConstants {
     public static String    CSS_STYLE_LIST_BUTTONS = "list_buttons";
     public static String    CSS_CLASS_COMPONENT_LABEL = "component_label";
     public static String    CSS_STYLE_HYPERLINK = "hyperlink";
+    public static String    CSS_CLASS_SLIDESHOW_READY = "slideshow_ready";
 
      // HERE ARE THE LANGUAGE INDEPENDENT GUI ICONS
     public static String ICON_WINDOW_LOGO = "EPG_Logo.png";

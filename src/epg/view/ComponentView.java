@@ -9,6 +9,7 @@ import static epg.StartupConstants.CSS_CLASS_COMPONENT;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import epg.model.Page;
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
 /**
@@ -22,6 +23,7 @@ public class ComponentView extends VBox{
     public ComponentView(){
         getStylesheets().add(STYLE_SHEET_UI);
         setPrefWidth(1060);
+        setAlignment(Pos.CENTER);
     }
     public ComponentView(Page pageToEdit, Component initComponent){
         getStylesheets().add(STYLE_SHEET_UI);

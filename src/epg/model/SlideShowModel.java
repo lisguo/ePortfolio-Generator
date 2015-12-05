@@ -52,7 +52,9 @@ public class SlideShowModel {
     public void setTitle(String initTitle) { 
 	title = initTitle; 
     }
-
+    public void setSlides(ObservableList<Slide> slides){
+        this.slides = slides; 
+   }
     // SERVICE METHODS
     
     /**

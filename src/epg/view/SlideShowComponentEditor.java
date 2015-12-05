@@ -62,7 +62,7 @@ import xml_utilities.InvalidXMLFileFormatException;
  *
  * @author BunnyRailgun
  */
-public class SlideShowComponentEditor extends Application{
+public class SlideShowComponentEditor extends Stage{
     // THIS WILL PERFORM SLIDESHOW READING AND WRITING
     SlideShowFileManager fileManager = new SlideShowFileManager();
 
@@ -73,11 +73,8 @@ public class SlideShowComponentEditor extends Application{
 
     Page pageToEdit;
     
-    public SlideShowComponentEditor(Page pageToEdit){
-        this.pageToEdit = pageToEdit;
-    }
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    public SlideShowComponentEditor(Page pageToEdit) throws Exception{
+        this.pageToEdit = pageToEdit;  
         // SET THE WINDOW ICON
 	String imagePath = PATH_ICONS + ICON_WINDOW_LOGO;
 	File file = new File(imagePath);
@@ -86,7 +83,7 @@ public class SlideShowComponentEditor extends Application{
 	//URL fileURL = file.toURI().toURL();
         System.out.println(file.getCanonicalPath());
 	Image windowIcon = new Image("file:"+file.getCanonicalPath());
-	primaryStage.getIcons().add(windowIcon);
+	getIcons().add(windowIcon);
 
 	String languageCode = "EN";
 
@@ -98,7 +95,8 @@ public class SlideShowComponentEditor extends Application{
             String appTitle = "Slide Show Maker";
 
 	    // NOW START THE UI IN EVENT HANDLING MODE
-	    ui.startUI(primaryStage, appTitle ,pageToEdit);
+	    ui.startUI(this, appTitle ,pageToEdit);
+            
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {
 	    // LET THE ERROR HANDLER PROVIDE THE RESPONSE

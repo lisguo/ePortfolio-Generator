@@ -23,6 +23,7 @@ public class ImageComponent extends Component{
     
     public ImageComponent(String initImagePath, String initImageFileName,
           String initCaption, int initWidth, int initHeight, String initFloatOption){
+        super.setComponentType("image");
         imagePath = initImagePath;
         imageFileName = initImageFileName;
         caption = initCaption;

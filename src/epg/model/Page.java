@@ -106,6 +106,9 @@ public class Page {
         }
         return sc;
     }
+    public void addSlideShowComponent(SlideShowComponent ssc){
+        components.add(ssc);
+    }
     public ObservableList<VideoComponent> getVideoComponents(){
         ObservableList<VideoComponent> vc = FXCollections.observableArrayList();
         for(Component c : components){
@@ -114,6 +117,9 @@ public class Page {
             }
         }
         return vc;
+    }
+    public void addVideoComponent(VideoComponent vc){
+        components.add(vc);
     }
     //MUTATOR
     public void setName(String newName){
