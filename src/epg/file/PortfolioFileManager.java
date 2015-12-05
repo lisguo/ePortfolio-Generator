@@ -116,9 +116,9 @@ public class PortfolioFileManager {
                     pageJso.getString(JSON_PAGE_FONT),
                     hasBannerImg);
             portfolioToLoad.addPage(page);
-            JsonArray jsonTextComponentsArray = json.getJsonArray(JSON_TEXT_COMPONENTS);
-            for(int j = 0; j < jsonTextComponentsArray.size(); i++){
-                JsonObject tcJso = jsonTextComponentsArray.getJsonObject(i);
+            JsonArray jsonTextComponentsArray = pageJso.getJsonArray(JSON_TEXT_COMPONENTS);
+            for(int j = 0; j < jsonTextComponentsArray.size(); j++){
+                JsonObject tcJso = jsonTextComponentsArray.getJsonObject(j);
                 TextComponent tc = new TextComponent(tcJso.getString(JSON_TEXT_TYPE),
                                                     tcJso.getString(JSON_TEXT));
                 tc.setFont(tcJso.getString(JSON_FONT));

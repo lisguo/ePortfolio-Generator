@@ -163,7 +163,7 @@ public class FileController {
                 saved = true;
                 ui.updateSiteToolbarControls(saved);
             }catch(Exception e){
-                System.out.println("ERROR IN LOADING");
+                e.printStackTrace();
             }
         }
     }

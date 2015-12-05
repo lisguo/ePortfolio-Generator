@@ -64,6 +64,7 @@ and open the template in the editor.
 .component_pane > .viewport{
     -fx-background-color: rgb(192, 206, 251);
     -fx-spacing: 50px;
+    -fx-alignment: center;
 }
 .component{
     -fx-background-color: rgb(183, 197, 246); 
@@ -101,5 +102,4 @@ and open the template in the editor.
     -fx-alignment: center;
     -fx-border-thickness: 10px;
     -fx-font: 25px Rockwell;
-    -fx-background-color: lightsteelblue;
 }

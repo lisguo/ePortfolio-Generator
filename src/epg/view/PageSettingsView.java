@@ -298,6 +298,13 @@ public class PageSettingsView extends HBox{
         editComponent.setOnAction(e -> {
             componentController.handleEditComponent(pageToEdit.getSelectedComponent());
         });
+        removeComponent.setOnAction(e -> {
+            componentController.handleRemoveComponent(pageToEdit.getSelectedComponent());
+        });
+    }
+    public void reloadComponentPane(){
+        reloadTextComponentPane();
+        reloadImageComponentPane();
     }
      public void reloadTextComponentPane() {
 	textComponentPane.getChildren().clear();

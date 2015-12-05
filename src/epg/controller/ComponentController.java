@@ -13,6 +13,7 @@ import epg.view.PageSettingsView;
 import epg.view.SlideShowComponentEditor;
 import epg.view.TextComponentEditor;
 import epg.view.VideoComponentEditor;
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
 /**
@@ -68,5 +69,11 @@ public class ComponentController {
             editor.showAndWait();
             //ui.reloadComponentPane();
         }
+    }
+    public void handleRemoveComponent(Component compToEdit){
+        System.out.println("REMOVE COMPONENT CLICKED");
+        ObservableList<Component> components = ui.getPageToEdit().getComponents();
+        components.remove(compToEdit);
+        ui.reloadTextComponentPane();
     }
 }

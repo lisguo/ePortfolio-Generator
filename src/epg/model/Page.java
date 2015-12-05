@@ -147,4 +147,9 @@ public class Page {
     public boolean isSelectedComponent(Component testComponent) {
 	return selectedComponent == testComponent;
     }
+    public void printTextComponents(){
+        for(TextComponent tc : getTextComponents()){
+            System.out.println(tc.getText());
+        }
+    }
 }
