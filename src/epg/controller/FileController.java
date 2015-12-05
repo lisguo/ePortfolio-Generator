@@ -6,6 +6,7 @@
 package epg.controller;
 
 import epg.LanguagePropertyType;
+import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.error.ErrorHandler;
 import epg.file.PortfolioFileManager;
 import epg.model.PortfolioModel;
@@ -125,7 +126,22 @@ public class FileController {
         }
     }
     public void handleExitRequest() {
-        
+        try {
+            // WE MAY HAVE TO SAVE CURRENT WORK
+            boolean continueToExit = true;
+            if (!saved) {
+                // THE USER CAN OPT OUT HERE
+                continueToExit = promptToSave();
+            }
+
+            // IF THE USER REALLY WANTS TO EXIT THE APP
+            if (continueToExit) {
+                // EXIT THE APPLICATION
+                System.exit(0);
+            }
+        } catch (IOException ioe) {
+            System.out.println("ERROR");
+        }
     }
 
     
@@ -135,7 +151,21 @@ public class FileController {
 
     
     private void promptToOpen() {
-       
+        FileChooser portfolioFileChooser = new FileChooser();
+        portfolioFileChooser.setInitialDirectory(new File(PATH_PORTFOLIOS));
+        File selectedFile = portfolioFileChooser.showOpenDialog(ui.getWindow());
+        
+        if(selectedFile != null){
+            try{
+                PortfolioModel portfolioToLoad = ui.getPortfolio();
+                portfolioIO.loadPortfolio(portfolioToLoad, selectedFile.getAbsolutePath());
+                ui.reloadPageEditorPane();
+                saved = true;
+                ui.updateSiteToolbarControls(saved);
+            }catch(Exception e){
+                System.out.println("ERROR IN LOADING");
+            }
+        }
     }
 
     

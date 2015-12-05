@@ -48,6 +48,7 @@ public class PortfolioFileManager {
     public static String JSON_BANNER_PATH = "banner_path";
     public static String JSON_BANNER_FILE_NAME = "banner_file_name";
     public static String JSON_FOOTER = "footer";
+    public static String JSON_TEXT = "text";
     //TEXT COMPONENTS
     public static String JSON_TEXT_COMPONENTS = "text_components";
     public static String JSON_TEXT_TYPE = "text_type";
@@ -109,11 +110,22 @@ public class PortfolioFileManager {
         for(int i = 0 ; i < jsonPagesArray.size(); i++){
             JsonObject pageJso = jsonPagesArray.getJsonObject(i);
             boolean hasBannerImg = !pageJso.getString(JSON_BANNER_FILE_NAME).equals("");
-            portfolioToLoad.addPage(pageJso.getString(JSON_PAGE_NAME),
+            Page page = new Page(pageJso.getString(JSON_PAGE_NAME),
                     pageJso.getInt(JSON_LAYOUT),
                     pageJso.getInt(JSON_COLOR),
                     pageJso.getString(JSON_PAGE_FONT),
                     hasBannerImg);
+            portfolioToLoad.addPage(page);
+            JsonArray jsonTextComponentsArray = json.getJsonArray(JSON_TEXT_COMPONENTS);
+            for(int j = 0; j < jsonTextComponentsArray.size(); i++){
+                JsonObject tcJso = jsonTextComponentsArray.getJsonObject(i);
+                TextComponent tc = new TextComponent(tcJso.getString(JSON_TEXT_TYPE),
+                                                    tcJso.getString(JSON_TEXT));
+                tc.setFont(tcJso.getString(JSON_FONT));
+                tc.setSize(tcJso.getInt(JSON_SIZE));
+                tc.setStyle(tcJso.getString(JSON_STYLE));
+                page.addTextComponent(tc);
+            }
         }
     }
     private JsonObject loadJSONFile(String jsonFilePath) throws IOException{
@@ -152,7 +164,7 @@ public class PortfolioFileManager {
                 .add(JSON_PAGE_FONT, page.getPageFont())
                 .add(JSON_FOOTER, page.getFooter())
                 .add(JSON_BANNER_PATH, page.getBannerImgPath())
-                .add(JSON_BANNER_FILE_NAME, page.getBannerFileName())       
+                .add(JSON_BANNER_FILE_NAME, page.getBannerFileName())  
                 .add(JSON_TEXT_COMPONENTS, makeTextComponentsJsonArray(page.getTextComponents()))
                 .build();
         return jso;
@@ -174,6 +186,7 @@ public class PortfolioFileManager {
                 .add(JSON_STYLE, tc.getStyle())
                 .add(JSON_FONT, tc.getFont())
                 .add(JSON_SIZE, tc.getSize())
+                .add(JSON_TEXT, tc.getText())
                 .build();
         return jso;
     }

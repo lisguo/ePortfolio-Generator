@@ -162,6 +162,9 @@ public class PortfolioGeneratorView {
     public PortfolioModel getPortfolio(){
         return portfolio;
     }
+    public Stage getWindow() {
+	return primaryStage;
+    }
     public void startUI(Stage initPrimaryStage, String windowTitle){
         initFileToolbar();
         initWorkspace();

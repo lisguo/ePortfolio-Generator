@@ -59,7 +59,10 @@ public class PortfolioModel {
     public void setStudentName(String newName){
         studentName = newName;
     }
-    
+    public void addPage(Page p){
+        pages.add(p);
+        ui.reloadPageEditorPane();
+    }
     public void addPage(   String initName,
 			    int initLayout,
 			    int initColor, 
