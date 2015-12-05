@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -62,6 +61,8 @@ import epg.model.Slide;
 import epg.model.SlideShowModel;
 import epg.error.ErrorHandler;
 import epg.file.SlideShowFileManager;
+import epg.model.Page;
+import javafx.geometry.Pos;
 
 /**
  * This class provides the User Interface for this application,
@@ -106,6 +107,11 @@ public class SlideShowMakerView {
     // AND THIS WILL GO IN THE CENTER
     ScrollPane slidesEditorScrollPane;
     VBox slidesEditorPane;
+    
+    //GO ON THE RIGHT
+    VBox portfolioSettings;
+    Label ready;
+    Button addToPortfolio;
 
     // THIS IS THE SLIDE SHOW WE'RE WORKING WITH
     SlideShowModel slideShow;
@@ -122,6 +128,8 @@ public class SlideShowMakerView {
     
     // THIS CONTROLLER RESPONDS TO SLIDE SHOW EDIT BUTTONS
     private SlideShowEditController editController;
+    
+    Page pageToEdit;
 
     /**
      * Default constructor, it initializes the GUI for use, but does not yet
@@ -159,7 +167,9 @@ public class SlideShowMakerView {
      * 
      * @param windowTitle The title for this window.
      */
-    public void startUI(Stage initPrimaryStage, String windowTitle) {
+    public void startUI(Stage initPrimaryStage, String windowTitle, Page pageToEdit) {
+        this.pageToEdit = pageToEdit;
+        
 	// THE TOOLBAR ALONG THE NORTH
 	initFileToolbar();
 
@@ -200,6 +210,14 @@ public class SlideShowMakerView {
 	// NOW PUT THESE TWO IN THE WORKSPACE
 	workspace.getChildren().add(slideEditToolbar);
 	workspace.getChildren().add(slidesEditorScrollPane);
+        
+        //GO IN THE RIGHT
+        portfolioSettings = new VBox();
+        ready = new Label("Ready to add slideshow");
+        Label ready2 = new Label("to your ePortfolio?");
+        addToPortfolio = new Button("Add to ePortfolio");
+        portfolioSettings.setAlignment(Pos.CENTER);
+        portfolioSettings.getChildren().addAll(ready,ready2,addToPortfolio);
     }
 
     private void initEventHandlers() {
@@ -241,6 +259,11 @@ public class SlideShowMakerView {
 	moveSlideDownButton.setOnAction(e -> {
 	    editController.processMoveSlideDownRequest();
 	});
+        
+        //PORTFOLIO CONTROLS
+        addToPortfolio.setOnAction(e ->{
+            fileController.handleSaveSlideShowRequest();
+        });
     }
 
     /**
@@ -269,10 +292,10 @@ public class SlideShowMakerView {
 	Rectangle2D bounds = screen.getVisualBounds();
 
 	// AND USE IT TO SIZE THE WINDOW
-	primaryStage.setX(bounds.getMinX());
-	primaryStage.setY(bounds.getMinY());
-	primaryStage.setWidth(bounds.getWidth());
-	primaryStage.setHeight(bounds.getHeight());
+	primaryStage.setX(bounds.getMinX() * .5);
+	primaryStage.setY(bounds.getMinY() * .8);
+	primaryStage.setWidth(bounds.getWidth()* .5);
+	primaryStage.setHeight(bounds.getHeight() * .8);
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER
 	epgPane = new BorderPane();
@@ -320,6 +343,7 @@ public class SlideShowMakerView {
     public void updateToolbarControls(boolean saved) {
 	// FIRST MAKE SURE THE WORKSPACE IS THERE
 	epgPane.setCenter(workspace);
+        epgPane.setRight(portfolioSettings);
 	
 	// NEXT ENABLE/DISABLE BUTTONS AS NEEDED IN THE FILE TOOLBAR
 	saveSlideShowButton.setDisable(saved);
@@ -363,19 +387,16 @@ public class SlideShowMakerView {
     
     private void initTitleControls() {
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
-	String labelPrompt = props.getProperty(LABEL_SLIDESHOW_TITLE);
 	titlePane = new FlowPane();
         titlePane.getStyleClass().add(CSS_CLASS_TITLE_PANE);
-	titleLabel = new Label(labelPrompt);
+	titleLabel = new Label("TITLE: ");
         titleLabel.getStyleClass().add(CSS_LABEL);
 	titleTextField = new TextField();
         titleTextField.getStyleClass().add(CSS_LABEL);
 	
 	titlePane.getChildren().add(titleLabel);
 	titlePane.getChildren().add(titleTextField);
-	
-	String titlePrompt = props.getProperty(LanguagePropertyType.LABEL_SLIDESHOW_TITLE);
-	titleTextField.setText(titlePrompt);
+	titleTextField.setText("ENTER TITLE");
 	
 	titleTextField.textProperty().addListener(e -> {
 	    slideShow.setTitle(titleTextField.getText());

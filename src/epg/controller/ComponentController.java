@@ -45,7 +45,7 @@ public class ComponentController {
     }
     public void handleAddSlideShowComponent() throws Exception{
         System.out.println("ADD SLIDE SHOW COMPONENT CLICKED!");
-        SlideShowComponentEditor editor = new SlideShowComponentEditor();
+        SlideShowComponentEditor editor = new SlideShowComponentEditor(ui.getPageToEdit());
         Stage s = new Stage();
         s.setHeight(900);
         s.setWidth(1080);

@@ -5,10 +5,30 @@
  */
 package epg.model;
 
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author BunnyRailgun
  */
 public class SlideShowComponent extends Component{
+    String title;
+    ObservableList<Slide> slides;
     
+    public SlideShowComponent(String title, ObservableList<Slide> slides){
+        this.title = title;
+        this.slides = slides;
+    }
+    public String getTitle(){
+        return title;
+    }
+    public ObservableList<Slide> getSlides(){
+        return slides;
+    }
+    public void setTitle(String newTitle){
+        title = newTitle;
+    }
+    public void setSlides(ObservableList<Slide> newSlides){
+        slides = newSlides;
+    }
 }

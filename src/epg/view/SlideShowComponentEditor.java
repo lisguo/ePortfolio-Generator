@@ -30,6 +30,7 @@ import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.PROPERTIES_SCHEMA_FILE_NAME;
 import epg.error.ErrorHandler;
 import epg.file.SlideShowFileManager;
+import epg.model.Page;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -61,7 +62,7 @@ import xml_utilities.InvalidXMLFileFormatException;
  *
  * @author BunnyRailgun
  */
-public class SlideShowComponentEditor extends Application {
+public class SlideShowComponentEditor extends Application{
     // THIS WILL PERFORM SLIDESHOW READING AND WRITING
     SlideShowFileManager fileManager = new SlideShowFileManager();
 
@@ -70,6 +71,11 @@ public class SlideShowComponentEditor extends Application {
     // POINT, RUNNING THE UI AND EVERYTHING ELSE
     SlideShowMakerView ui = new SlideShowMakerView(fileManager);
 
+    Page pageToEdit;
+    
+    public SlideShowComponentEditor(Page pageToEdit){
+        this.pageToEdit = pageToEdit;
+    }
     @Override
     public void start(Stage primaryStage) throws Exception {
         // SET THE WINDOW ICON
@@ -92,7 +98,7 @@ public class SlideShowComponentEditor extends Application {
             String appTitle = "Slide Show Maker";
 
 	    // NOW START THE UI IN EVENT HANDLING MODE
-	    ui.startUI(primaryStage, appTitle);
+	    ui.startUI(primaryStage, appTitle ,pageToEdit);
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {
 	    // LET THE ERROR HANDLER PROVIDE THE RESPONSE
