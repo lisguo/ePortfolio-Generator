@@ -9,13 +9,22 @@ import epg.LanguagePropertyType;
 import static epg.StartupConstants.PATH_PORTFOLIOS;
 import epg.error.ErrorHandler;
 import epg.file.PortfolioFileManager;
+import static epg.file.SlideShowFileManager.JSON_EXT;
 import epg.model.PortfolioModel;
 import epg.model.SlideShowModel;
 import epg.view.PortfolioGeneratorView;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
@@ -125,6 +134,25 @@ public class FileController {
             return false;
         }
     }
+    
+    public void handleSaveAsPortfolioRequest(){
+        try {
+            FileChooser portfolioFileChooser = new FileChooser();
+            portfolioFileChooser.setInitialDirectory(new File(PATH_PORTFOLIOS));
+            portfolioFileChooser.setInitialFileName(ui.getPortfolio().getTitle() + JSON_EXT);
+            FileChooser.ExtensionFilter jsonFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.JSON");
+            portfolioFileChooser.getExtensionFilters().add(jsonFilter);
+            File f = portfolioFileChooser.showSaveDialog(null);
+            //UPDATE TITLE
+            ui.getPortfolio().setTitle(f.getName().substring(0,f.getName().lastIndexOf(JSON_EXT)));
+            System.out.println("NEW TITLE: " + ui.getPortfolio().getTitle());
+            portfolioIO.savePortfolio(ui.getPortfolio());
+            saved=true;
+            ui.updateSiteToolbarControls(saved);
+        } catch (IOException ex) {
+            Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void handleExitRequest() {
         try {
             // WE MAY HAVE TO SAVE CURRENT WORK
@@ -146,7 +174,24 @@ public class FileController {
 
     
     private boolean promptToSave() throws IOException {
-        return true;
+        Stage dialog = new Stage();
+        dialog.setWidth(700);
+        dialog.setHeight(300);
+        VBox dialogOptions = new VBox();
+        Label save = new Label("Would you like to save?");
+        HBox confirm = new HBox();
+        Button ok = new Button("YES");
+        Button cancel = new Button("NO");
+        confirm.getChildren().addAll(ok,cancel);
+        dialogOptions.getChildren().addAll(save,confirm);
+        Scene scene = new Scene(dialogOptions);
+        dialog.setScene(scene);
+        
+        ok.setOnAction(e->{
+            handleSavePortfolioRequest();
+        });
+        
+        return false;
     }
 
     

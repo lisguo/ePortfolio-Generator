@@ -1,0 +1,21 @@
+
+{
+    "title":"Bunnies",
+    "slides":[
+        {
+            "image_file_name":"4bunnies.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"Four Bunnies"
+        },
+        {
+            "image_file_name":"bunnycups.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"Two Bunnies"
+        },
+        {
+            "image_file_name":"Grey Bunny.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"One Bunny"
+        }
+    ]
+}

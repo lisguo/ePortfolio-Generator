@@ -67,6 +67,7 @@ public class ImageComponentEditor extends Stage {
         vBox = new VBox();
         imageSelection = new HBox();
         captionField = new TextField();
+        captionField.setAlignment(Pos.TOP_LEFT);
         okButton = new Button("OK");
         selectImage = new Button("Select Image...");
         imageName = new Label(imgFileName);

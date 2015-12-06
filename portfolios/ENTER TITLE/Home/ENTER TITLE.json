@@ -1,0 +1,32 @@
+
+{
+    "title":"ENTER TITLE",
+    "student_name":"Lisa Guo",
+    "pages":[
+        {
+            "page_name":"Home",
+            "layout":0,
+            "color":0,
+            "page_font":"Righteous",
+            "footer":"",
+            "banner_path":"",
+            "banner_file_name":"",
+            "has_banner":true,
+            "text_components":[
+                {
+                    "text_type":"Header",
+                    "style":"None",
+                    "font":"Righteous",
+                    "size":12,
+                    "text":"Welcome to my ePortfolio!"
+                }
+            ],
+            "image_components":[
+            ],
+            "slideshow_components":[
+            ],
+            "video_components":[
+            ]
+        }
+    ]
+}

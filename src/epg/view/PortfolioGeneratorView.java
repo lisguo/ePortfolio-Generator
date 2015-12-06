@@ -267,6 +267,9 @@ public class PortfolioGeneratorView {
         savePortfolioButton.setOnAction(e ->{
             fileController.handleSavePortfolioRequest();
         });
+        saveAsPortfolioButton.setOnAction(e ->{
+            fileController.handleSaveAsPortfolioRequest();
+        });
         loadPortfolioButton.setOnAction(e ->{
             fileController.handleLoadPortfolioRequest();
         });
@@ -322,7 +325,7 @@ public class PortfolioGeneratorView {
         if(portfolio.getSelectedPage() != null){
             //showPageSettingsWorkspace(portfolio.getSelectedPage());
             settingsView.getChildren().clear();
-            settingsView = new PageSettingsView(portfolio, 
+            settingsView = new PageSettingsView(this, 
                                                 portfolio.getSelectedPage());
             portfolioEditorPane.getChildren().add(settingsView);
             System.out.println("SELECTED PAGE: " + portfolio.getSelectedPage().getName());

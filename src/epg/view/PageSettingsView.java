@@ -86,11 +86,13 @@ public class PageSettingsView extends HBox{
     VBox videoComponentPane;
 
     PortfolioModel portfolio;
+    PortfolioGeneratorView ui;
     public PageSettingsView(){
         
     }
-    public PageSettingsView(PortfolioModel p, Page page){
-        portfolio = p;
+    public PageSettingsView(PortfolioGeneratorView ui, Page page){
+        this.ui = ui;
+        portfolio = ui.getPortfolio();
         pageToEdit = page;
         showPageSettingsWorkspace();
     }
@@ -314,6 +316,7 @@ public class PageSettingsView extends HBox{
         reloadImageComponentPane();
         reloadSlideShowComponentPane();
         reloadVideoComponentPane();
+        ui.updateSiteToolbarControls(false);
     }
      public void reloadTextComponentPane() {
 	textComponentPane.getChildren().clear();

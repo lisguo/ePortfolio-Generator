@@ -62,7 +62,7 @@ public class TextComponentEditor extends Stage{
     //COMPONENTS OF THE COMPONENT
     String type;
     String text;
-    
+    VBox textFields;
     public TextComponentEditor(Page initPageToEdit){
         vbox = new VBox();
         hBox = new HBox();
@@ -165,7 +165,7 @@ public class TextComponentEditor extends Stage{
                 Button add = initChildButton(addOrRemove, ICON_ADD_PAGE, TOOLTIP_ADD_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 Button remove = initChildButton(addOrRemove, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 addOrRemove.getStyleClass().add(CSS_STYLE_LIST_BUTTONS);
-                VBox textFields = new VBox();
+                textFields = new VBox();
                 textFields.getChildren().add(textField);
                 //HYPERLINK CONTROLS
                 textField.setAlignment(Pos.TOP_LEFT);
@@ -173,7 +173,7 @@ public class TextComponentEditor extends Stage{
                 textField.setPrefColumnCount(50);
                 nextDialog.getChildren().addAll(list,addOrRemove);
                 Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
-                nextDialog.getChildren().addAll(textFields);
+                nextDialog.getChildren().addAll(textFields,okButton);
                 addOrRemove.setAlignment(Pos.CENTER);
                 textFields.getStyleClass().add("list");
                 this.setHeight(600);
@@ -196,7 +196,15 @@ public class TextComponentEditor extends Stage{
             scene.getStylesheets().add(STYLE_SHEET_UI);
             setScene(scene);
             okButton.setOnAction(e ->{
-            text = textField.getText();
+                if(type.equals("List")){
+                    for(int i = 0; i < textFields.getChildren().size(); i++){
+                        String curr = ((TextField)textFields.getChildren().get(i)).getText();
+                        text += curr + "\n";
+                    }
+                }
+                else{
+                    text = textField.getText();
+                }
             TextComponent createdComponent = new TextComponent(type, text);
             //IF IT WAS A PARAGRAPH
             if(type.equals("Paragraph")){
