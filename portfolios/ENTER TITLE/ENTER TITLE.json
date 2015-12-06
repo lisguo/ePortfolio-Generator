@@ -5,12 +5,12 @@
     "pages":[
         {
             "page_name":"New Page",
-            "layout":0,
+            "layout":1,
             "color":0,
             "page_font":"Righteous",
             "footer":"",
-            "banner_path":"",
-            "banner_file_name":"",
+            "banner_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\sites\\Bunny\\img\\",
+            "banner_file_name":"4bunnies.jpg",
             "text_components":[
                 {
                     "text_type":"Header",

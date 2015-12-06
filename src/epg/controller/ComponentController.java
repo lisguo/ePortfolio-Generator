@@ -13,6 +13,7 @@ import epg.view.PageSettingsView;
 import epg.view.SlideShowComponentEditor;
 import epg.view.TextComponentEditor;
 import epg.view.VideoComponentEditor;
+import java.io.IOException;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
@@ -27,7 +28,7 @@ public class ComponentController {
         ui = initUI;
     }
     
-    public void handleAddTextComponent(){
+    public void handleAddTextComponent() throws IOException{
         System.out.println("ADD TEXT COMPONENT CLICKED");
         TextComponentEditor editor = new TextComponentEditor(ui.getPageToEdit());
         editor.setHeight(350);
@@ -35,7 +36,7 @@ public class ComponentController {
         editor.showAndWait();
         ui.reloadComponentPane();
     }
-    public void handleAddImageComponent(){
+    public void handleAddImageComponent() throws IOException{
         System.out.println("ADD IMAGE COMPONENT CLICKED!");
         ImageComponentEditor editor = new ImageComponentEditor(ui.getPortfolio(), ui.getPageToEdit());
         editor.setHeight(400);
@@ -52,14 +53,14 @@ public class ComponentController {
         editor.showAndWait();
         ui.reloadComponentPane();
     }
-    public void handleAddVideoComponent(){
+    public void handleAddVideoComponent() throws IOException{
         VideoComponentEditor editor = new VideoComponentEditor(ui.getPortfolio(), ui.getPageToEdit());
         editor.setHeight(350);
         editor.setWidth(500);
         editor.showAndWait();
         ui.reloadComponentPane();
     }
-    public void handleEditComponent(Component compToEdit){
+    public void handleEditComponent(Component compToEdit) throws IOException{
         System.out.println("EDIT COMPONENT CLICKED");
         if(compToEdit.getComponentType().equals("text")){
             TextComponent tc = ((TextComponent)compToEdit);
@@ -70,7 +71,7 @@ public class ComponentController {
             ui.reloadComponentPane();
         }
     }
-    public void handleRemoveComponent(Component compToEdit){
+    public void handleRemoveComponent(Component compToEdit) throws IOException{
         System.out.println("REMOVE COMPONENT CLICKED");
         ObservableList<Component> components = ui.getPageToEdit().getComponents();
         components.remove(compToEdit);

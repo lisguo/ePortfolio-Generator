@@ -55,6 +55,7 @@ import epg.model.Component;
 import epg.model.Page;
 import epg.model.PortfolioModel;
 import epg.model.TextComponent;
+import epg.web.SiteGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -151,9 +152,8 @@ public class PortfolioGeneratorView {
     
     public PortfolioGeneratorView() throws IOException{
         portfolio = new PortfolioModel(this);
-        //htmlPath = PATH_PORFOLIOS + portfolio.getTitle() + "/index.html";
+        //GENERATE HTML
         htmlPath = PATH_PORTFOLIOS + portfolio.getTitle() + "/index.html";
-        
         File f = new File(htmlPath);
         htmlPath = f.getCanonicalPath();
         fileManager = new PortfolioFileManager();
@@ -285,7 +285,7 @@ public class PortfolioGeneratorView {
 	
     }
     
-    public void reloadPageEditorPane() {
+    public void reloadPageEditorPane() throws IOException {
 	pageEditorPane.getChildren().clear();
 	for (Page page : portfolio.getPages()) {
 	    PageEditView pageEditor = new PageEditView(page);
@@ -296,7 +296,11 @@ public class PortfolioGeneratorView {
 	    pageEditorPane.getChildren().add(pageEditor);
 	    pageEditor.setOnMousePressed(e -> {
 		portfolio.setSelectedPage(page);
-		this.reloadPageEditorPane();
+                try {
+                    this.reloadPageEditorPane();
+                } catch (IOException ex) {
+                    Logger.getLogger(PortfolioGeneratorView.class.getName()).log(Level.SEVERE, null, ex);
+                }
 	    });
 	}
         //SHOW SETTINGS AND ADD THEM

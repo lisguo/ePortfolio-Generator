@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javafx.collections.ObservableList;
-import static epg.StartupConstants.PATH_SITES;
+import static epg.StartupConstants.PATH_SLIDESHOWS;
 import epg.model.Slide;
 import epg.model.SlideShowModel;
 import java.nio.file.Files;
@@ -53,11 +53,11 @@ public class SlideShowViewer extends Stage{
     public SlideShowViewer(SlideShowModel m) throws IOException{
         title = m.getTitle();
         slides = m.getSlides();
-        htmlPath = PATH_SITES + title + "/index.html";
-        cssPath = PATH_SITES + title + "/css/slideshow_style.css";
-        jsPath = PATH_SITES + title + "/js/Slideshow.js";
+        htmlPath = PATH_SLIDESHOWS + title + "/index.html";
+        cssPath = PATH_SLIDESHOWS + title + "/css/slideshow_style.css";
+        jsPath = PATH_SLIDESHOWS + title + "/js/Slideshow.js";
         imgPathNonNormal = "./img/";
-        imgPath = PATH_SITES + title + "/img";
+        imgPath = PATH_SLIDESHOWS + title + "/img";
         //Normalize imgPath
         File f = new File(imgPath);
         imgPath = f.getCanonicalPath() + "\\";
@@ -187,7 +187,7 @@ public class SlideShowViewer extends Stage{
     public void makeHtml() throws IOException, URISyntaxException{
         //COPY JSON FILE TO SITES
         Path jsonFile = Paths.get(PATH_SLIDE_SHOWS + title + ".json");
-        Path copyTo = Paths.get(PATH_SITES + title + "/" + title + ".json");
+        Path copyTo = Paths.get(PATH_SLIDESHOWS + title + "/" + title + ".json");
         System.out.println("Copied " + jsonFile + "\nto\n" + copyTo);
         //OVERWRITE IF EXISTS
         CopyOption[] jsonOptions = new CopyOption[]{

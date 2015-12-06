@@ -7,6 +7,7 @@ import epg.model.Page;
 import epg.view.PageSettingsView;
 import epg.view.PortfolioGeneratorView;
 import java.io.File;
+import java.io.IOException;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -22,7 +23,7 @@ public class PageSettingsController{
         selectedPage = ui.getPortfolio().getSelectedPage();
     }
 
-    public void handleSetLayout(ToggleGroup layoutButtons) {
+    public void handleSetLayout(ToggleGroup layoutButtons) throws IOException {
         int layout = layoutButtons.getToggles().indexOf(layoutButtons.getSelectedToggle());
         selectedPage.setLayout(layout);
         System.out.println("LAYOUT CHANGED TO : " + layout);
@@ -60,7 +61,7 @@ public class PageSettingsController{
         selectedPage.setFooter(footer);
         System.out.println("FOOTER CHANGD TO : " + footer);
     }
-    public void handleBannerSelection(){
+    public void handleBannerSelection() throws IOException{
         FileChooser imageFileChooser = new FileChooser();
 	
 	// SET THE STARTING DIRECTORY

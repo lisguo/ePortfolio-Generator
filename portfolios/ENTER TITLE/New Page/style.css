@@ -2,20 +2,20 @@
     background-color: #243F63;
 }
 a.nav{
-    font-family: $pageFont;
+    font-family: 'Righteous', cursive;
     font-size: 23px;
     font-style: oblique;
     color: white;
 }
 #banner{
-    font-family: $pageFont;
+    font-family: 'Righteous',cursive;
     font-size: 30px;
     text-align: center;
     background-color: #33588A;
     color: white;
 }
 #textComponents{
-    font-family: $pageFont;
+    font-family: 'Righteous',cursive;
     font-size: 18px;
     padding: 50px;
 }

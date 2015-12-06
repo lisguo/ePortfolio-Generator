@@ -166,15 +166,28 @@ public class TextComponentEditor extends Stage{
                 Button remove = initChildButton(addOrRemove, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 addOrRemove.getStyleClass().add(CSS_STYLE_LIST_BUTTONS);
                 
-                //HYPERLINK CONTROLS
+                VBox textFields = new VBox();
                 textField.setAlignment(Pos.TOP_LEFT);
                 textField.setPrefHeight(200);
                 textField.setPrefColumnCount(50);
-                Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
-                nextDialog.getChildren().addAll(textField, okButton);
+                textFields.getChildren().add(textField);
                 
-                TextField textField2 = new TextField();
-                nextDialog.getChildren().addAll(list,addOrRemove,hyperLink,textField,textField2);
+                //ADD HANDLER
+                add.setOnAction(e ->{
+                    TextField newTextField = new TextField();
+                    newTextField.setAlignment(Pos.TOP_LEFT);
+                    newTextField.setPrefHeight(200);
+                    newTextField.setPrefColumnCount(50);
+                    textFields.getChildren().add(newTextField);
+                });
+                remove.setOnAction(e->{
+                    textFields.getChildren().remove(textFields.getChildren().size()-1);
+                });
+                
+                nextDialog.getChildren().addAll(list,addOrRemove);
+                //HYPERLINK CONTROLS
+                Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
+                nextDialog.getChildren().addAll(textFields, okButton);
                 addOrRemove.setAlignment(Pos.CENTER);
                 
             }

@@ -30,6 +30,8 @@ import epg.model.PortfolioModel;
 import epg.model.SlideShowComponent;
 import epg.model.TextComponent;
 import epg.model.VideoComponent;
+import epg.web.SiteGenerator;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -88,7 +90,7 @@ public class PageSettingsView extends HBox{
     public PageSettingsView(){
         
     }
-    public PageSettingsView(PortfolioModel p, Page page){
+    public PageSettingsView(PortfolioModel p, Page page) throws IOException{
         portfolio = p;
         pageToEdit = page;
         showPageSettingsWorkspace();
@@ -99,7 +101,7 @@ public class PageSettingsView extends HBox{
     public Page getPageToEdit(){
         return pageToEdit;
     }
-    public void showPageSettingsWorkspace(){
+    public void showPageSettingsWorkspace() throws IOException{
         //PAGE SETTINGS PANE
         pageSettingsPane = new VBox();
         //SETTING THE WIDTH!!!! CHANGE LATER
@@ -307,11 +309,13 @@ public class PageSettingsView extends HBox{
             componentController.handleRemoveComponent(pageToEdit.getSelectedComponent());
         });
     }
-    public void reloadComponentPane(){
+    public void reloadComponentPane() throws IOException{
         reloadTextComponentPane();
         reloadImageComponentPane();
         reloadSlideShowComponentPane();
         reloadVideoComponentPane();
+        SiteGenerator generator = new SiteGenerator();
+        generator.start(portfolio);
     }
      public void reloadTextComponentPane() {
 	textComponentPane.getChildren().clear();
@@ -324,7 +328,11 @@ public class PageSettingsView extends HBox{
 	    textComponentPane.getChildren().add(componentEditor);
             componentEditor.setOnMousePressed(e ->{
                 pageToEdit.setSelectedComponent(component);
-                reloadComponentPane();
+                try {
+                    reloadComponentPane();
+                } catch (IOException ex) {
+                    Logger.getLogger(PageSettingsView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             });
 	}
     }
@@ -339,7 +347,11 @@ public class PageSettingsView extends HBox{
              imageComponentPane.getChildren().add(componentEditor);
             componentEditor.setOnMousePressed(e ->{
                 pageToEdit.setSelectedComponent(component);
-                reloadComponentPane();
+                 try {
+                     reloadComponentPane();
+                 } catch (IOException ex) {
+                     Logger.getLogger(PageSettingsView.class.getName()).log(Level.SEVERE, null, ex);
+                 }
             });
         }
      }
@@ -354,7 +366,11 @@ public class PageSettingsView extends HBox{
              slideShowComponentPane.getChildren().add(componentEditor);
             componentEditor.setOnMousePressed(e ->{
                 pageToEdit.setSelectedComponent(component);
-                reloadComponentPane();
+                 try {
+                     reloadComponentPane();
+                 } catch (IOException ex) {
+                     Logger.getLogger(PageSettingsView.class.getName()).log(Level.SEVERE, null, ex);
+                 }
             });
          }
      }
@@ -369,7 +385,11 @@ public class PageSettingsView extends HBox{
              videoComponentPane.getChildren().add(componentEditor);
             componentEditor.setOnMousePressed(e ->{
                 pageToEdit.setSelectedComponent(component);
-                reloadComponentPane();
+                 try {
+                     reloadComponentPane();
+                 } catch (IOException ex) {
+                     Logger.getLogger(PageSettingsView.class.getName()).log(Level.SEVERE, null, ex);
+                 }
             });
          }
      }
