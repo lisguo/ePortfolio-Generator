@@ -51,10 +51,12 @@ import epg.controller.FileController;
 import epg.controller.PageEditController;
 import epg.controller.PageSettingsController;
 import epg.file.PortfolioFileManager;
+import static epg.file.SlideShowFileManager.SLASH;
 import epg.model.Component;
 import epg.model.Page;
 import epg.model.PortfolioModel;
 import epg.model.TextComponent;
+import epg.web.SiteGenerator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -144,18 +146,13 @@ public class PortfolioGeneratorView {
     //SITE VIEWER
     Pane pageViewerPane;
     String htmlPath;
-   
+    WebEngine engine;
    
     //THE PORTFOLIO GENERATOR WE WILL BE WORKING ON
     PortfolioModel portfolio;
     
     public PortfolioGeneratorView() throws IOException{
         portfolio = new PortfolioModel(this);
-        //htmlPath = PATH_PORFOLIOS + portfolio.getTitle() + "/index.html";
-        htmlPath = PATH_PORTFOLIOS + portfolio.getTitle() + "/index.html";
-        
-        File f = new File(htmlPath);
-        htmlPath = f.getCanonicalPath();
         fileManager = new PortfolioFileManager();
     }
     
@@ -244,10 +241,7 @@ public class PortfolioGeneratorView {
         
         //WEB VIEWER
         WebView viewer = new WebView();
-        WebEngine engine = viewer.getEngine();
-        String loadStr = "file:///" + htmlPath;
-        System.out.println("Loading " + loadStr);
-        engine.load(loadStr);
+        engine = viewer.getEngine();
         //CHANGE SIZE
         viewer.setPrefSize(1900, 900);
         viewer.setManaged(true);
@@ -282,6 +276,7 @@ public class PortfolioGeneratorView {
         removePageButton.setOnAction(e->{
             pageEditController.processRemovePageRequest();
         });
+        
 	
     }
     
@@ -307,6 +302,10 @@ public class PortfolioGeneratorView {
                                                 portfolio.getSelectedPage());
             portfolioEditorPane.getChildren().add(settingsView);
             System.out.println("SELECTED PAGE: " + portfolio.getSelectedPage().getName());
+            SiteGenerator sg = new SiteGenerator(portfolio);
+            sg.generateSite();
+            engine.load(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + 
+                    portfolio.getSelectedPage().getName() + SLASH + "index.html");
         }
 	updateSiteToolbarControls(false);
     }

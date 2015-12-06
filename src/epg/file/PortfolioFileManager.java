@@ -33,6 +33,7 @@ import epg.model.Slide;
 import epg.model.SlideShowComponent;
 import epg.model.TextComponent;
 import epg.model.VideoComponent;
+import java.math.BigDecimal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -54,6 +55,7 @@ public class PortfolioFileManager {
     public static String JSON_BANNER_FILE_NAME = "banner_file_name";
     public static String JSON_FOOTER = "footer";
     public static String JSON_TEXT = "text";
+    public static String JSON_HAS_BANNER = "has_banner";
     
     //TEXT COMPONENTS
     public static String JSON_TEXT_COMPONENTS = "text_components";
@@ -128,7 +130,7 @@ public class PortfolioFileManager {
         
         //INIT WRITER
         String portfolioTitle = "" + portfolioToSave.getTitle();
-        String jsonFilePath = PATH_PORTFOLIOS + SLASH + portfolioTitle + JSON_EXT;
+        String jsonFilePath = PATH_PORTFOLIOS + SLASH + portfolioTitle + SLASH + portfolioTitle+ JSON_EXT;
         OutputStream os = new FileOutputStream(jsonFilePath);
         JsonWriter jsonFileWriter = Json.createWriter(os);
         jsonFileWriter.writeObject(portfolioJsonObject);
@@ -146,15 +148,14 @@ public class PortfolioFileManager {
         JsonArray jsonPagesArray = json.getJsonArray(JSON_PAGES);
         for(int i = 0 ; i < jsonPagesArray.size(); i++){
             JsonObject pageJso = jsonPagesArray.getJsonObject(i);
-            boolean hasBannerImg = !pageJso.getString(JSON_BANNER_FILE_NAME).equals("");
             Page page = new Page(pageJso.getString(JSON_PAGE_NAME),
                     pageJso.getInt(JSON_LAYOUT),
                     pageJso.getInt(JSON_COLOR),
                     pageJso.getString(JSON_PAGE_FONT),
-                    hasBannerImg);
-            if(hasBannerImg){
-                page.setBannerFileName(JSON_BANNER_FILE_NAME);
-                page.setBannerImgPath(JSON_BANNER_PATH);
+                    pageJso.getBoolean(JSON_HAS_BANNER));
+            if(pageJso.getBoolean(JSON_HAS_BANNER) == true){
+                page.setBannerFileName(pageJso.getString(JSON_BANNER_FILE_NAME));
+                page.setBannerImgPath(pageJso.getString(JSON_BANNER_PATH));
             }
             //TEXT COMPONENTS
             JsonArray jsonTextComponentsArray = pageJso.getJsonArray(JSON_TEXT_COMPONENTS);
@@ -253,6 +254,7 @@ public class PortfolioFileManager {
                 .add(JSON_FOOTER, page.getFooter())
                 .add(JSON_BANNER_PATH, page.getBannerImgPath())
                 .add(JSON_BANNER_FILE_NAME, page.getBannerFileName())  
+                .add(JSON_HAS_BANNER, page.getHasBannerImage())
                 .add(JSON_TEXT_COMPONENTS, makeTextComponentsJsonArray(page.getTextComponents()))
                 .add(JSON_IMAGE_COMPONENTS, makeImageComponentsJsonArray(page.getImageComponents()))
                 .add(JSON_SLIDESHOW_COMPONENTS, makeSlideShowComponentsJsonArray(page.getSlideShowComponents()))

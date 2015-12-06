@@ -6,6 +6,7 @@ $(function() {
 var slides = [];
 
    $.getJSON('TITLE.json', function(data) {
+	   alert(data);
        $.each(data.slides, function(i, f) {
           image_names.push("./img/" + f.image_file_name);
 		  captions.push(f.caption);
