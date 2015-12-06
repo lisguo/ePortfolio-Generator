@@ -1,5 +1,5 @@
 var pageNames = [];
-var pageName = 'New Page';
+var pageName = 'New Page2';
 var bannerFile;
 var layout;
 var color; 

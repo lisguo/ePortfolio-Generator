@@ -62,6 +62,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -278,6 +280,27 @@ public class PortfolioGeneratorView {
             pageEditController.processRemovePageRequest();
         });
         
+        workspaceModeToolbarPane.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+            try {
+                SiteGenerator sg = new SiteGenerator(portfolio);
+                //TAB CHANGED
+                //SAVE
+                fileController.handleSavePortfolioRequest();
+                sg.generateSite();
+                File f = new File( PATH_PORTFOLIOS + portfolio.getTitle() + SLASH +
+                        portfolio.getSelectedPage().getName() + SLASH + "index.html");
+                String htmlPath = "file:///" +f.getCanonicalPath();
+                engine.load(f.toURI().toURL().toString());
+                pageViewerPane.getChildren().clear();
+                pageViewerPane.getChildren().add(viewer);
+            } catch (IOException ex) {
+                Logger.getLogger(PortfolioGeneratorView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }); 
+        
 	
     }
     
@@ -307,11 +330,6 @@ public class PortfolioGeneratorView {
             //SAVE
             fileController = new FileController(this, fileManager);
             fileController.handleSavePortfolioRequest();
-            sg.generateSite();
-            engine.load(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + 
-                    portfolio.getSelectedPage().getName() + SLASH + "index.html");
-            pageViewerPane.getChildren().clear();
-            pageViewerPane.getChildren().add(viewer);
             
         }
 	updateSiteToolbarControls(false);

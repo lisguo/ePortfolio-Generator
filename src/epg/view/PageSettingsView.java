@@ -50,6 +50,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import properties_manager.PropertiesManager;
 
 public class PageSettingsView extends HBox{
@@ -241,8 +242,9 @@ public class PageSettingsView extends HBox{
                 imageComponentLabel,imageComponentPane,
                 slideShowComponentLabel, slideShowComponentPane, 
                 videoComponentLabel,videoComponentPane);
+        componentPane.getStyleClass().add("component_pane");
         getChildren().addAll(pageSettingsPane,componentToolbar,componentScrollPane);
-        
+        componentPane.setPrefWidth(1060);
         reloadComponentPane();
         initPageSettingHandlers();
         initComponentHandlers();

@@ -173,9 +173,12 @@ public class TextComponentEditor extends Stage{
                 textField.setPrefColumnCount(50);
                 nextDialog.getChildren().addAll(list,addOrRemove);
                 Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
-                nextDialog.getChildren().addAll(textField);
+                nextDialog.getChildren().addAll(textFields);
                 addOrRemove.setAlignment(Pos.CENTER);
+                textFields.getStyleClass().add("list");
+                this.setHeight(600);
                 add.setOnAction(e->{
+                    System.out.println("ADDING TO LIST");
                     TextField newTextField = new TextField();
                     newTextField.setAlignment(Pos.TOP_LEFT);
                     newTextField.setPrefHeight(200);
@@ -183,6 +186,7 @@ public class TextComponentEditor extends Stage{
                     textFields.getChildren().add(newTextField);
                 });
                 remove.setOnAction(e->{
+                    System.out.println("REMOVING TO LIST");
                     textFields.getChildren().remove(textFields.getChildren().get(textFields.getChildren().size()-1));
                 });
                 

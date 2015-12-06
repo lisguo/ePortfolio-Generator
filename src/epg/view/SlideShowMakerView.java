@@ -317,9 +317,9 @@ public class SlideShowMakerView {
 	Rectangle2D bounds = screen.getVisualBounds();
 
 	// AND USE IT TO SIZE THE WINDOW
-	primaryStage.setX(bounds.getMinX() * .3);
+	primaryStage.setX(bounds.getMinX() * .45);
 	primaryStage.setY(bounds.getMinY() * .8);
-	primaryStage.setWidth(bounds.getWidth() * .3);
+	primaryStage.setWidth(bounds.getWidth() * .45);
 	primaryStage.setHeight(bounds.getHeight() * .8);
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER

@@ -66,7 +66,7 @@ public class PageSettingsController{
         FileChooser imageFileChooser = new FileChooser();
 	
 	// SET THE STARTING DIRECTORY
-	imageFileChooser.setInitialDirectory(new File(PATH_PORTFOLIOS + ui.getPortfolio().getTitle() + SLASH + "images" + SLASH));
+	imageFileChooser.setInitialDirectory(new File(PATH_PORTFOLIOS + ui.getPortfolio().getTitle() + SLASH + selectedPage.getName() + SLASH));
 	
 	// LET'S ONLY SEE IMAGE FILES
 	FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");

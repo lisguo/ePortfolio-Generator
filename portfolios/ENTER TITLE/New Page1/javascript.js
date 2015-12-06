@@ -1,5 +1,5 @@
 var pageNames = [];
-var pageName = 'New Page';
+var pageName = 'New Page1';
 var bannerFile;
 var layout;
 var color; 
@@ -15,9 +15,10 @@ var imageCaptions = [];
 var slideshows = [];
 var videos = [];
 var videoCaptions = [];
-$(function(){
+
+$(function extract(){
 	var pages = [];
-    $.getJSON('../ENTER TITLE.json', function(data) {
+    $.getJSON('ENTER TITLE.json', function(data) {
 		studentName = data.student_name;
         $.each(data.pages, function(i,f){
             pageNames.push(f.page_name);
@@ -46,9 +47,10 @@ $(function(){
             
         });
     });
-	
+	window.setTimeout(makeSite,1000);
+});
+function makeSite(){
     //ADD FONT FAMILY
-	alert();
     $("head").append("<link rel ='stylesheet' href ='layout" + layout + ".css'>");
     $("head").append("<link rel ='stylesheet' href ='style" + color + ".css'>");
     $("head").append("<link href='https://fonts.googleapis.com/css?family=" + pageFont + "' rel='stylesheet' type='text/css'>")
@@ -58,16 +60,14 @@ $(function(){
     
 	//Create Banner with name
 	$("#banner").append("<a class='studentName'>"+studentName+"</a>")
-	$("#banner").append("<img id='bannerImg' src = './img/"+bannerFile+"' alt='banner'>");
+	$("#banner").append("<img id='bannerImg' src = './img/"+bannerFile+">");
     //CREATE NAV BAR
 	for( i = 0; i < pageNames.length; i++){
 		if(i == 0){
-			alert();
-			$('#navBar').append("<li><a class='nav' href='index.html'>" + pageNames[i]+"</a></li>");
+			$('#navBar').append("<a class='nav' href='index.html'>" + pageNames[i]+"</a>");
 		}
 		else{
-			alert();
-			$("#navBar").append("<li><a class='nav' href='index" + i+1 + ".html'>" + pageNames[i] + "</a></li>");
+			$("#navBar").append("<a class='nav' href='index" + i+1 + ".html'>" + pageNames[i] + "</a>");
 		}
 	}
 	
@@ -95,4 +95,4 @@ $(function(){
 		$("#"+videos[i]).append("<video></video>")
 		$("#video").append("<source src='./videos/'"+videos[i] + "'type=video/mp4'>")
 	}
-});
+}
