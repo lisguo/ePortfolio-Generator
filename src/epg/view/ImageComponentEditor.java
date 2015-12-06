@@ -8,10 +8,11 @@ package epg.view;
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_EDITOR;
 import static epg.StartupConstants.CSS_SMALL_LABEL;
 import static epg.StartupConstants.PATH_IMAGES;
-import static epg.StartupConstants.PATH_SITE_IMAGES;
+import static epg.StartupConstants.PATH_PORTFOLIOS;
 import static epg.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.error.ErrorHandler;
+import static epg.file.SlideShowFileManager.SLASH;
 import epg.model.ImageComponent;
 import epg.model.Page;
 import epg.model.PortfolioModel;
@@ -57,8 +58,9 @@ public class ImageComponentEditor extends Stage {
     String floatOption;
     
     Page pageToEdit;
-    
-    public ImageComponentEditor(Page page){
+    PortfolioModel portfolio;
+    public ImageComponentEditor(PortfolioModel portfolio, Page page){
+        this.portfolio = portfolio;
         pageToEdit = page;
         imgFileName = "";
         setTitle("Add an Image Component");
@@ -111,7 +113,9 @@ public class ImageComponentEditor extends Stage {
             FileChooser imageFileChooser = new FileChooser();
 	
             // SET THE STARTING DIRECTORY
-            imageFileChooser.setInitialDirectory(new File(PATH_SITE_IMAGES));
+            File dir = new File(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + "images" + SLASH);
+            dir.mkdirs();
+            imageFileChooser.setInitialDirectory(dir);
 
             // LET'S ONLY SEE IMAGE FILES
             FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");

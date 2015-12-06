@@ -29,6 +29,7 @@ import epg.model.Page;
 import epg.model.PortfolioModel;
 import epg.model.SlideShowComponent;
 import epg.model.TextComponent;
+import epg.model.VideoComponent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -238,7 +239,8 @@ public class PageSettingsView extends HBox{
         //FINALLY ADD EVERYTHING TO PORTFOLIO SETTINGS VIEW
         componentPane.getChildren().addAll(textComponentLabel, textComponentPane,
                 imageComponentLabel,imageComponentPane,
-                slideShowComponentLabel, slideShowComponentPane, videoComponentPane);
+                slideShowComponentLabel, slideShowComponentPane, 
+                videoComponentLabel,videoComponentPane);
         getChildren().addAll(pageSettingsPane,componentToolbar,componentScrollPane);
         
         reloadComponentPane();
@@ -309,6 +311,7 @@ public class PageSettingsView extends HBox{
         reloadTextComponentPane();
         reloadImageComponentPane();
         reloadSlideShowComponentPane();
+        reloadVideoComponentPane();
     }
      public void reloadTextComponentPane() {
 	textComponentPane.getChildren().clear();
@@ -349,6 +352,21 @@ public class PageSettingsView extends HBox{
             else
                 componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
              slideShowComponentPane.getChildren().add(componentEditor);
+            componentEditor.setOnMousePressed(e ->{
+                pageToEdit.setSelectedComponent(component);
+                reloadComponentPane();
+            });
+         }
+     }
+     public void reloadVideoComponentPane(){
+         videoComponentPane.getChildren().clear();
+         for(VideoComponent component : pageToEdit.getVideoComponents()){
+             VideoComponentView componentEditor = new VideoComponentView(pageToEdit, component);
+             if(pageToEdit.isSelectedComponent(component))
+                componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
+            else
+                componentEditor.getStyleClass().add(CSS_CLASS_COMPONENT);
+             videoComponentPane.getChildren().add(componentEditor);
             componentEditor.setOnMousePressed(e ->{
                 pageToEdit.setSelectedComponent(component);
                 reloadComponentPane();

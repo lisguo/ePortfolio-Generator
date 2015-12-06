@@ -19,7 +19,6 @@ public class StartupConstants {
     public static String PATH_CSS = "/epg/style/";
     public static String STYLE_SHEET_UI = PATH_CSS + "PortfolioGeneratorStyle.css";
     public static String PATH_PORTFOLIOS = "./portfolios/";
-    public static String PATH_SITE_IMAGES = PATH_IMAGES + "site_images/";
     
     // CSS STYLE SHEET CLASSES
     public static String    CSS_CLASS_VERTICAL_TOOLBAR_BUTTON = "vertical_toolbar_button";

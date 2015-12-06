@@ -99,7 +99,8 @@ public class TextComponentEditor extends Stage{
             textEditDialog(type);
         });
     }
-    public TextComponentEditor(TextComponent tc){
+    public TextComponentEditor(Page initPageToEdit , TextComponent tc){
+        pageToEdit = initPageToEdit;
         type = tc.getType();
         textField = new TextField();
         textField.setText(tc.getText());

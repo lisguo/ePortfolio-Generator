@@ -31,6 +31,7 @@ import static epg.StartupConstants.PROPERTIES_SCHEMA_FILE_NAME;
 import epg.error.ErrorHandler;
 import epg.file.SlideShowFileManager;
 import epg.model.Page;
+import epg.model.PortfolioModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -72,8 +73,9 @@ public class SlideShowComponentEditor extends Stage{
     SlideShowMakerView ui = new SlideShowMakerView(fileManager);
 
     Page pageToEdit;
-    
-    public SlideShowComponentEditor(Page pageToEdit) throws Exception{
+    PortfolioModel portfolio;
+    public SlideShowComponentEditor(PortfolioModel portfolio, Page pageToEdit) throws Exception{
+        this.portfolio = portfolio;
         this.pageToEdit = pageToEdit;  
         // SET THE WINDOW ICON
 	String imagePath = PATH_ICONS + ICON_WINDOW_LOGO;
@@ -95,7 +97,7 @@ public class SlideShowComponentEditor extends Stage{
             String appTitle = "Slide Show Maker";
 
 	    // NOW START THE UI IN EVENT HANDLING MODE
-	    ui.startUI(this, appTitle ,pageToEdit);
+	    ui.startUI(this, appTitle ,portfolio, pageToEdit);
             
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {

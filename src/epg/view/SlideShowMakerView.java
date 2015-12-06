@@ -62,6 +62,7 @@ import epg.model.SlideShowModel;
 import epg.error.ErrorHandler;
 import epg.file.SlideShowFileManager;
 import epg.model.Page;
+import epg.model.PortfolioModel;
 import epg.model.SlideShowComponent;
 import javafx.geometry.Pos;
 
@@ -131,7 +132,7 @@ public class SlideShowMakerView {
     private SlideShowEditController editController;
     
     Page pageToEdit;
-
+    PortfolioModel portfolio;
     /**
      * Default constructor, it initializes the GUI for use, but does not yet
      * load all the language-dependent controls, that needs to be done via the
@@ -168,7 +169,8 @@ public class SlideShowMakerView {
      * 
      * @param windowTitle The title for this window.
      */
-    public void startUI(Stage initPrimaryStage, String windowTitle, Page pageToEdit) {
+    public void startUI(Stage initPrimaryStage, String windowTitle, PortfolioModel portfolio, Page pageToEdit) {
+        this.portfolio = portfolio;
         this.pageToEdit = pageToEdit;
         
 	// THE TOOLBAR ALONG THE NORTH
@@ -264,6 +266,7 @@ public class SlideShowMakerView {
         
         //PORTFOLIO CONTROLS
         addToPortfolio.setOnAction(e ->{
+            slideShow.setTitle(titleTextField.getText());
             SlideShowComponent ssc = new SlideShowComponent(slideShow.getTitle(),
                                                     slideShow.getSlides());
             pageToEdit.addSlideShowComponent(ssc);
@@ -298,9 +301,9 @@ public class SlideShowMakerView {
 	Rectangle2D bounds = screen.getVisualBounds();
 
 	// AND USE IT TO SIZE THE WINDOW
-	primaryStage.setX(bounds.getMinX() * .5);
+	primaryStage.setX(576);
 	primaryStage.setY(bounds.getMinY() * .8);
-	primaryStage.setWidth(bounds.getWidth()* .5);
+	primaryStage.setWidth(576);
 	primaryStage.setHeight(bounds.getHeight() * .8);
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER

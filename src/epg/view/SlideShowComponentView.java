@@ -8,6 +8,7 @@ package epg.view;
 import epg.LanguagePropertyType;
 import static epg.LanguagePropertyType.TOOLTIP_NEXT_SLIDE;
 import static epg.LanguagePropertyType.TOOLTIP_PREVIOUS_SLIDE;
+import static epg.StartupConstants.CSS_CLASS_COMPONENT_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX;
 import static epg.StartupConstants.DEFAULT_THUMBNAIL_WIDTH;
 import static epg.StartupConstants.ICON_NEXT;
@@ -64,16 +65,16 @@ public class SlideShowComponentView extends ComponentView{
         
         buttonsPane = new HBox();
         prev = initChildButton(buttonsPane, ICON_PREVIOUS, TOOLTIP_PREVIOUS_SLIDE,
-                CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX, false);
+                CSS_CLASS_COMPONENT_TOOLBAR_BUTTON, false);
         next = initChildButton(buttonsPane, ICON_NEXT, TOOLTIP_NEXT_SLIDE,
-                CSS_CLASS_HORIZONTAL_TOOLBAR_HBOX, false);
+                CSS_CLASS_COMPONENT_TOOLBAR_BUTTON, false);
         buttonsPane.setAlignment(Pos.CENTER);
         title = new Label(ssc.getTitle());
         image = new ImageView();
         caption = new Label();
         updateImage();
         updateCaption();
-        
+        initHandlers();
         getChildren().addAll(title, image,caption,buttonsPane);
         
     }
@@ -105,9 +106,9 @@ public class SlideShowComponentView extends ComponentView{
             image.setImage(componentImage);
             
             //RESZIZE
-            double scaledWidth = DEFAULT_THUMBNAIL_WIDTH;
-	    double perc = scaledWidth / componentImage.getWidth();
-	    double scaledHeight = componentImage.getHeight() * perc;
+            double scaledHeight = 150;
+	    double perc = scaledHeight / componentImage.getHeight();
+	    double scaledWidth = componentImage.getWidth() * perc;
 	    image.setFitWidth(scaledWidth);
 	    image.setFitHeight(scaledHeight);
         }catch (Exception e){

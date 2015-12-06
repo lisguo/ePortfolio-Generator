@@ -37,7 +37,7 @@ public class ComponentController {
     }
     public void handleAddImageComponent(){
         System.out.println("ADD IMAGE COMPONENT CLICKED!");
-        ImageComponentEditor editor = new ImageComponentEditor(ui.getPageToEdit());
+        ImageComponentEditor editor = new ImageComponentEditor(ui.getPortfolio(), ui.getPageToEdit());
         editor.setHeight(400);
         editor.setWidth(500);
         editor.showAndWait();
@@ -45,7 +45,7 @@ public class ComponentController {
     }
     public void handleAddSlideShowComponent() throws Exception{
         System.out.println("ADD SLIDE SHOW COMPONENT CLICKED!");
-        SlideShowComponentEditor editor = new SlideShowComponentEditor(ui.getPageToEdit());
+        SlideShowComponentEditor editor = new SlideShowComponentEditor(ui.getPortfolio(), ui.getPageToEdit());
         Stage s = new Stage();
         s.setHeight(900);
         s.setWidth(1080);
@@ -53,7 +53,7 @@ public class ComponentController {
         ui.reloadComponentPane();
     }
     public void handleAddVideoComponent(){
-        VideoComponentEditor editor = new VideoComponentEditor();
+        VideoComponentEditor editor = new VideoComponentEditor(ui.getPortfolio(), ui.getPageToEdit());
         editor.setHeight(350);
         editor.setWidth(500);
         editor.showAndWait();
@@ -63,7 +63,7 @@ public class ComponentController {
         System.out.println("EDIT COMPONENT CLICKED");
         if(compToEdit.getComponentType().equals("text")){
             TextComponent tc = ((TextComponent)compToEdit);
-            TextComponentEditor editor = new TextComponentEditor(tc);
+            TextComponentEditor editor = new TextComponentEditor(ui.getPageToEdit(),tc);
             editor.setHeight(350);
             editor.setWidth(400);
             editor.showAndWait();
@@ -74,6 +74,6 @@ public class ComponentController {
         System.out.println("REMOVE COMPONENT CLICKED");
         ObservableList<Component> components = ui.getPageToEdit().getComponents();
         components.remove(compToEdit);
-        ui.reloadTextComponentPane();
+        ui.reloadComponentPane();
     }
 }

@@ -1,7 +1,8 @@
 package epg.controller;
 
-import static epg.StartupConstants.PATH_SITE_IMAGES;
+import static epg.StartupConstants.PATH_PORTFOLIOS;
 import static epg.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
+import static epg.file.SlideShowFileManager.SLASH;
 import epg.model.Page;
 import epg.view.PageSettingsView;
 import epg.view.PortfolioGeneratorView;
@@ -63,7 +64,7 @@ public class PageSettingsController{
         FileChooser imageFileChooser = new FileChooser();
 	
 	// SET THE STARTING DIRECTORY
-	imageFileChooser.setInitialDirectory(new File(PATH_SITE_IMAGES));
+	imageFileChooser.setInitialDirectory(new File(PATH_PORTFOLIOS + ui.getPortfolio().getTitle() + SLASH + "images" + SLASH));
 	
 	// LET'S ONLY SEE IMAGE FILES
 	FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");

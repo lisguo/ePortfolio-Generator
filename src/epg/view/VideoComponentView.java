@@ -8,32 +8,35 @@ package epg.view;
 import static epg.StartupConstants.DEFAULT_THUMBNAIL_WIDTH;
 import epg.error.ErrorHandler;
 import static epg.file.SlideShowFileManager.SLASH;
-import epg.model.ImageComponent;
 import epg.model.Page;
+import epg.model.VideoComponent;
 import java.io.File;
 import java.net.URL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 /**
  *
  * @author BunnyRailgun
  */
-public class ImageComponentView extends ComponentView{
-    String imgPath;
-    String imgFileName;
-    String caption;
+public class VideoComponentView extends ComponentView{
+    String videoPath;
+    String videoFileName;
     int width;
     int height;
-    String floatOption;
-    ImageView imageViewer;
+    String caption;
+    Media video;
+    MediaPlayer videoPlayer;
+    MediaView videoViewer;
     
     HBox hBox;
     VBox captionControls;
@@ -50,13 +53,13 @@ public class ImageComponentView extends ComponentView{
     
     HBox fontControl,styleControl,sizeControl;
     
-    ImageComponent imageComponent;
-    public ImageComponentView(Page pageToEdit, ImageComponent imageComponent){
+    VideoComponent videoComponent;
+    
+    public VideoComponentView(Page pageToEdit, VideoComponent videoComponent){
         super();
-        this.imageComponent = imageComponent;
-        imageViewer = new ImageView();
-        updateImage();
-        caption = imageComponent.getCaption();
+        this.videoComponent = videoComponent;
+        updateVideo();
+        caption = videoComponent.getCaption();
         
         fontControl = new HBox();
         styleControl = new HBox();
@@ -103,7 +106,7 @@ public class ImageComponentView extends ComponentView{
         sizes.add("44");
         
         fontSelection = new ComboBox(fonts);
-        fontSelection.getSelectionModel().select(imageComponent.getCaptionFont());
+        fontSelection.getSelectionModel().select(videoComponent.getCaptionFont());
         
         styleSelection = new ComboBox(styles);
         styleSelection.getSelectionModel().select("None");
@@ -124,44 +127,58 @@ public class ImageComponentView extends ComponentView{
         
         //PUT ON HBOX
         hBox = new HBox();
-        hBox.getChildren().addAll(imageViewer,captionControls);
+        System.out.println("MAKING VIDEO");
+        videoPlayer.setOnReady(new Runnable(){
+            
+            @Override
+            public void run() {
+                videoPlayer.stop();
+                int width = videoPlayer.getMedia().getWidth();
+                int height = videoPlayer.getMedia().getHeight();
+                //RESZIZE
+                double scaledWidth = 300;
+                double perc = scaledWidth / width;
+                double scaledHeight = height * perc;
+                videoViewer.setFitWidth(scaledWidth);
+                videoViewer.setFitHeight(scaledHeight);
+            }
+            
+        });
+        
+        hBox.getChildren().addAll(videoViewer,captionControls);
         getChildren().add(hBox);
-                
+        
+        initVideoComponentHandlers();
         
     }
-    public void updateImage(){
-        String imgPath = imageComponent.getImagePath() + SLASH + imageComponent.getImageFileName();
-        File file = new File(imgPath);
+    public void updateVideo(){
+        System.out.println("UPDATING VIDEO");
+        videoPath = videoComponent.getVideoPath() + videoComponent.getVideoFileName();
+        File file = new File(videoPath);
         try{
             URL fileURL = file.toURI().toURL();
-            Image componentImage = new Image(fileURL.toExternalForm());
-            imageViewer.setImage(componentImage);
-            
-            //RESZIZE
-            double scaledWidth = DEFAULT_THUMBNAIL_WIDTH;
-	    double perc = scaledWidth / componentImage.getWidth();
-	    double scaledHeight = componentImage.getHeight() * perc;
-	    imageViewer.setFitWidth(scaledWidth);
-	    imageViewer.setFitHeight(scaledHeight);
-        }catch (Exception e){
+            video = new Media(fileURL.toExternalForm());
+            videoPlayer = new MediaPlayer(video);
+            videoViewer = new MediaView(videoPlayer);
+        }catch(Exception e){
             ErrorHandler eH = new ErrorHandler();
-            eH.processError("ERROR IN SHOWING IMAGE");
+            eH.processError("ERROR IN SHOWING VIDEO");
         }
     }
-    public void initImageComponentHandlers(){
+    public void initVideoComponentHandlers(){
         fontSelection.setOnAction(e -> {
             String font = (String)fontSelection.getSelectionModel().getSelectedItem();
-            imageComponent.setCaptionFont(font);
+            videoComponent.setCaptionFont(font);
             System.out.println("FONT UPDATED TO : " + font);
         });
         styleSelection.setOnAction(e ->{
             String style = (String)styleSelection.getSelectionModel().getSelectedItem();
-            imageComponent.setCaptionStyle(style);
+            videoComponent.setCaptionStyle(style);
             System.out.println("STYLE UPDATED TO : " + style);
         });
         sizeSelection.setOnAction(e->{
             int size = Integer.getInteger((String)sizeSelection.getSelectionModel().getSelectedItem());
-            imageComponent.setCaptionSize(size);
+            videoComponent.setCaptionSize(size);
             System.out.println("SIZE CHANGED TO " + size);
         });
     }

@@ -7,7 +7,14 @@ package epg.view;
 
 import static epg.StartupConstants.CSS_CLASS_COMPONENT_EDITOR;
 import static epg.StartupConstants.CSS_SMALL_LABEL;
+import static epg.StartupConstants.PATH_PORTFOLIOS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.error.ErrorHandler;
+import static epg.file.SlideShowFileManager.SLASH;
+import epg.model.Page;
+import epg.model.PortfolioModel;
+import epg.model.VideoComponent;
+import java.io.File;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -25,27 +33,41 @@ public class VideoComponentEditor extends Stage{
     Scene scene;
     VBox vBox;
     Label videoName;
-    TextField caption;
+    TextField captionField;
     Button okButton;
     HBox videoSelection;
     Button selectVideo;
-    Label captionLabel;
+    Label captionFieldLabel;
     
     //SIZE
     Label displaySize;
     TextField widthField;
     Label x;
     TextField heightField;
-    public VideoComponentEditor(){
+    
+    PortfolioModel portfolio;
+    Page pageToEdit;
+    
+    String videoPath;
+    String videoFileName;
+    String caption;
+    int width;
+    int height;
+    
+    public VideoComponentEditor(PortfolioModel portfolio, Page page){
+        this.portfolio = portfolio;
+        pageToEdit = page;
+        
+        videoFileName = "";
         setTitle("Add a Video Component");
         vBox = new VBox();
-        videoName = new Label("videoName.mp4");
+        videoName = new Label("");
         videoSelection = new HBox();
-        caption = new TextField();
+        captionField = new TextField();
         okButton = new Button("OK");
         selectVideo = new Button("Select Video...");
-        caption.setMinHeight(100);
-        captionLabel = new Label("Caption:");
+        captionField.setMinHeight(100);
+        captionFieldLabel = new Label("Caption:");
         videoSelection.getChildren().addAll(selectVideo, videoName);
         videoSelection.setAlignment(Pos.CENTER);
         
@@ -60,7 +82,7 @@ public class VideoComponentEditor extends Stage{
         size.getChildren().addAll(widthField, x , heightField);
         size.setAlignment(Pos.CENTER);
         
-        vBox.getChildren().addAll(videoSelection, captionLabel,caption, 
+        vBox.getChildren().addAll(videoSelection, captionFieldLabel,captionField, 
                 displaySize, size, okButton);
         vBox.setAlignment(Pos.CENTER);
         
@@ -70,9 +92,65 @@ public class VideoComponentEditor extends Stage{
         vBox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
         setScene(scene);
         
-        okButton.setOnAction(e ->{
-            close();
+        initHandlers();
+        
+    }
+    public void initHandlers(){
+        selectVideo.setOnAction(e ->{
+            //OPEN IMAGE SELECTION
+            FileChooser imageFileChooser = new FileChooser();
+	
+            // SET THE STARTING DIRECTORY
+            File videoFile = new File(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + "videos" + SLASH);
+            videoFile.mkdirs();
+            imageFileChooser.setInitialDirectory(videoFile);
+
+            // LET'S ONLY SEE IMAGE FILES
+            FileChooser.ExtensionFilter mp4Filter = new FileChooser.ExtensionFilter("MP4 files (*.mp4)", "*.MP4");
+            FileChooser.ExtensionFilter flvFilter = new FileChooser.ExtensionFilter("FLV files (*.flv)", "*.FLV");
+            imageFileChooser.getExtensionFilters().addAll(mp4Filter, flvFilter);
+
+            // LET'S OPEN THE FILE CHOOSER
+            File file = imageFileChooser.showOpenDialog(null);
+            if (file != null) {
+                videoPath = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
+                videoFileName = file.getName();
+                updateVideoName();
+            }
         });
+        
+        okButton.setOnAction(e ->{
+            //IF NO IMAGE SELECTED SHOW ERROR
+            if(videoFileName.equals("")){
+                ErrorHandler eH = new ErrorHandler();
+                eH.processError("NO VIDEO SELECTED");
+            }
+            else{
+                //GET CAPTION AND SIZE
+                caption = captionField.getText();
+                try{
+                    width = Integer.parseInt(widthField.getText());
+                    height = Integer.parseInt(heightField.getText());
+                    
+                    //PUT IN AN IMAGE COMPONENT AND ADD TO PAGE
+                    VideoComponent videoComponent = new VideoComponent(
+                        videoPath, videoFileName, caption, width, height);
+                    //SET FONT AS PAGE FONT
+                    videoComponent.setCaptionFont(pageToEdit.getPageFont());
+                    pageToEdit.addVideoComponent(videoComponent);
+                    System.out.println("VIDEO COMPONENT ADDED");
+                    close();
+                }catch(Exception ex){ 
+                //IF SIZES ARE NOT INTEGERS OR EMPTY
+                    //ERROR DIALOG
+                    ErrorHandler eH = new ErrorHandler();
+                    eH.processError("INVALID SIZES");
+                }
+            }
+        });
+    }
+    public void updateVideoName(){
+        videoName.setText(videoFileName);
     }
     
 }

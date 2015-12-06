@@ -12,6 +12,7 @@ import epg.model.TextComponent;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -101,6 +102,7 @@ public class TextComponentView extends ComponentView{
         styleControl.getChildren().addAll(styleLabel,styleSelection);
         sizeControl.getChildren().addAll(fontSizeLabel,sizeSelection);
         
+        fontControls.setAlignment(Pos.CENTER);
         fontControls.getChildren().addAll(fontControl,styleControl,sizeControl);
         
         text = new Label(textComponent.getText());
