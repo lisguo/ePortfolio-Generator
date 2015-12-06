@@ -266,12 +266,28 @@ public class SlideShowMakerView {
         
         //PORTFOLIO CONTROLS
         addToPortfolio.setOnAction(e ->{
-            slideShow.setTitle(titleTextField.getText());
-            SlideShowComponent ssc = new SlideShowComponent(slideShow.getTitle(),
-                                                    slideShow.getSlides());
-            pageToEdit.addSlideShowComponent(ssc);
-            System.out.println("ADDED SLIDESHOW : " + slideShow.getTitle());
-            primaryStage.close();
+            try {
+                slideShow.setTitle(titleTextField.getText());
+                SlideShowComponent ssc = new SlideShowComponent(slideShow.getTitle(),
+                        slideShow.getSlides());
+                pageToEdit.addSlideShowComponent(ssc);
+                System.out.println("ADDED SLIDESHOW : " + slideShow.getTitle());
+                //SAVE
+                fileController = new SlideShowFileController(this, fileManager);
+                fileController.handleSaveSlideShowRequest();
+                //MAKE SITE
+                SlideShowViewer viewer = new SlideShowViewer(slideShow);
+                viewer.makeCSS();
+                viewer.makeJS();
+                try {
+                    viewer.makeHtml();
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(SlideShowMakerView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                primaryStage.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SlideShowMakerView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -301,9 +317,9 @@ public class SlideShowMakerView {
 	Rectangle2D bounds = screen.getVisualBounds();
 
 	// AND USE IT TO SIZE THE WINDOW
-	primaryStage.setX(576);
+	primaryStage.setX(bounds.getMinX() * .3);
 	primaryStage.setY(bounds.getMinY() * .8);
-	primaryStage.setWidth(576);
+	primaryStage.setWidth(bounds.getWidth() * .3);
 	primaryStage.setHeight(bounds.getHeight() * .8);
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER

@@ -165,17 +165,26 @@ public class TextComponentEditor extends Stage{
                 Button add = initChildButton(addOrRemove, ICON_ADD_PAGE, TOOLTIP_ADD_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 Button remove = initChildButton(addOrRemove, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 addOrRemove.getStyleClass().add(CSS_STYLE_LIST_BUTTONS);
-                
+                VBox textFields = new VBox();
+                textFields.getChildren().add(textField);
                 //HYPERLINK CONTROLS
                 textField.setAlignment(Pos.TOP_LEFT);
                 textField.setPrefHeight(200);
                 textField.setPrefColumnCount(50);
+                nextDialog.getChildren().addAll(list,addOrRemove);
                 Button hyperLink = initChildButton(nextDialog, ICON_HYPERLINK, TOOLTIP_HYPERLINK, CSS_CLASS_HYPERLINK_BUTTON,false);
-                nextDialog.getChildren().addAll(textField, okButton);
-                
-                TextField textField2 = new TextField();
-                nextDialog.getChildren().addAll(list,addOrRemove,hyperLink,textField,textField2);
+                nextDialog.getChildren().addAll(textField);
                 addOrRemove.setAlignment(Pos.CENTER);
+                add.setOnAction(e->{
+                    TextField newTextField = new TextField();
+                    newTextField.setAlignment(Pos.TOP_LEFT);
+                    newTextField.setPrefHeight(200);
+                    newTextField.setPrefColumnCount(50);
+                    textFields.getChildren().add(newTextField);
+                });
+                remove.setOnAction(e->{
+                    textFields.getChildren().remove(textFields.getChildren().get(textFields.getChildren().size()-1));
+                });
                 
             }
             nextDialog.setAlignment(Pos.CENTER);

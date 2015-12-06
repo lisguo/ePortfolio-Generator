@@ -5,8 +5,7 @@ var captions = [];var play;
 $(function() {
 var slides = [];
 
-   $.getJSON('TITLE.json', function(data) {
-	   alert(data);
+   $.getJSON('SlideShow.json', function(data) {
        $.each(data.slides, function(i, f) {
           image_names.push("./img/" + f.image_file_name);
 		  captions.push(f.caption);

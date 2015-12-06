@@ -33,6 +33,8 @@ public class PageSettingsController{
         }
         else{
             selectedPage.setHasBannerImage(false);
+            selectedPage.setBannerFileName("");
+            selectedPage.setBannerImgPath("");
         }
         System.out.println("PAGE HAS BANNER IMAGE : " + selectedPage.getHasBannerImage());
         //REFRESH

@@ -1,21 +1,21 @@
 
 {
-    "title":"Bunny",
+    "title":"Bunniez",
     "slides":[
-        {
-            "image_file_name":"4bunnies.jpg",
-            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
-            "caption":"ENTER CAPTION 1"
-        },
         {
             "image_file_name":"bunny eating leaves.jpg",
             "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
-            "caption":"ENTER CAPTION 2"
+            "caption":"ENTER CAPTION1"
+        },
+        {
+            "image_file_name":"Grey Bunny.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION2"
         },
         {
             "image_file_name":"bunnycups.jpg",
             "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
-            "caption":"ENTER CAPTION 3"
+            "caption":"ENTER CAPTION3"
         }
     ]
 }

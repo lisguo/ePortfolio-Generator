@@ -146,6 +146,7 @@ public class PortfolioGeneratorView {
     //SITE VIEWER
     Pane pageViewerPane;
     String htmlPath;
+    WebView viewer;
     WebEngine engine;
    
     //THE PORTFOLIO GENERATOR WE WILL BE WORKING ON
@@ -240,7 +241,7 @@ public class PortfolioGeneratorView {
         
         
         //WEB VIEWER
-        WebView viewer = new WebView();
+        viewer = new WebView();
         engine = viewer.getEngine();
         //CHANGE SIZE
         viewer.setPrefSize(1900, 900);
@@ -303,9 +304,15 @@ public class PortfolioGeneratorView {
             portfolioEditorPane.getChildren().add(settingsView);
             System.out.println("SELECTED PAGE: " + portfolio.getSelectedPage().getName());
             SiteGenerator sg = new SiteGenerator(portfolio);
+            //SAVE
+            fileController = new FileController(this, fileManager);
+            fileController.handleSavePortfolioRequest();
             sg.generateSite();
             engine.load(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + 
                     portfolio.getSelectedPage().getName() + SLASH + "index.html");
+            pageViewerPane.getChildren().clear();
+            pageViewerPane.getChildren().add(viewer);
+            
         }
 	updateSiteToolbarControls(false);
     }
