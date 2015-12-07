@@ -59,6 +59,9 @@ public class ImageComponentEditor extends Stage {
     
     Page pageToEdit;
     PortfolioModel portfolio;
+    
+    boolean editing = false;
+    ImageComponent compToEdit;
     public ImageComponentEditor(PortfolioModel portfolio, Page page){
         this.portfolio = portfolio;
         pageToEdit = page;
@@ -108,15 +111,63 @@ public class ImageComponentEditor extends Stage {
         initHandlers();
     }
     
+    public ImageComponentEditor(Page pageToEdit , ImageComponent compToEdit){
+        editing = true;
+        this.compToEdit = compToEdit;
+        this.portfolio = portfolio;
+        this.pageToEdit = pageToEdit;
+        imgFileName = compToEdit.getImageFileName();
+        setTitle("Edit an Image Component");
+        vBox = new VBox();
+        imageSelection = new HBox();
+        captionField = new TextField();
+        captionField.setAlignment(Pos.TOP_LEFT);
+        okButton = new Button("OK");
+        selectImage = new Button("Select Image...");
+        imageName = new Label(imgFileName);
+        captionField.setMinHeight(100);
+        captionField.setText(compToEdit.getCaption());
+        captionFieldLabel = new Label("Caption:");
+        imageSelection.getChildren().addAll(selectImage, imageName);
+        imageSelection.setAlignment(Pos.CENTER);
+        imgPath = compToEdit.getImagePath();
+        //SIZE
+        displaySize = new Label("Size (Width x Height): ");
+        HBox size = new HBox();
+        widthField = new TextField();
+        widthField.setPrefWidth(80);
+        x = new Label("x");
+        heightField = new TextField();
+        heightField.setPrefWidth(80);
+        size.getChildren().addAll(widthField, x , heightField);
+        size.setAlignment(Pos.CENTER);
+        
+        //FLOAT
+        ObservableList<String> floatOptions = FXCollections.observableArrayList();
+        floatOptions.add("Float Left");
+        floatOptions.add("Float Right");
+        floatOptions.add("Float Neither");
+        imageFloat = new ComboBox(floatOptions);
+        imageFloat.getSelectionModel().select(compToEdit.getFloatOption());
+        
+        vBox.getChildren().addAll(imageSelection, captionFieldLabel,captionField, 
+                displaySize, size, imageFloat, okButton);
+        vBox.setAlignment(Pos.CENTER);
+        
+        scene = new Scene(vBox);
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        imageName.getStyleClass().add(CSS_SMALL_LABEL);
+        vBox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
+        setScene(scene);
+        
+        initHandlers();
+    }
+    
     public void initHandlers(){
         selectImage.setOnAction(e ->{
             //OPEN IMAGE SELECTION
             FileChooser imageFileChooser = new FileChooser();
 	
-            // SET THE STARTING DIRECTORY
-            File dir = new File(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + "images" + SLASH);
-            dir.mkdirs();
-            imageFileChooser.setInitialDirectory(dir);
 
             // LET'S ONLY SEE IMAGE FILES
             FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -149,19 +200,32 @@ public class ImageComponentEditor extends Stage {
                     //GET FLOAT
                     floatOption = (String) imageFloat.getSelectionModel().getSelectedItem();
 
+                    if(imgPath.equals("")){
+                        imgPath = compToEdit.getImagePath();
+                    }
                     //PUT IN AN IMAGE COMPONENT AND ADD TO PAGE
                     ImageComponent imageComponent = new ImageComponent(
                             imgPath, imgFileName, caption, width, height, floatOption);
+                
                     //SET FONT AS PAGE FONT
-                    imageComponent.setCaptionFont(pageToEdit.getPageFont());
-                    pageToEdit.addImageComponent(imageComponent);
-                    System.out.println("IMAGE COMPONENT ADDED");
+                    if(editing == true){
+                        imageComponent.setCaptionFont(compToEdit.getCaptionFont());
+                        imageComponent.setCaptionStyle(compToEdit.getCaptionStyle());
+                        imageComponent.setCaptionSize(compToEdit.getCaptionSize());
+                        pageToEdit.getComponents().set(pageToEdit.getComponents().indexOf(compToEdit), imageComponent);
+                        System.out.println("IMAGE COMPONENT EDITED");
+                    }else{
+                        imageComponent.setCaptionFont(pageToEdit.getPageFont());
+                        pageToEdit.addImageComponent(imageComponent);
+                        System.out.println("IMAGE COMPONENT ADDED");
+                    }
                     close();
                 }catch(Exception ex){ 
                 //IF SIZES ARE NOT INTEGERS OR EMPTY
                     //ERROR DIALOG
                     ErrorHandler eH = new ErrorHandler();
                     eH.processError("INVALID SIZES");
+                    ex.printStackTrace();
                 }
             }
         });

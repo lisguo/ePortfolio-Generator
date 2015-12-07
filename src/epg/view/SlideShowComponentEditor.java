@@ -30,8 +30,10 @@ import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.PROPERTIES_SCHEMA_FILE_NAME;
 import epg.error.ErrorHandler;
 import epg.file.SlideShowFileManager;
+import static epg.file.SlideShowFileManager.JSON_EXT;
 import epg.model.Page;
 import epg.model.PortfolioModel;
+import epg.model.SlideShowComponent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -98,6 +100,45 @@ public class SlideShowComponentEditor extends Stage{
 
 	    // NOW START THE UI IN EVENT HANDLING MODE
 	    ui.startUI(this, appTitle ,portfolio, pageToEdit);
+            
+	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
+	else {
+	    // LET THE ERROR HANDLER PROVIDE THE RESPONSE
+	    ErrorHandler errorHandler = ui.getErrorHandler();
+	    errorHandler.processError(LanguagePropertyType.ERROR_DATA_FILE_LOADING);
+	    System.exit(0);
+	}
+    }
+    public SlideShowComponentEditor(PortfolioModel portfolio,Page pageToEdit, SlideShowComponent ssc) throws IOException{
+        this.portfolio = portfolio;
+        this.pageToEdit = pageToEdit;  
+        // SET THE WINDOW ICON
+	String imagePath = PATH_ICONS + ICON_WINDOW_LOGO;
+	File file = new File(imagePath);
+	
+	// GET AND SET THE IMAGE
+	//URL fileURL = file.toURI().toURL();
+        System.out.println(file.getCanonicalPath());
+	Image windowIcon = new Image("file:"+file.getCanonicalPath());
+	getIcons().add(windowIcon);
+
+	String languageCode = "EN";
+
+	
+        // LOAD APP SETTINGS INTO THE GUI AND START IT UP
+        boolean success = loadProperties(languageCode);
+        if (success) {
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            String appTitle = "Slide Show Maker";
+
+	    // NOW START THE UI IN EVENT HANDLING MODE
+	    ui.startUI(this, appTitle ,portfolio, pageToEdit);
+            ui.setSSC(ssc);
+            ui.updateToolbarControls(false);
+            ui.setEditing(true);
+            //Load
+            SlideShowFileManager fileManager = new SlideShowFileManager();
+            fileManager.loadSlideShow(ui.getSlideShow(), "./data/slide_shows/" + ssc.getTitle() + JSON_EXT);
             
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {

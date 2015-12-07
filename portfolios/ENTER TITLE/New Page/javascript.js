@@ -47,7 +47,7 @@ $(function extract(){
             
         });
     });
-	window.setTimeout(makeSite,1000);
+	window.setTimeout(makeSite,500);
 });
 function makeSite(){
     //ADD FONT FAMILY
@@ -71,6 +71,9 @@ function makeSite(){
 		}
 	}
 	
+	//FOOTER
+	$("footer").append(footer);
+	
 	//CREATE TEXT COMPONENTS
 	for(i = 0; i < text.length; i++){
 		if(textType[i] == "Header"){
@@ -87,7 +90,7 @@ function makeSite(){
 	}
 	//SLIDESHOW COMPONENTS
 	for(i =0; i<slideshows.length;i++){
-		$("#slideshowComponents").append("<iframe id ='"+slideshows[i]+"' class ='slideshowComp' src ='./slideshows/ "+ slideshows[i] + "/index.html'></iframe>");
+		$("#slideshowComponents").append("<iframe id ='"+slideshows[i]+"' class ='slideshowComp' src ='./slideshows/"+ slideshows[i] + "/index.html'></iframe>");
 	}
 	//VIDEO COMPONENTS
 	for(i =0;i<videos.length;i++){

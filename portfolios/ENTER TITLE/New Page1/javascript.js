@@ -20,6 +20,7 @@ $(function extract(){
 	var pages = [];
     $.getJSON('ENTER TITLE.json', function(data) {
 		studentName = data.student_name;
+		footer = data.footer;
         $.each(data.pages, function(i,f){
             pageNames.push(f.page_name);
             if(pageName == f.page_name){ //CURRENT PAGE
@@ -70,6 +71,8 @@ function makeSite(){
 			$("#navBar").append("<a class='nav' href='index" + i+1 + ".html'>" + pageNames[i] + "</a>");
 		}
 	}
+	//FOOTER
+	$("footer").append(footer);
 	
 	//CREATE TEXT COMPONENTS
 	for(i = 0; i < text.length; i++){

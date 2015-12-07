@@ -1,5 +1,6 @@
 package epg.view;
 
+import static epg.StartupConstants.PATH_PORTFOLIOS;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -21,6 +22,8 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import static epg.StartupConstants.PATH_SLIDE_SHOWS;
+import static epg.file.SlideShowFileManager.SLASH;
+import epg.model.PortfolioModel;
 /**
  * 
  * @author Lisa Guo (BunnyRailgun)
@@ -48,16 +51,17 @@ public class SlideShowViewer extends Stage{
     static final String imgHeight = "500";
     
     //CSS PREFERENCES
+    PortfolioModel portfolio;
     
-    
-    public SlideShowViewer(SlideShowModel m) throws IOException{
+    public SlideShowViewer(SlideShowModel m, PortfolioModel portfolio) throws IOException{
+        this.portfolio = portfolio;
         title = m.getTitle();
         slides = m.getSlides();
-        htmlPath = PATH_SITES + title + "/index.html";
-        cssPath = PATH_SITES + title + "/css/slideshow_style.css";
-        jsPath = PATH_SITES + title + "/js/Slideshow.js";
+        htmlPath = PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + portfolio.getSelectedPage().getName() +"/slideshows/" + title + "/index.html";
+        cssPath = PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + portfolio.getSelectedPage().getName() + "/slideshows/" + title + "/css/slideshow_style.css";
+        jsPath = PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + portfolio.getSelectedPage().getName() +"/slideshows/" + title + "/js/Slideshow.js";
         imgPathNonNormal = "./img/";
-        imgPath = PATH_SITES + title + "/img";
+        imgPath = PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + portfolio.getSelectedPage().getName() +"/slideshows" +  "/img/";
         //Normalize imgPath
         File f = new File(imgPath);
         imgPath = f.getCanonicalPath() + "\\";
@@ -187,7 +191,7 @@ public class SlideShowViewer extends Stage{
     public void makeHtml() throws IOException, URISyntaxException{
         //COPY JSON FILE TO SITES
         Path jsonFile = Paths.get(PATH_SLIDE_SHOWS + title + ".json");
-        Path copyTo = Paths.get(PATH_SITES + title + "/" + title + ".json");
+        Path copyTo = Paths.get(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + portfolio.getSelectedPage().getName() + SLASH + "slideshows" + SLASH + title + SLASH + title + ".json");
         System.out.println("Copied " + jsonFile + "\nto\n" + copyTo);
         //OVERWRITE IF EXISTS
         CopyOption[] jsonOptions = new CopyOption[]{
@@ -199,9 +203,9 @@ public class SlideShowViewer extends Stage{
         for(Slide s : slides){
             Path orig = Paths.get(s.getImagePath() + "\\" + s.getImageFileName()); //Original path
             //Make directory
-            File f = new File(imgPath + s.getImageFileName());
+            File f = new File(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + portfolio.getSelectedPage().getName() +"/slideshows/" +  title + "/img/" + s.getImageFileName());
             f.mkdirs();
-            Path img = Paths.get(imgPath + s.getImageFileName());
+            Path img = Paths.get(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + portfolio.getSelectedPage().getName() +"/slideshows/" + title +  "/img/" + s.getImageFileName());
             //OVERWRITE IF EXISTS
             CopyOption[] options = new CopyOption[]{
                 StandardCopyOption.REPLACE_EXISTING,

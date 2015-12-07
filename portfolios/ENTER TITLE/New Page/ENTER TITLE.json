@@ -5,13 +5,13 @@
     "pages":[
         {
             "page_name":"New Page",
-            "layout":0,
-            "color":0,
+            "layout":4,
+            "color":4,
             "page_font":"Righteous",
             "footer":"",
             "banner_path":"",
             "banner_file_name":"",
-            "has_banner":true,
+            "has_banner":false,
             "text_components":[
             ],
             "image_components":[

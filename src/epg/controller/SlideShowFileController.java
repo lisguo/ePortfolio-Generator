@@ -144,7 +144,7 @@ public class SlideShowFileController {
      */
     public void handleViewSlideShowRequest() throws IOException, URISyntaxException {
         //MAKE FILES AND SHOW SLIDESHOW
-        SlideShowViewer viewer = new SlideShowViewer(ui.getSlideShow());
+        SlideShowViewer viewer = new SlideShowViewer(ui.getSlideShow(), ui.getPortfolio());
         slideShowIO.saveSlideShow(ui.getSlideShow());
         viewer.makeJS();
         viewer.makeCSS();

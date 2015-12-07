@@ -102,6 +102,9 @@ public class PageSettingsView extends HBox{
     public Page getPageToEdit(){
         return pageToEdit;
     }
+    public void reloadUISettings(boolean isSaved){
+        ui.updateSiteToolbarControls(isSaved);
+    }
     public void showPageSettingsWorkspace(){
         //PAGE SETTINGS PANE
         pageSettingsPane = new VBox();
@@ -136,7 +139,7 @@ public class PageSettingsView extends HBox{
         Label colorLabel = new Label("Select Color Scheme:");
         colorButtons = new ToggleGroup();
         RadioButton color1Button = new RadioButton("Blue");
-        RadioButton color2Button = new RadioButton("Red");
+        RadioButton color2Button = new RadioButton("Pink");
         RadioButton color3Button = new RadioButton("Green");
         RadioButton color4Button = new RadioButton("Beige");
         RadioButton color5Button = new RadioButton("Gray");
@@ -322,6 +325,7 @@ public class PageSettingsView extends HBox{
 	textComponentPane.getChildren().clear();
 	for (TextComponent component : pageToEdit.getTextComponents()) {
 	    TextComponentView componentEditor = new TextComponentView(pageToEdit, component);
+            System.out.println("SELECTED: " + component.getText());
             if(pageToEdit.isSelectedComponent(component))
                 componentEditor.getStyleClass().add(CSS_CLASS_SELECTED_COMPONENT);
             else

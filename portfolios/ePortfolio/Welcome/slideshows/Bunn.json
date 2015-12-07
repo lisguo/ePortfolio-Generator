@@ -1,0 +1,16 @@
+
+{
+    "title":"Bunn",
+    "slides":[
+        {
+            "image_file_name":"4bunnies.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION1"
+        },
+        {
+            "image_file_name":"bunny eating leaves.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION2"
+        }
+    ]
+}

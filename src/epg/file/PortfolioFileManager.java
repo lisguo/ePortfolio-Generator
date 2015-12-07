@@ -33,6 +33,7 @@ import epg.model.Slide;
 import epg.model.SlideShowComponent;
 import epg.model.TextComponent;
 import epg.model.VideoComponent;
+import java.io.File;
 import java.math.BigDecimal;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -131,6 +132,8 @@ public class PortfolioFileManager {
         //INIT WRITER
         String portfolioTitle = "" + portfolioToSave.getTitle();
         String jsonFilePath = PATH_PORTFOLIOS + SLASH + portfolioTitle + SLASH + portfolioTitle+ JSON_EXT;
+        File f = new File(PATH_PORTFOLIOS + SLASH + portfolioTitle + SLASH + portfolioTitle+ JSON_EXT);
+        f.mkdirs();
         OutputStream os = new FileOutputStream(jsonFilePath);
         JsonWriter jsonFileWriter = Json.createWriter(os);
         jsonFileWriter.writeObject(portfolioJsonObject);
@@ -145,6 +148,7 @@ public class PortfolioFileManager {
         
         portfolioToLoad.reset();;
         portfolioToLoad.setTitle(json.getString(JSON_TITLE));
+        portfolioToLoad.setStudentName(json.getString(JSON_STUDENT_NAME));
         JsonArray jsonPagesArray = json.getJsonArray(JSON_PAGES);
         for(int i = 0 ; i < jsonPagesArray.size(); i++){
             JsonObject pageJso = jsonPagesArray.getJsonObject(i);
@@ -157,6 +161,7 @@ public class PortfolioFileManager {
                 page.setBannerFileName(pageJso.getString(JSON_BANNER_FILE_NAME));
                 page.setBannerImgPath(pageJso.getString(JSON_BANNER_PATH));
             }
+            page.setFooter(pageJso.getString(JSON_FOOTER));
             //TEXT COMPONENTS
             JsonArray jsonTextComponentsArray = pageJso.getJsonArray(JSON_TEXT_COMPONENTS);
             for(int j = 0; j < jsonTextComponentsArray.size(); j++){

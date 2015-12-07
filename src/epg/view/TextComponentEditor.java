@@ -32,6 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Component;
 import epg.model.Page;
 import epg.model.TextComponent;
 import javafx.event.ActionEvent;
@@ -63,6 +64,10 @@ public class TextComponentEditor extends Stage{
     String type;
     String text;
     VBox textFields;
+    String listText = "";
+    boolean editing = false;
+        
+        
     public TextComponentEditor(Page initPageToEdit){
         vbox = new VBox();
         hBox = new HBox();
@@ -90,7 +95,6 @@ public class TextComponentEditor extends Stage{
         okButton = new Button("OK");
         vbox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
         
-        
         okButton.setOnAction(e ->{
             close();
         });
@@ -103,7 +107,14 @@ public class TextComponentEditor extends Stage{
         pageToEdit = initPageToEdit;
         type = tc.getType();
         textField = new TextField();
-        textField.setText(tc.getText());
+        editing = true;
+        if(type.equals("List")){
+            listText = tc.getText();
+        }
+        else{
+            textField.setText(tc.getText());
+        }
+        System.out.println("STARTING TEXT: " + textField.getText());
         okButton = new Button("OK");
         textEditDialog(type);
     }
@@ -161,6 +172,7 @@ public class TextComponentEditor extends Stage{
             }
             else{
                 Label list = new Label("List:");
+                
                 HBox addOrRemove = new HBox();
                 Button add = initChildButton(addOrRemove, ICON_ADD_PAGE, TOOLTIP_ADD_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
                 Button remove = initChildButton(addOrRemove, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,false);
@@ -177,6 +189,22 @@ public class TextComponentEditor extends Stage{
                 addOrRemove.setAlignment(Pos.CENTER);
                 textFields.getStyleClass().add("list");
                 this.setHeight(600);
+                //INITALIZE LIST IF PREVIOUS LIST HAD
+                if(!listText.equals("")){
+                    textFields.getChildren().clear();
+                    String prevText = listText;
+                    System.out.println("INIT: "+prevText);
+                    String addText;
+                    while(prevText.contains("\n")){
+                        addText = prevText.substring(0,prevText.indexOf("\n"));
+                        System.out.println("TEXT : " + addText);
+                        textFields.getChildren().add(new TextField(addText));
+                        //SKIP THE \n
+                        addText = prevText.substring(prevText.indexOf("\n")+1);
+                        prevText = prevText.substring(prevText.indexOf("\n")+1);
+                    }
+                    System.out.println("EDITED : " + prevText);
+                }
                 add.setOnAction(e->{
                     System.out.println("ADDING TO LIST");
                     TextField newTextField = new TextField();
@@ -195,11 +223,13 @@ public class TextComponentEditor extends Stage{
             scene = new Scene(nextDialog);
             scene.getStylesheets().add(STYLE_SHEET_UI);
             setScene(scene);
+            text = "";
             okButton.setOnAction(e ->{
                 if(type.equals("List")){
                     for(int i = 0; i < textFields.getChildren().size(); i++){
                         String curr = ((TextField)textFields.getChildren().get(i)).getText();
                         text += curr + "\n";
+                        System.out.println("TEXT : " + text);
                     }
                 }
                 else{
@@ -214,7 +244,13 @@ public class TextComponentEditor extends Stage{
             else{
                 createdComponent.setFont(pageToEdit.getPageFont());
             }
-            pageToEdit.addTextComponent(createdComponent);
+            if(editing){
+                Component edit = pageToEdit.getSelectedComponent();
+                pageToEdit.getComponents().set(pageToEdit.getComponents().indexOf(edit),createdComponent);
+            }
+            else{
+                pageToEdit.addTextComponent(createdComponent);
+            }
             System.out.println("ADDED TEXT COMPONENT : " + type + "-" + text);
             //SET TEXT COMPONENT AS SELECTED
             pageToEdit.setSelectedComponent(createdComponent);

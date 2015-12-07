@@ -7,12 +7,18 @@ package epg.controller;
 
 import epg.PortfolioGenerator;
 import epg.model.Component;
+import epg.model.ImageComponent;
+import epg.model.SlideShowComponent;
 import epg.model.TextComponent;
+import epg.model.VideoComponent;
 import epg.view.ImageComponentEditor;
 import epg.view.PageSettingsView;
 import epg.view.SlideShowComponentEditor;
 import epg.view.TextComponentEditor;
 import epg.view.VideoComponentEditor;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
@@ -68,6 +74,35 @@ public class ComponentController {
             editor.setWidth(400);
             editor.showAndWait();
             ui.reloadComponentPane();
+        }
+        if(compToEdit.getComponentType().equals("image")){
+            ImageComponent ic = (ImageComponent)compToEdit;
+            ImageComponentEditor editor = new ImageComponentEditor(ui.getPageToEdit(), ic);
+            editor.setHeight(400);
+            editor.setWidth(400);
+            editor.showAndWait();
+            ui.reloadComponentPane();
+        }
+        if(compToEdit.getComponentType().equals("slideshow")){
+            try {
+                SlideShowComponent ssc = (SlideShowComponent) compToEdit;
+                SlideShowComponentEditor editor = new SlideShowComponentEditor(ui.getPortfolio(),ui.getPageToEdit(), ssc);
+                Stage s = new Stage();
+                s.setHeight(900);
+                s.setWidth(1080);
+                editor.showAndWait();
+                ui.reloadComponentPane();
+            } catch (IOException ex) {
+                Logger.getLogger(ComponentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if(compToEdit.getComponentType().equals("video")){
+            VideoComponent vc = (VideoComponent)compToEdit;
+            VideoComponentEditor editor = new VideoComponentEditor(ui.getPageToEdit(), vc);
+                editor.setHeight(350);
+                editor.setWidth(400);
+                editor.showAndWait();
+                ui.reloadComponentPane();
         }
     }
     public void handleRemoveComponent(Component compToEdit){

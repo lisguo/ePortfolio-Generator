@@ -13,6 +13,7 @@ import static epg.file.SlideShowFileManager.SLASH;
 import epg.model.ImageComponent;
 import epg.model.Page;
 import epg.model.PortfolioModel;
+import epg.model.SlideShowComponent;
 import epg.model.VideoComponent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -127,7 +128,7 @@ public class SiteGenerator {
                     "            \n" +
                     "        });\n" +
                     "    });\n" +
-                    "	window.setTimeout(makeSite,1000);\n" +
+                    "	window.setTimeout(makeSite,500);\n" +
                     "});\n" +
                     "function makeSite(){\n" +
                     "    //ADD FONT FAMILY\n" +
@@ -150,6 +151,8 @@ public class SiteGenerator {
                     "			$(\"#navBar\").append(\"<a class='nav' href='index\" + i+1 + \".html'>\" + pageNames[i] + \"</a>\");\n" +
                     "		}\n" +
                     "	}\n" +
+                                        "	\n	//FOOTER\n" +
+                    "	$(\"footer\").append(footer);\n" +
                     "	\n" +
                     "	//CREATE TEXT COMPONENTS\n" +
                     "	for(i = 0; i < text.length; i++){\n" +
@@ -167,7 +170,7 @@ public class SiteGenerator {
                     "	}\n" +
                     "	//SLIDESHOW COMPONENTS\n" +
                     "	for(i =0; i<slideshows.length;i++){\n" +
-                    "		$(\"#slideshowComponents\").append(\"<iframe id ='\"+slideshows[i]+\"' class ='slideshowComp' src ='./slideshows/ \"+ slideshows[i] + \"/index.html'></iframe>\");\n" +
+                    "		$(\"#slideshowComponents\").append(\"<iframe id ='\"+slideshows[i]+\"' class ='slideshowComp' src ='./slideshows/\"+ slideshows[i] + \"/index.html'></iframe>\");\n" +
                     "	}\n" +
                     "	//VIDEO COMPONENTS\n" +
                     "	for(i =0;i<videos.length;i++){\n" +
@@ -236,19 +239,17 @@ public class SiteGenerator {
                         Files.copy(orig,img,options);
                     }
                     //MAKE SLIDESHOW DIRECTORY
-                    String ssPath = htmlPath + "slideshows" + SLASH;
-                    Path orig = Paths.get(PATH_SITES);
-                    File f = new File(ssPath);
-                    f.mkdirs();
-                    Path copyTo = Paths.get(ssPath);
-                    
-                    System.out.println("Copied \n" + orig.toString() + "\nto\n" + f.getCanonicalPath());
-                    Files.copy(orig,copyTo,options);
-                    
-                    System.out.println("Copied \n" + orig.toString() + "\nto\n" + f.getCanonicalPath());
+                    for(SlideShowComponent ssc : page.getSlideShowComponents()){
+                        String ssPath = htmlPath + "slideshows" + SLASH + ssc.getTitle() + JSON_EXT;
+                        File origF = new File(PATH_SITES +  ssc.getTitle());
+                        File f = new File(ssPath);
+                        f.mkdirs();
+
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(SiteGenerator.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 //MAKE VIDEO DIRECTORY
                 String videoPath = htmlPath + "videos" + SLASH;
                 for(VideoComponent vc : page.getVideoComponents()){
@@ -312,7 +313,9 @@ public class SiteGenerator {
                         "        </div>\n" +
                         "        <div id=\"videoComponents\">\n" +
                         "        </div>\n" +
-                        "    </body>\n" +
+                        "    </body>\n	"
+                        + "<footer>\n" +
+                        "	</footer>\n" +
                         "</html>";
                 System.out.println(htmlCode);
                 bw.write(htmlCode);

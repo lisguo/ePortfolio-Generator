@@ -1,0 +1,29 @@
+#navBar{
+    background-color: #dfdbdb;
+}
+a.nav{
+    font-family: 'Rock Salt', cursive;
+    font-size: 18px;
+    font-style: oblique;
+    color: black;
+    border-bottom: 1px solid black;
+}
+#banner{
+    font-family: 'Rock Salt', cursive;
+    font-size: 30px;
+    background-color: #dfdbdb;
+    border: 1px solid;
+    border-color: black;
+}
+#textComponents{
+    font-family: 'Rock Salt', cursive;
+    font-size: 18px;
+}
+body{
+    background-color: white;
+}
+#content{
+    background-color: whitesmoke;
+    border: 1px solid;
+    border-color: black;
+}

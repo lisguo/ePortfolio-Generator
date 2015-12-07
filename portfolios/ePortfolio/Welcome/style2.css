@@ -1,0 +1,22 @@
+#navBar{
+    background-color: #C9536C;
+}
+a.nav{
+    font-family: 'Lora', serif;
+    font-size: 23px;
+    font-style: oblique;
+    color: black;
+    border-bottom: 1px solid black;
+}
+#banner{
+    font-family: 'Lora', serif;
+    font-size: 30px;
+    background-color: #FF809B;
+}
+#textComponents{
+    font-family: 'Lora', serif;
+    font-size: 18px;
+}
+body{
+    background-color: #FFCCD7;
+}

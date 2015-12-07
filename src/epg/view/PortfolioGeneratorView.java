@@ -298,6 +298,7 @@ public class PortfolioGeneratorView {
                 engine.load(f.toURI().toURL().toString());
                 pageViewerPane.getChildren().clear();
                 pageViewerPane.getChildren().add(viewer);
+                updateSiteToolbarControls(false);
             } catch (IOException ex) {
                 Logger.getLogger(PortfolioGeneratorView.class.getName()).log(Level.SEVERE, null, ex);
             }

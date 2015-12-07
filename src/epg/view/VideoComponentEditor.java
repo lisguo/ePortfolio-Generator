@@ -53,7 +53,8 @@ public class VideoComponentEditor extends Stage{
     String caption;
     int width;
     int height;
-    
+    boolean editing = false;
+    VideoComponent vc;
     public VideoComponentEditor(PortfolioModel portfolio, Page page){
         this.portfolio = portfolio;
         pageToEdit = page;
@@ -95,15 +96,55 @@ public class VideoComponentEditor extends Stage{
         initHandlers();
         
     }
+    public VideoComponentEditor(Page initPageToEdit, VideoComponent vc){
+        pageToEdit = initPageToEdit;
+        editing = true;
+        this.vc = vc;
+        videoFileName = vc.getVideoFileName();
+        setTitle("Add a Video Component");
+        vBox = new VBox();
+        videoName = new Label(videoFileName);
+        videoSelection = new HBox();
+        
+        captionField = new TextField();
+        captionField.setText(vc.getCaption());
+        
+        okButton = new Button("OK");
+        selectVideo = new Button("Select Video...");
+        captionField.setMinHeight(100);
+        captionFieldLabel = new Label("Caption:");
+        videoSelection.getChildren().addAll(selectVideo, videoName);
+        videoSelection.setAlignment(Pos.CENTER);
+        
+        //SIZE
+        displaySize = new Label("Size (Width x Height): ");
+        HBox size = new HBox();
+        widthField = new TextField();
+        widthField.setPrefWidth(80);
+        x = new Label("x");
+        heightField = new TextField();
+        heightField.setPrefWidth(80);
+        size.getChildren().addAll(widthField, x , heightField);
+        size.setAlignment(Pos.CENTER);
+        
+        vBox.getChildren().addAll(videoSelection, captionFieldLabel,captionField, 
+                displaySize, size, okButton);
+        vBox.setAlignment(Pos.CENTER);
+        
+        scene = new Scene(vBox);
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        videoName.getStyleClass().add(CSS_SMALL_LABEL);
+        vBox.getStyleClass().add(CSS_CLASS_COMPONENT_EDITOR);
+        setScene(scene);
+        
+        initHandlers();
+        
+    }
     public void initHandlers(){
         selectVideo.setOnAction(e ->{
             //OPEN IMAGE SELECTION
             FileChooser imageFileChooser = new FileChooser();
 	
-            // SET THE STARTING DIRECTORY
-            File videoFile = new File(PATH_PORTFOLIOS + portfolio.getTitle() + SLASH + "videos" + SLASH);
-            videoFile.mkdirs();
-            imageFileChooser.setInitialDirectory(videoFile);
 
             // LET'S ONLY SEE IMAGE FILES
             FileChooser.ExtensionFilter mp4Filter = new FileChooser.ExtensionFilter("MP4 files (*.mp4)", "*.MP4");
@@ -136,15 +177,20 @@ public class VideoComponentEditor extends Stage{
                     VideoComponent videoComponent = new VideoComponent(
                         videoPath, videoFileName, caption, width, height);
                     //SET FONT AS PAGE FONT
-                    videoComponent.setCaptionFont(pageToEdit.getPageFont());
-                    pageToEdit.addVideoComponent(videoComponent);
-                    System.out.println("VIDEO COMPONENT ADDED");
+                    if(editing){
+                        pageToEdit.getComponents().set(pageToEdit.getComponents().indexOf(vc), videoComponent);
+                    }else{
+                        videoComponent.setCaptionFont(pageToEdit.getPageFont());
+                        pageToEdit.addVideoComponent(videoComponent);
+                        System.out.println("VIDEO COMPONENT ADDED");
+                    }
                     close();
                 }catch(Exception ex){ 
                 //IF SIZES ARE NOT INTEGERS OR EMPTY
                     //ERROR DIALOG
                     ErrorHandler eH = new ErrorHandler();
                     eH.processError("INVALID SIZES");
+                    ex.printStackTrace();
                 }
             }
         });

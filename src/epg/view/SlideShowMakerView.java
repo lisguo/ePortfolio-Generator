@@ -131,8 +131,10 @@ public class SlideShowMakerView {
     // THIS CONTROLLER RESPONDS TO SLIDE SHOW EDIT BUTTONS
     private SlideShowEditController editController;
     
+    boolean editing = false;
     Page pageToEdit;
     PortfolioModel portfolio;
+    SlideShowComponent ssc;
     /**
      * Default constructor, it initializes the GUI for use, but does not yet
      * load all the language-dependent controls, that needs to be done via the
@@ -153,7 +155,9 @@ public class SlideShowMakerView {
     public SlideShowModel getSlideShow() {
 	return slideShow;
     }
-
+    public void setEditing(boolean edit){
+        editing = edit;
+    }
     public Stage getWindow() {
 	return primaryStage;
     }
@@ -223,6 +227,9 @@ public class SlideShowMakerView {
         portfolioSettings.getStyleClass().add(CSS_CLASS_SLIDESHOW_READY);
         portfolioSettings.getChildren().addAll(ready,ready2,addToPortfolio);
     }
+    public void setSSC(SlideShowComponent ssc){
+        this.ssc = ssc;
+    }
 
     private void initEventHandlers() {
 	// FIRST THE FILE CONTROLS
@@ -268,15 +275,20 @@ public class SlideShowMakerView {
         addToPortfolio.setOnAction(e ->{
             try {
                 slideShow.setTitle(titleTextField.getText());
-                SlideShowComponent ssc = new SlideShowComponent(slideShow.getTitle(),
+                SlideShowComponent ssc2 = new SlideShowComponent(slideShow.getTitle(),
                         slideShow.getSlides());
-                pageToEdit.addSlideShowComponent(ssc);
+                if(editing){
+                    pageToEdit.getComponents().set(pageToEdit.getComponents().indexOf(ssc),ssc2);
+                }else{
+                    pageToEdit.addSlideShowComponent(ssc2);
+                }
                 System.out.println("ADDED SLIDESHOW : " + slideShow.getTitle());
                 //SAVE
+                slideShow.setTitle(titleTextField.getText());
                 fileController = new SlideShowFileController(this, fileManager);
                 fileController.handleSaveSlideShowRequest();
                 //MAKE SITE
-                SlideShowViewer viewer = new SlideShowViewer(slideShow);
+                SlideShowViewer viewer = new SlideShowViewer(slideShow, portfolio);
                 viewer.makeCSS();
                 viewer.makeJS();
                 try {
@@ -317,9 +329,9 @@ public class SlideShowMakerView {
 	Rectangle2D bounds = screen.getVisualBounds();
 
 	// AND USE IT TO SIZE THE WINDOW
-	primaryStage.setX(bounds.getMinX() * .45);
+	primaryStage.setX(bounds.getMinX() * .43);
 	primaryStage.setY(bounds.getMinY() * .8);
-	primaryStage.setWidth(bounds.getWidth() * .45);
+	primaryStage.setWidth(bounds.getWidth() * .43);
 	primaryStage.setHeight(bounds.getHeight() * .8);
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER
@@ -357,7 +369,9 @@ public class SlideShowMakerView {
 	toolbar.getChildren().add(button);
 	return button;
     }
-    
+    public PortfolioModel getPortfolio(){
+        return portfolio;
+    }
     /**
      * Updates the enabled/disabled status of all toolbar
      * buttons.

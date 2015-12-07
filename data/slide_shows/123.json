@@ -1,0 +1,16 @@
+
+{
+    "title":"123",
+    "slides":[
+        {
+            "image_file_name":"bunnycups.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION"
+        },
+        {
+            "image_file_name":"4bunnies.jpg",
+            "image_path":"C:\\Users\\BunnyRailgun\\Documents\\School\\Java\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+            "caption":"ENTER CAPTION"
+        }
+    ]
+}

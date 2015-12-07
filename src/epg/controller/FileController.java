@@ -191,7 +191,7 @@ public class FileController {
             handleSavePortfolioRequest();
         });
         
-        return false;
+        return true;
     }
 
     

@@ -46,27 +46,34 @@ public class PageSettingsController{
         int color = colorButtons.getToggles().indexOf(colorButtons.getSelectedToggle());
         selectedPage.setColor(color);
         System.out.println("COLOR CHANGED TO : " + color);
+        ui.reloadUISettings(false);
     }
     public void handleSetPageFont(ComboBox pageFont){
         String font = (String)(pageFont.getSelectionModel().getSelectedItem());
         selectedPage.setPageFont(font);
         System.out.println("FONT CHANGED TO : " + font);
+        ui.reloadUISettings(false);
     }
     public void handleSetStudentName(TextField textField){
         String name = textField.getText();
         ui.getPortfolio().setStudentName(name);
         System.out.println("STUDENT NAME CHANGED TO : " + name);
+        ui.reloadUISettings(false);
     }
     public void handleSetFooter(TextField textField){
         String footer = textField.getText();
         selectedPage.setFooter(footer);
         System.out.println("FOOTER CHANGD TO : " + footer);
+        ui.reloadUISettings(false);
     }
     public void handleBannerSelection(){
         FileChooser imageFileChooser = new FileChooser();
 	
 	// SET THE STARTING DIRECTORY
-	imageFileChooser.setInitialDirectory(new File(PATH_PORTFOLIOS + ui.getPortfolio().getTitle() + SLASH + selectedPage.getName() + SLASH));
+        File f = new File(PATH_PORTFOLIOS + ui.getPortfolio().getTitle() + SLASH + selectedPage.getName() + SLASH);
+        f.mkdirs();
+	imageFileChooser.setInitialDirectory(f);
+        
 	
 	// LET'S ONLY SEE IMAGE FILES
 	FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -88,7 +95,7 @@ public class PageSettingsController{
         
         System.out.println("BANNER : " + selectedPage.getBannerImgPath()
                                          + selectedPage.getBannerFileName());
-    
+        ui.reloadUISettings(false);
     }
     
 }

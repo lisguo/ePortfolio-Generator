@@ -51,7 +51,6 @@ public class SlideShowComponentView extends ComponentView{
     Button next;
     
     Page pageToEdit;
-    
     public SlideShowComponentView(Page pageToEdit, SlideShowComponent ssc){
         slides = ssc.getSlides();
         images = FXCollections.observableArrayList();
@@ -78,6 +77,7 @@ public class SlideShowComponentView extends ComponentView{
         getChildren().addAll(title, image,caption,buttonsPane);
         
     }
+   
     public void initHandlers(){
         prev.setOnAction(e -> {
             if(currSlide == 0)
